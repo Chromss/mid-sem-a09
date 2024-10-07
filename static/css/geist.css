@@ -1,0 +1,53 @@
+@font-face {
+    font-family: 'Geist';
+    src: url('/static/font/Geist/Geist-Thin.ttf') format('truetype');
+    font-weight: 100;
+}
+
+@font-face {
+    font-family: 'Geist';
+    src: url('/static/font/Geist/Geist-ExtraLight.ttf') format('truetype');
+    font-weight: 200;
+}
+
+@font-face {
+    font-family: 'Geist';
+    src: url('/static/font/Geist/Geist-Light.ttf') format('truetype');
+    font-weight: 300;
+}
+
+@font-face {
+    font-family: 'Geist';
+    src: url('/static/font/Geist/Geist-Regular.ttf') format('truetype');
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: 'Geist';
+    src: url('/static/font/Geist/Geist-Medium.ttf') format('truetype');
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: 'Geist';
+    src: url('/static/font/Geist/Geist-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: 'Geist';
+    src: url('/static/font/Geist/Geist-Bold.ttf') format('truetype');
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: 'Geist';
+    src: url('/static/font/Geist/Geist-ExtraBold.ttf') format('truetype');
+    font-weight: 800;
+}
+
+@font-face {
+    font-family: 'Geist';
+    src: url('/static/font/Geist/Geist-Black.ttf') format('truetype');
+    font-weight: 900;
+}

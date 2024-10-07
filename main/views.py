@@ -12,5 +12,8 @@ from django.utils.html import *
 from main.forms import *
 from main.models import *
 
+def test(request):
+    return render(request, 'test.html')
+
 def landing_page(request):
     return render(request, 'landing_page.html')
