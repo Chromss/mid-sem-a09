@@ -16,33 +16,33 @@ Jogja adalah kota yang istimewa dengan sejuta cerita. Kota ini selalu punya berb
 
 Berikut adalah manfaat menggunakan web MlakuMlaku dari Kami, webmaster.
 
-### Berbelanja Souvenir
+### A. Berbelanja Souvenir
 Pengguna dapat melihat souvenir yang dijual di suatu lokasi dan membelinya.
 
-### Melihat Ulasan dan Rating, serta Berkomentar
+### B. Melihat Ulasan dan Rating, serta Berkomentar
 Pengguna dapat memberikan ulasan dan rating untuk setiap destinasi wisata, serta melihat ulasan dan rating dari pengguna lain. Hal ini akan meningkatkan keyakinan pengguna dalam memilih tempat yang ingin \`dikunjungi.
 
-### Template Itinerary
+### C. Template Itinerary
 1. Menyediakan berbagai template itinerary seperti "2 Hari 2 Malam di Jogja" yang dapat disesuaikan sesuai preferensi.
 2. Pengguna dapat menambahkan atau menghapus destinasi sesuai preferensi.
 
-### Bookmark/Playlist Tempat Wisata
+### D. Bookmark/Playlist Tempat Wisata
 1. Pengguna dapat menyimpan destinasi favorit ke dalam daftar bookmark pribadi.
 2. Pengguna dapat mengakses fitur untuk membuat beberapa playlist berdasarkan tema atau rencana perjalanan.
 3. Pengguna dapat mengatur agar playlist dapat menjadi public untuk dibagikan dengan teman maupun private untuk koleksi pribadi.
 
-### #JurnalJogjaku 
+### E. #JurnalJogjaku 
 1. Platform seperti Medium untuk membagikan pengalaman pribadi selama di Jogja.
 2. Pengguna dapat menulis cerita, tips, atau momen berkesan yang dialami.
 
 ## Daftar Modul
 
-### Modul Admin: Manajemen Produk
+### A. Modul Admin: Manajemen Produk
 1. Menambahkan Produk: Setelah memilih lokasi, admin dapat menambahkan produk-produk yang dijual di lokasi tersebut.
 2. Mengedit Produk: Admin dapat mengubah detail produk, seperti nama, deskripsi, harga, dan gambar.
 3. Menghapus Produk: Admin dapat menghapus produk yang tidak lagi tersedia atau ingin dihentikan penjualannya di lokasi tersebut.
 
-### Places
+### B. Places
 Setelah memilih lokasi, pengguna dapat melihat deskripsi singkat mengenai lokasi tersebut serta daftar produk yang dijual di lokasi tersebut.
 
 **Ulasan dan Komentar**
@@ -55,27 +55,27 @@ Setelah memilih lokasi, pengguna dapat melihat deskripsi singkat mengenai lokasi
 2. Pembayaran: Aplikasi menyediakan berbagai metode pembayaran yang aman dan mudah digunakan untuk menyelesaikan transaksi pembelian.
 3. Notifikasi Pembelian: Setelah melakukan pembelian, pengguna akan menerima notifikasi konfirmasi serta informasi pengiriman produk.
 
-### Itinerary
+### C. Itinerary
 1. Template Management: Menyediakan berbagai template itinerary yang dapat disesuaikan oleh pengguna.
 2. Destination Editing: Menambah, menghapus, atau mengubah destinasi dalam template itinerary yang dipilih jika user merasa kurang puas dengan template.
 3. Itinerary Sharing: Mengizinkan user untuk membagikan tautan  itinerary yang telah dibuat dengan user lain.
 
-### Collections
+### D. Collections
 1. Bookmark Management: Mengizinkan user menyimpan destinasi favorit mereka ke dalam sebuah koleksi di akun mereka.
 2. Playlist Creation: Untuk membuat, mengedit, dan menghapus playlist berdasarkan tema atau rencana perjalanan yang sesuai dengan preferensi user.
 3. Playlist Privacy: Mengatur playlist sebagai public atau private, sesuai keinginan user.
 4. Playlist Sharing: Memungkinkan user untuk membagikan playlist mereka dengan orang lain.
 
-### #JurnalJogjaku
+### E. #JurnalJogjaku
 1. Journal Posting: Mengizinkan pengguna menulis cerita, tips, dan pengalaman mereka dalam format thread (seperti Twitter).
 2. Comment: Pengguna lain dapat meninggalkan komentar pada cerita yang diposting.
 3. Journal Search: Untuk mencari cerita berdasarkan hashtag atau kata kunci tertentu.
 
 ## Role dan Peran Pengguna
-**Customer**
+### A. Customer
 Role ini merupakan role umum yang dapat mengakses modul 2 s.d. 5 di dalam web MlakuMlaku, yakni Places, Itinerary, Collections, dan #JurnalJogjaku. Role ini diperuntukkan bagi pengguna yang ingin menikmati layanan web dalam sudut pandang pembeli, yakni mengamati, membeli, dan berbagi. Batasan yang dimiliki role ini adalah tidak dapat menambahkan, menyunting, dan menghapus daftar produk yang tersedia pada web, juga memiliki batasan dalam mengakses page-page berbasis admin. Namun, registrasi untuk mengambil role ini lebih sederhana dengan hanya memasukkan data umum seperti username, email, dan password walaupun untuk pembelian produk tetap harus menyertakan data pengantaran.
 
-**Admin**
+### B. Admin
 Role ini merupakan role khusus yang dapat mengakses seluruh modul di dalam web MlakuMlaku. Role ini hanya diperuntukkan bagi webmaster yang mengatur deployment dari keseluruhan web termasuk menambahkan, menyunting, dan menghapus daftar produk yang didaftarkan. Selain itu, sebagai webmaster, role ini juga dapat melakukan modifikasi dan penambahan pada aspek modul yang lain sesuai kepentingan tertentu. Role ini hanya dimiliki oleh lima orang, yakni yang tertera namanya di paling atas.
 
 ## Sumber Dataset Awal
