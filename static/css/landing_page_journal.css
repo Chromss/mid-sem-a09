@@ -1,0 +1,950 @@
+.journal {
+    background-color: #f3f4f8;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .journal .div {
+    background-color: var(--primary-light);
+    height: 1740px;
+    overflow: hidden;
+    position: relative;
+    width: 1440px;
+  }
+  
+  .journal .navbar {
+    height: 36px;
+    left: 87px;
+    position: absolute;
+    top: 30px;
+    width: 1276px;
+  }
+  
+  .journal .text-wrapper {
+    color: var(--dark-text);
+    font-family: "Geist-Medium", Helvetica;
+    font-size: 16px;
+    font-weight: 500;
+    height: 19px;
+    left: 918px;
+    letter-spacing: -0.36px;
+    line-height: 19.2px;
+    position: absolute;
+    top: 9px;
+    white-space: nowrap;
+  }
+  
+  .journal .text-wrapper-2 {
+    color: var(--primary-red);
+    font-family: "Geist-SemiBold", Helvetica;
+    font-size: 16px;
+    font-weight: 600;
+    height: 19px;
+    left: 1057px;
+    letter-spacing: -0.36px;
+    line-height: 19.2px;
+    position: absolute;
+    top: 9px;
+    white-space: nowrap;
+  }
+  
+  .journal .text-wrapper-3 {
+    color: var(--dark-text);
+    font-family: "Geist-Medium", Helvetica;
+    font-size: 16px;
+    font-weight: 500;
+    height: 19px;
+    left: 1191px;
+    letter-spacing: -0.36px;
+    line-height: 19.2px;
+    position: absolute;
+    top: 9px;
+    white-space: nowrap;
+  }
+  
+  .journal .text-wrapper-4 {
+    color: var(--dark-text);
+    font-family: "Geist-Bold", Helvetica;
+    font-size: 16px;
+    font-weight: 700;
+    height: 19px;
+    left: 585px;
+    letter-spacing: -0.36px;
+    line-height: 19.2px;
+    position: absolute;
+    text-align: center;
+    top: 9px;
+    white-space: nowrap;
+  }
+  
+  .journal .text-wrapper-5 {
+    color: var(--dark-text);
+    font-family: "Geist-Medium", Helvetica;
+    font-size: 16px;
+    font-weight: 500;
+    height: 19px;
+    left: 166px;
+    letter-spacing: -0.36px;
+    line-height: 19.2px;
+    position: absolute;
+    top: 9px;
+    white-space: nowrap;
+  }
+  
+  .journal .button {
+    all: unset;
+    box-sizing: border-box;
+    height: 36px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 122px;
+  }
+  
+  .journal .overlap-group {
+    background-color: var(--blue-accent);
+    border-radius: 999px;
+    height: 36px;
+    position: relative;
+    width: 120px;
+  }
+  
+  .journal .text-wrapper-6 {
+    color: var(--light-text);
+    font-family: "Geist-SemiBold", Helvetica;
+    font-size: 16px;
+    font-weight: 600;
+    height: 17px;
+    left: 32px;
+    letter-spacing: -0.48px;
+    line-height: 16.8px;
+    position: absolute;
+    text-align: center;
+    top: 9px;
+    white-space: nowrap;
+  }
+  
+  .journal .overlap {
+    background-color: var(--primary-dark);
+    border-radius: 999px;
+    height: 54px;
+    left: 65px;
+    position: absolute;
+    top: 146px;
+    width: 840px;
+  }
+  
+  .journal .panel {
+    height: 36px;
+    left: 83px;
+    position: relative;
+    top: 9px;
+    width: 708px;
+  }
+  
+  .journal .div-wrapper {
+    background-color: var(--blue-accent);
+    border-radius: 999px;
+    height: 36px;
+    left: 600px;
+    position: absolute;
+    top: 0;
+    width: 100px;
+  }
+  
+  .journal .text-wrapper-7 {
+    color: var(--light-text);
+    font-family: "Geist-SemiBold", Helvetica;
+    font-size: 14px;
+    font-weight: 600;
+    height: 17px;
+    left: 26px;
+    letter-spacing: -0.42px;
+    line-height: 16.8px;
+    position: absolute;
+    text-align: right;
+    top: 10px;
+    white-space: nowrap;
+  }
+  
+  .journal .text-wrapper-8 {
+    color: var(--light-text);
+    font-family: "Geist-Medium", Helvetica;
+    font-size: 14px;
+    font-weight: 500;
+    height: 17px;
+    left: 0;
+    letter-spacing: -0.42px;
+    line-height: 16.8px;
+    position: absolute;
+    top: 10px;
+    white-space: nowrap;
+  }
+  
+  .journal .text-wrapper-9 {
+    color: var(--light-text);
+    font-family: "Geist-Medium", Helvetica;
+    font-size: 14px;
+    font-weight: 500;
+    height: 17px;
+    left: 120px;
+    letter-spacing: -0.42px;
+    line-height: 16.8px;
+    position: absolute;
+    top: 10px;
+    white-space: nowrap;
+  }
+  
+  .journal .text-wrapper-10 {
+    color: var(--light-text);
+    font-family: "Geist-Medium", Helvetica;
+    font-size: 14px;
+    font-weight: 500;
+    height: 17px;
+    left: 477px;
+    letter-spacing: -0.42px;
+    line-height: 16.8px;
+    position: absolute;
+    text-align: right;
+    top: 10px;
+    white-space: nowrap;
+  }
+  
+  .journal .footer {
+    background-color: transparent;
+    height: 80px;
+    left: 0;
+    position: absolute;
+    top: 1660px;
+    width: 1446px;
+  }
+  
+  .journal .overlap-2 {
+    background-color: var(--primary-dark);
+    height: 80px;
+    position: relative;
+    width: 1440px;
+  }
+  
+  .journal .p {
+    color: var(--light-text);
+    font-family: "Geist-Medium", Helvetica;
+    font-size: 16px;
+    font-weight: 500;
+    height: 19px;
+    left: 574px;
+    letter-spacing: -0.36px;
+    line-height: 19.2px;
+    position: absolute;
+    text-align: center;
+    top: 30px;
+    white-space: nowrap;
+  }
+  
+  .journal .text-wrapper-11 {
+    color: var(--light-text);
+    font-family: "Geist-Medium", Helvetica;
+    font-size: 16px;
+    font-weight: 500;
+    height: 19px;
+    left: 58px;
+    letter-spacing: -0.36px;
+    line-height: 19.2px;
+    position: absolute;
+    top: 30px;
+    white-space: nowrap;
+  }
+  
+  .journal .text-wrapper-12 {
+    color: var(--light-text);
+    font-family: "Geist-Medium", Helvetica;
+    font-size: 16px;
+    font-weight: 500;
+    height: 19px;
+    left: 1337px;
+    letter-spacing: -0.36px;
+    line-height: 19.2px;
+    position: absolute;
+    text-align: right;
+    top: 30px;
+    white-space: nowrap;
+  }
+  
+  .journal .overlap-3 {
+    background-color: var(--light-text);
+    border-radius: 24px;
+    box-shadow: 0px 0px 5px #282a3a26;
+    height: 1390px;
+    left: 65px;
+    position: absolute;
+    top: 215px;
+    width: 840px;
+  }
+  
+  .journal .line {
+    height: 1px;
+    left: 50px;
+    object-fit: cover;
+    position: absolute;
+    top: 230px;
+    width: 741px;
+  }
+  
+  .journal .post-card {
+    height: 163px;
+    left: 60px;
+    position: absolute;
+    top: 37px;
+    width: 728px;
+  }
+  
+  .journal .div-2 {
+    color: transparent;
+    font-family: "Geist-Medium", Helvetica;
+    font-size: 14px;
+    font-weight: 500;
+    height: 17px;
+    left: 48px;
+    letter-spacing: -0.32px;
+    line-height: 16.8px;
+    position: absolute;
+    top: 0;
+    white-space: nowrap;
+  }
+  
+  .journal .span {
+    color: #252525;
+    letter-spacing: -0.04px;
+  }
+  
+  .journal .text-wrapper-13 {
+    color: #6b6b6b;
+    letter-spacing: -0.04px;
+  }
+  
+  .journal .text-wrapper-14 {
+    color: var(--fade-text);
+    font-family: "Geist-Regular", Helvetica;
+    font-size: 12px;
+    font-weight: 400;
+    height: 14px;
+    left: 48px;
+    letter-spacing: -0.27px;
+    line-height: 14.4px;
+    position: absolute;
+    top: 17px;
+    white-space: nowrap;
+  }
+  
+  .journal .text-wrapper-15 {
+    color: var(--dark-text);
+    font-family: "Geist-Regular", Helvetica;
+    font-size: 18px;
+    font-weight: 400;
+    height: 22px;
+    left: 0;
+    letter-spacing: -0.41px;
+    line-height: 21.6px;
+    position: absolute;
+    top: 46px;
+    white-space: nowrap;
+  }
+  
+  .journal .text-wrapper-16 {
+    color: var(--dark-text);
+    font-family: "Geist-Light", Helvetica;
+    font-size: 14px;
+    font-weight: 300;
+    left: 0;
+    letter-spacing: -0.32px;
+    line-height: 16.8px;
+    position: absolute;
+    top: 74px;
+    width: 532px;
+  }
+  
+  .journal .profile {
+    height: 35px;
+    left: -2px;
+    position: absolute;
+    top: -1px;
+    width: 35px;
+  }
+  
+  .journal .rectangle {
+    height: 120px;
+    left: 550px;
+    object-fit: cover;
+    position: absolute;
+    top: 21px;
+    width: 170px;
+  }
+  
+  .journal .overlap-group-wrapper {
+    all: unset;
+    box-sizing: border-box;
+    height: 26px;
+    left: 0;
+    position: absolute;
+    top: 137px;
+    width: 77px;
+  }
+  
+  .journal .overlap-group-2 {
+    background-color: var(--green-accent);
+    border-radius: 999px;
+    height: 26px;
+    position: relative;
+    width: 75px;
+  }
+  
+  .journal .text-wrapper-17 {
+    color: var(--dark-text);
+    font-family: "Geist-Medium", Helvetica;
+    font-size: 12px;
+    font-weight: 500;
+    height: 14px;
+    left: 33px;
+    letter-spacing: -0.36px;
+    line-height: 14.4px;
+    position: absolute;
+    top: 6px;
+    white-space: nowrap;
+  }
+  
+  .journal .group {
+    height: 12px;
+    left: 17px;
+    position: absolute;
+    top: 7px;
+    width: 11px;
+  }
+  
+  .journal .overlap-wrapper {
+    all: unset;
+    box-sizing: border-box;
+    height: 26px;
+    left: 90px;
+    position: absolute;
+    top: 137px;
+    width: 77px;
+  }
+  
+  .journal .overlap-4 {
+    background-color: var(--light-text);
+    border: 0.75px solid;
+    border-color: var(--line);
+    border-radius: 999px;
+    height: 26px;
+    position: relative;
+    width: 75px;
+  }
+  
+  .journal .text-wrapper-18 {
+    color: var(--fade-text);
+    font-family: "Geist-Medium", Helvetica;
+    font-size: 12px;
+    font-weight: 500;
+    height: 14px;
+    left: 30px;
+    letter-spacing: -0.36px;
+    line-height: 14.4px;
+    position: absolute;
+    top: 5px;
+    white-space: nowrap;
+  }
+  
+  .journal .vector {
+    height: 10px;
+    left: 15px;
+    position: absolute;
+    top: 7px;
+    width: 9px;
+  }
+  
+  .journal .button-2 {
+    all: unset;
+    box-sizing: border-box;
+    height: 26px;
+    left: 180px;
+    position: absolute;
+    top: 137px;
+    width: 132px;
+  }
+  
+  .journal .overlap-5 {
+    background-color: var(--light-text);
+    border: 0.75px solid;
+    border-color: var(--line);
+    border-radius: 999px;
+    height: 26px;
+    position: relative;
+    width: 130px;
+  }
+  
+  .journal .text-wrapper-19 {
+    color: var(--fade-text);
+    font-family: "Geist-Medium", Helvetica;
+    font-size: 12px;
+    font-weight: 500;
+    height: 14px;
+    left: 32px;
+    letter-spacing: -0.36px;
+    line-height: 14.4px;
+    position: absolute;
+    top: 5px;
+    white-space: nowrap;
+  }
+  
+  .journal .img {
+    height: 10px;
+    left: 17px;
+    position: absolute;
+    top: 7px;
+    width: 10px;
+  }
+  
+  .journal .line-2 {
+    height: 1px;
+    left: 50px;
+    object-fit: cover;
+    position: absolute;
+    top: 452px;
+    width: 741px;
+  }
+  
+  .journal .post-card-2 {
+    height: 163px;
+    left: 60px;
+    position: absolute;
+    top: 260px;
+    width: 728px;
+  }
+  
+  .journal .text-wrapper-20 {
+    color: var(--dark-text);
+    font-family: "Geist-Medium", Helvetica;
+    font-size: 12px;
+    font-weight: 500;
+    height: 14px;
+    left: 34px;
+    letter-spacing: -0.36px;
+    line-height: 14.4px;
+    position: absolute;
+    top: 6px;
+    white-space: nowrap;
+  }
+  
+  .journal .group-2 {
+    height: 12px;
+    left: 18px;
+    position: absolute;
+    top: 7px;
+    width: 11px;
+  }
+  
+  .journal .line-3 {
+    height: 1px;
+    left: 50px;
+    object-fit: cover;
+    position: absolute;
+    top: 676px;
+    width: 741px;
+  }
+  
+  .journal .post-card-3 {
+    height: 163px;
+    left: 60px;
+    position: absolute;
+    top: 483px;
+    width: 728px;
+  }
+  
+  .journal .line-4 {
+    height: 1px;
+    left: 50px;
+    object-fit: cover;
+    position: absolute;
+    top: 898px;
+    width: 741px;
+  }
+  
+  .journal .post-card-4 {
+    height: 163px;
+    left: 60px;
+    position: absolute;
+    top: 706px;
+    width: 728px;
+  }
+  
+  .journal .line-5 {
+    height: 1px;
+    left: 50px;
+    object-fit: cover;
+    position: absolute;
+    top: 1122px;
+    width: 741px;
+  }
+  
+  .journal .post-card-5 {
+    height: 163px;
+    left: 60px;
+    position: absolute;
+    top: 929px;
+    width: 728px;
+  }
+  
+  .journal .post-card-6 {
+    height: 163px;
+    left: 60px;
+    position: absolute;
+    top: 1152px;
+    width: 728px;
+  }
+  
+  .journal .text-wrapper-21 {
+    color: var(--dark-text);
+    font-family: "Geist-SemiBold", Helvetica;
+    font-size: 28px;
+    font-weight: 600;
+    height: 29px;
+    left: 960px;
+    letter-spacing: -0.63px;
+    line-height: 29.4px;
+    position: absolute;
+    top: 150px;
+    white-space: nowrap;
+  }
+  
+  .journal .text-wrapper-22 {
+    color: var(--dark-text);
+    font-family: "Geist-SemiBold", Helvetica;
+    font-size: 28px;
+    font-weight: 600;
+    height: 29px;
+    left: 960px;
+    letter-spacing: -0.63px;
+    line-height: 29.4px;
+    position: absolute;
+    top: 565px;
+    white-space: nowrap;
+  }
+  
+  .journal .text-wrapper-23 {
+    color: var(--fade-text);
+    font-family: "Geist-Regular", Helvetica;
+    font-size: 16px;
+    font-weight: 400;
+    height: 17px;
+    left: 960px;
+    letter-spacing: -0.36px;
+    line-height: 16.8px;
+    position: absolute;
+    top: 182px;
+    white-space: nowrap;
+  }
+  
+  .journal .text-wrapper-24 {
+    color: var(--fade-text);
+    font-family: "Geist-Regular", Helvetica;
+    font-size: 16px;
+    font-weight: 400;
+    height: 17px;
+    left: 960px;
+    letter-spacing: -0.36px;
+    line-height: 16.8px;
+    position: absolute;
+    top: 597px;
+    white-space: nowrap;
+  }
+  
+  .journal .overlap-6 {
+    background-color: var(--light-text);
+    border-radius: 24px;
+    box-shadow: 0px 0px 5px #282a3a26;
+    height: 319px;
+    left: 960px;
+    position: absolute;
+    top: 215px;
+    width: 415px;
+  }
+  
+  .journal .line-6 {
+    height: 1px;
+    left: 122px;
+    object-fit: cover;
+    position: absolute;
+    top: 110px;
+    width: 264px;
+  }
+  
+  .journal .line-7 {
+    height: 1px;
+    left: 122px;
+    object-fit: cover;
+    position: absolute;
+    top: 210px;
+    width: 264px;
+  }
+  
+  .journal .top-journal {
+    height: 59px;
+    left: 127px;
+    position: absolute;
+    top: 31px;
+    width: 257px;
+  }
+  
+  .journal .text-wrapper-25 {
+    color: var(--fade-text);
+    font-family: "Geist-Regular", Helvetica;
+    font-size: 14px;
+    font-weight: 400;
+    height: 15px;
+    left: 0;
+    letter-spacing: -0.32px;
+    line-height: 14.7px;
+    position: absolute;
+    top: 44px;
+    white-space: nowrap;
+  }
+  
+  .journal .text-wrapper-26 {
+    color: var(--dark-text);
+    font-family: "Geist-Regular", Helvetica;
+    font-size: 16px;
+    font-weight: 400;
+    left: 0;
+    letter-spacing: -0.36px;
+    line-height: 19.2px;
+    position: absolute;
+    top: 0;
+    width: 253px;
+  }
+  
+  .journal .top-journal-2 {
+    height: 59px;
+    left: 127px;
+    position: absolute;
+    top: 130px;
+    width: 257px;
+  }
+  
+  .journal .top-journal-3 {
+    height: 59px;
+    left: 127px;
+    position: absolute;
+    top: 229px;
+    width: 257px;
+  }
+  
+  .journal .label {
+    height: 24px;
+    left: 30px;
+    position: absolute;
+    top: 50px;
+    width: 77px;
+  }
+  
+  .journal .overlap-7 {
+    background-color: var(--green-accent);
+    border-radius: 999px;
+    height: 24px;
+    position: relative;
+    width: 75px;
+  }
+  
+  .journal .text-wrapper-27 {
+    color: var(--dark-text);
+    font-family: "Geist-Medium", Helvetica;
+    font-size: 12px;
+    font-weight: 500;
+    height: 14px;
+    left: 33px;
+    letter-spacing: -0.36px;
+    line-height: 14.4px;
+    position: absolute;
+    top: 5px;
+    white-space: nowrap;
+  }
+  
+  .journal .vector-2 {
+    height: 12px;
+    left: 15px;
+    position: absolute;
+    top: 6px;
+    width: 13px;
+  }
+  
+  .journal .label-2 {
+    height: 24px;
+    left: 30px;
+    position: absolute;
+    top: 149px;
+    width: 77px;
+  }
+  
+  .journal .text-wrapper-28 {
+    color: var(--dark-text);
+    font-family: "Geist-Medium", Helvetica;
+    font-size: 12px;
+    font-weight: 500;
+    height: 14px;
+    left: 31px;
+    letter-spacing: -0.36px;
+    line-height: 14.4px;
+    position: absolute;
+    top: 5px;
+    white-space: nowrap;
+  }
+  
+  .journal .vector-3 {
+    height: 12px;
+    left: 13px;
+    position: absolute;
+    top: 6px;
+    width: 13px;
+  }
+  
+  .journal .label-3 {
+    height: 24px;
+    left: 30px;
+    position: absolute;
+    top: 248px;
+    width: 77px;
+  }
+  
+  .journal .overlap-8 {
+    background-color: var(--light-text);
+    border-radius: 24px;
+    box-shadow: 0px 0px 5px #282a3a26;
+    height: 517px;
+    left: 960px;
+    position: absolute;
+    top: 630px;
+    width: 415px;
+  }
+  
+  .journal .line-8 {
+    height: 1px;
+    left: 30px;
+    object-fit: cover;
+    position: absolute;
+    top: 108px;
+    width: 356px;
+  }
+  
+  .journal .line-9 {
+    height: 1px;
+    left: 30px;
+    object-fit: cover;
+    position: absolute;
+    top: 208px;
+    width: 356px;
+  }
+  
+  .journal .line-10 {
+    height: 1px;
+    left: 30px;
+    object-fit: cover;
+    position: absolute;
+    top: 308px;
+    width: 356px;
+  }
+  
+  .journal .line-11 {
+    height: 1px;
+    left: 30px;
+    object-fit: cover;
+    position: absolute;
+    top: 408px;
+    width: 356px;
+  }
+  
+  .journal .top-journal-4 {
+    height: 59px;
+    left: 35px;
+    position: absolute;
+    top: 30px;
+    width: 257px;
+  }
+  
+  .journal .top-journal-5 {
+    height: 59px;
+    left: 35px;
+    position: absolute;
+    top: 129px;
+    width: 257px;
+  }
+  
+  .journal .top-journal-6 {
+    height: 59px;
+    left: 35px;
+    position: absolute;
+    top: 228px;
+    width: 257px;
+  }
+  
+  .journal .top-journal-7 {
+    height: 59px;
+    left: 35px;
+    position: absolute;
+    top: 328px;
+    width: 257px;
+  }
+  
+  .journal .top-journal-8 {
+    height: 59px;
+    left: 35px;
+    position: absolute;
+    top: 428px;
+    width: 257px;
+  }
+  
+  .journal .rectangle-2 {
+    height: 55px;
+    left: 300px;
+    object-fit: cover;
+    position: absolute;
+    top: 30px;
+    width: 80px;
+  }
+  
+  .journal .rectangle-3 {
+    height: 55px;
+    left: 300px;
+    object-fit: cover;
+    position: absolute;
+    top: 129px;
+    width: 80px;
+  }
+  
+  .journal .rectangle-4 {
+    height: 55px;
+    left: 300px;
+    object-fit: cover;
+    position: absolute;
+    top: 228px;
+    width: 80px;
+  }
+  
+  .journal .rectangle-5 {
+    height: 55px;
+    left: 300px;
+    object-fit: cover;
+    position: absolute;
+    top: 328px;
+    width: 80px;
+  }
+  
+  .journal .rectangle-6 {
+    height: 55px;
+    left: 300px;
+    object-fit: cover;
+    position: absolute;
+    top: 428px;
+    width: 80px;
+  }
+  

@@ -1,0 +1,42 @@
+<!-- spesific_journal.html -->
+{% extends 'base.html' %}
+
+{% block title %}{{ journal.title }} - MlakuMlaku{% endblock %}
+
+{% block content %}
+<div class="specific-journal">
+    <nav>
+        <a href="{% url 'journal' %}">Back to Journals</a>
+        <h2>MlakuMlaku Journal</h2>
+    </nav>
+
+    <article class="journal-full">
+        <h1>{{ journal.title }}</h1>
+        <div class="journal-meta">
+            <img src="{{ journal.author.avatar_url }}" alt="{{ journal.author.name }}">
+            <span>{{ journal.author.name }}</span>
+            <span>{{ journal.date }}</span>
+        </div>
+        <div class="journal-actions">
+            <button class="btn btn-like">{{ journal.likes }} Like</button>
+            <button class="btn btn-save">Save</button>
+        </div>
+
+        <img src="{{ journal.cover_image }}" alt="{{ journal.title }}" class="journal-cover">
+
+        <div class="journal-content">
+            {{ journal.content|safe }}
+        </div>
+    </article>
+
+    <section class="upcoming-next">
+        <h3>Upcoming Next</h3>
+        <!-- List upcoming journal entries -->
+    </section>
+
+    <section class="journals-by-author">
+        <h3>Journals by {{ journal.author.name }}</h3>
+        <!-- List other journals by the same author -->
+    </section>
+</div>
+{% endblock %}

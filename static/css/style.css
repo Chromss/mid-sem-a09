@@ -1,0 +1,12 @@
+.journal-container {
+    width: 80%;
+    margin: auto;
+}
+.journal-card {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin: 10px 0;
+}
+.create-button {
+    text-align: right;
+}
