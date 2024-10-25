@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{% static 'css/landing_page_journal.css' %}">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Beranda Jurnal</title>
+</head>
+<body class="journal">
+    <div class="div">
+        <div class="navbar">
+            <div class="text-wrapper" onclick="location.href='{% url 'main:home' %}'">Home</div>
+            <div class="text-wrapper-2">Publish</div>
+            <div class="text-wrapper-3" onclick="location.href='{% url 'main:journal_history' %}'">History</div>
+            <div class="text-wrapper-4">Journal</div>
+            <div class="text-wrapper-5">Search</div>
+            <button class="button" onclick="location.href='{% url 'main:create_journal' %}'"> 
+                <div class="overlap-group">
+                    <div class="text-wrapper-6">Publish</div>
+                </div>
+            </button>
+        </div>
+        <div class="overlap">
+            <!-- tes tes tes -->
+            <div class="panel">
+                <div class="div-wrapper">
+                    <div class="text-wrapper-7">History</div>
+                </div>
+                <div class="text-wrapper-8">Search</div>
+                <div class="text-wrapper-9">Journal</div>
+                <div class="text-wrapper-10">Home</div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="overlap-2">
+                <p class="p">Footer Content</p>
+                <div class="text-wrapper-11">Left</div>
+                <div class="text-wrapper-12">Right</div>
+            </div>
+        </div>
+        <div class="overlap-3">
+            <div class="line"></div>
+            {% for journal in journals %}
+            <div class="post-card">
+                <div class="div-2">
+                    <span class="span">{{ journal.title }}</span>
+                    <span class="text-wrapper-13"> - {{ journal.created_at }}</span>
+                </div>
+                <div class="text-wrapper-14">{{ journal.content }}</div>
+                <div class="text-wrapper-15">{{ journal.author.username }}</div>
+                <div class="text-wrapper-16">{{ journal.description }}</div>
+                <img class="profile" src="{% static 'images/profile.png' %}" alt="Profile">
+                <img class="rectangle" src="{% static 'images/rectangle.png' %}" alt="Rectangle">
+                <div class="overlap-group-wrapper">
+                    <div class="overlap-group-2">
+                        <div class="text-wrapper-17">Like</div>
+                        <div class="group"></div>
+                    </div>
+                </div>
+                <div class="overlap-wrapper">
+                    <div class="overlap-4">
+                        <div class="text-wrapper-18">Save</div>
+                        <div class="vector"></div>
+                    </div>
+                </div>
+                <button class="button-2" onclick="location.href='{% url 'main:save_journal' journal.id %}'">
+                    <div class="overlap-5">
+                        <div class="text-wrapper-19">Save</div>
+                        <div class="img"></div>
+                    </div>
+                </button>
+            </div>
+            <div class="line-2"></div>
+            {% endfor %}
+        </div>
+        <div class="text-wrapper-21">Top Journals</div>
+        <div class="text-wrapper-22">Recent Journals</div>
+        <div class="text-wrapper-23">Top Journals Description</div>
+        <div class="text-wrapper-24">Recent Journals Description</div>
+        <div class="overlap-6">
+            <div class="line-6"></div>
+            <div class="line-7"></div>
+            <div class="top-journal">
+                <div class="text-wrapper-25">Top Journal 1</div>
+                <div class="text-wrapper-26">Description</div>
+            </div>
+            <div class="top-journal-2">
+                <div class="text-wrapper-25">Top Journal 2</div>
+                <div class="text-wrapper-26">Description</div>
+            </div>
+            <div class="top-journal-3">
+                <div class="text-wrapper-25">Top Journal 3</div>
+                <div class="text-wrapper-26">Description</div>
+            </div>
+            <div class="label">
+                <div class="overlap-7">
+                    <div class="text-wrapper-27">Label</div>
+                    <div class="vector-2"></div>
+                </div>
+            </div>
+            <div class="label-2">
+                <div class="overlap-7">
+                    <div class="text-wrapper-28">Label</div>
+                    <div class="vector-3"></div>
+                </div>
+            </div>
+            <div class="label-3">
+                <div class="overlap-7">
+                    <div class="text-wrapper-28">Label</div>
+                    <div class="vector-3"></div>
+                </div>
+            </div>
+        </div>
+        <div class="overlap-8">
+            <div class="line-8"></div>
+            <div class="line-9"></div>
+            <div class="line-10"></div>
+            <div class="line-11"></div>
+            <div class="top-journal-4">
+                <div class="text-wrapper-25">Top Journal 4</div>
+                <div class="text-wrapper-26">Description</div>
+            </div>
+            <div class="top-journal-5">
+                <div class="text-wrapper-25">Top Journal 5</div>
+                <div class="text-wrapper-26">Description</div>
+            </div>
+            <div class="top-journal-6">
+                <div class="text-wrapper-25">Top Journal 6</div>
+                <div class="text-wrapper-26">Description</div>
+            </div>
+            <div class="top-journal-7">
+                <div class="text-wrapper-25">Top Journal 7</div>
+                <div class="text-wrapper-26">Description</div>
+            </div>
+            <div class="top-journal-8">
+                <div class="text-wrapper-25">Top Journal 8</div>
+                <div class="text-wrapper-26">Description</div>
+            </div>
+            <img class="rectangle-2" src="{% static 'images/rectangle.png' %}" alt="Rectangle">
+            <img class="rectangle-3" src="{% static 'images/rectangle.png' %}" alt="Rectangle">
+            <img class="rectangle-4" src="{% static 'images/rectangle.png' %}" alt="Rectangle">
+            <img class="rectangle-5" src="{% static 'images/rectangle.png' %}" alt="Rectangle">
+            <img class="rectangle-6" src="{% static 'images/rectangle.png' %}" alt="Rectangle">
+        </div>
+    </div>
+</body>
+</html>
