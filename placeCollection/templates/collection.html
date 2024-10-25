@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/collections.css' %}">
+
+{% block content %}
+<div class="collections-page">
+    <!-- Your Collections Section -->
+    <section class="section-container">
+        <div class="section-header">
+            <div class="header-content">
+                <h2>Your Collections</h2>
+                <p>Easily browse and organize your favorite destinations in personalized tour albums.</p>
+            </div>
+            <div class="header-actions">
+                <a href="{% url 'show_collection' %}" class="show-all">Show all</a>
+                <button class="create-btn">Create Collection</button>
+            </div>
+        </div>
+
+        <div class="collections-grid">
+            {% for collection in collections %}
+            <div class="collection-card">
+                <div class="card-image">
+                    <img src="{% static 'images/a.jpg' %}" alt="Collection Image">
+                </div>
+                <div class="card-content">
+                    <h3>{{ collection.title }}</h3>
+                    <div class="card-meta">
+                        <span>Created {{ collection.created_at|date:"M d, Y" }}</span>
+                        <span class="dot">•</span>
+                        <span>{{ collection.item_count }} items</span>
+                    </div>
+                    <div class="tags">
+                        {% for tag in collection.tags.all %}
+                            <span>{{ tag.name }}</span>
+                        {% endfor %}
+                        {% if collection.tags.count > 5 %}
+                            <span class="more-tag">+{{ collection.tags.count|add:"-5" }} more</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <p>No collections found.</p>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- Traveler Favorites Section -->
+    <section class="section-container">
+        <div class="section-header">
+            <div class="header-content">
+                <h2>Traveler Favorites</h2>
+                <p>Unlock inspiration by exploring the favorite spots of travelers around Yogyakarta.</p>
+            </div>
+            <div class="header-actions">
+                <a href="{% url 'show_all_collections' %}" class="show-all">Show all</a>
+                <button class="create-btn">Create Collection</button>
+            </div>
+        </div>
+
+        <div class="collections-grid">
+            {% for favorite in traveler_favorites %}
+            <div class="collection-card">
+                <div class="card-image">
+                    <img src="{% static 'images/b.jpg' %}" alt="Collection Image">
+                </div>
+                <div class="card-content">
+                    <h3>{{ favorite.title }}</h3>
+                    <div class="card-meta">
+                        <span>{{ favorite.owner.username }}</span>
+                        <span class="dot">•</span>
+                        <span>{{ favorite.likes }} likes</span>
+                        <span class="dot">•</span>
+                        <span>{{ favorite.item_count }} items</span>
+                    </div>
+                    <div class="tags">
+                        {% for tag in favorite.tags.all %}
+                            <span>{{ tag.name }}</span>
+                        {% endfor %}
+                        {% if favorite.tags.count > 5 %}
+                            <span class="more-tag">+{{ favorite.tags.count|add:"-5" }} more</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <p>No traveler favorites found.</p>
+            {% endfor %}
+        </div>
+    </section>
+</div>
+{% endblock %}
