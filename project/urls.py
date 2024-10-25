@@ -6,5 +6,4 @@ urlpatterns = [
     path('', include('main.urls')),
     path('placecollections/', include('placecollections.urls', namespace='placecollections')),
     path('', include('placeCollection.urls', namespace='placeCollection')),
-
 ]
