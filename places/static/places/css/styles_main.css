@@ -40,6 +40,7 @@ body {
     height: 100%;
     object-fit: cover;
     border-radius: 10px;
+    max-height: 400px;
 }
 
 /* Banner Overlay */
@@ -48,11 +49,15 @@ body {
     bottom: -56px;
     left: 50%;
     transform: translateX(-50%);
+    width: 100%;
+    max-width: 900px;
+    padding: 0 10px;
+    box-sizing: border-box;
 }
 
 /* Rounded Rectangle Section */
 .rounded-rectangle {
-    width: 900px;
+    width: 100%;
     background-color: #F7F7F7;
     border-radius: 20px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -67,7 +72,6 @@ body {
 
 @media (max-width: 1024px) {
     .rounded-rectangle {
-        width: 100%;
         padding: 15px 20px;
     }
 }
@@ -88,18 +92,20 @@ body {
 .rectangle-section, .label-section {
     display: flex;
     width: 100%;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
     gap: 15px;
     margin-bottom: 10px;
+    flex-wrap: wrap;
 }
 
 .info-item, .label-item {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    flex: 1;
+    flex: 1 1 30%;
     position: relative;
+    min-width: 150px;
 }
 
 .info-item:not(:last-child)::after, 
@@ -113,7 +119,6 @@ body {
     background-color: #A1A1A1;
 }
 
-/* Section Text Styles */
 .section-text {
     color: #252525;
     font-size: 20px;
@@ -225,6 +230,18 @@ body {
     margin-bottom: 10px;
 }
 
+@media (max-width: 768px) {
+    .section-title {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    .section-title {
+        font-size: 16px;
+    }
+}
+
 /* Overview Content */
 .overview-content {
     color: #252525;
@@ -233,10 +250,22 @@ body {
     text-align: justify;
 }
 
+@media (max-width: 768px) {
+    .overview-content {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .overview-content {
+        font-size: 12px;
+    }
+}
+
 /* Latest Review Section */
 .latest-review-section {
     margin-top: 40px;
-    position: relative; /* Added */
+    position: relative; /* Enables sticky positioning */
 }
 
 /* Reviews Container */
@@ -245,6 +274,12 @@ body {
     overflow-y: auto;
     padding-right: 10px;
     margin-bottom: 10px; /* Space between reviews and write-review */
+}
+
+@media (max-width: 768px) {
+    .reviews-container {
+        max-height: none;
+    }
 }
 
 /* Review Item */
@@ -263,6 +298,7 @@ body {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
+    flex-wrap: wrap;
 }
 
 /* Profile Picture */
@@ -271,6 +307,15 @@ body {
     height: 50px;
     border-radius: 50%;
     margin-right: 15px;
+    object-fit: cover;
+}
+
+@media (max-width: 480px) {
+    .profile-pic {
+        width: 40px;
+        height: 40px;
+        margin-right: 10px;
+    }
 }
 
 /* Review User Info */
@@ -291,16 +336,33 @@ body {
     font-size: 12px;
 }
 
+@media (max-width: 480px) {
+    .username {
+        font-size: 12px;
+    }
+    
+    .review-date {
+        font-size: 10px;
+    }
+}
+
 /* Review Stars */
 .review-stars {
     display: flex;
     margin-left: auto;
+    gap: 2px;
 }
 
 .star-icon {
     width: 20px;
     height: 20px;
-    margin-left: 2px;
+}
+
+@media (max-width: 480px) {
+    .star-icon {
+        width: 16px;
+        height: 16px;
+    }
 }
 
 /* Review Content */
@@ -310,15 +372,28 @@ body {
     line-height: 160%;
 }
 
+@media (max-width: 480px) {
+    .review-content {
+        font-size: 12px;
+    }
+}
+
 /* Write Your Review */
 .write-review-container {
-    position: sticky; /* Added */
-    bottom: 0; /* Added */
+    position: sticky; /* Keeps the form visible */
+    bottom: 0; /* Sticks to the bottom */
     background-color: #252525;
     border-radius: 10px;
     padding: 10px;
     box-sizing: border-box;
-    z-index: 1; /* Added */
+    z-index: 1; /* Ensures it stays above other elements */
+}
+
+@media (max-width: 768px) {
+    .write-review-container {
+        position: static;
+        border-radius: 0;
+    }
 }
 
 /* Write Review Textarea */
@@ -341,6 +416,13 @@ body {
     color: #F7F7F7;
 }
 
+@media (max-width: 480px) {
+    .write-review-container textarea {
+        min-height: 36px;
+        font-size: 12px;
+    }
+}
+
 /* Review Actions */
 .review-actions {
     display: flex;
@@ -348,6 +430,15 @@ body {
     align-items: center;
     width: 100%;
     margin-top: 10px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+@media (max-width: 480px) {
+    .review-actions {
+        flex-direction: column;
+        align-items: flex-start;
+    }
 }
 
 /* Star Rating */
@@ -363,6 +454,13 @@ body {
     margin-right: 5px;
 }
 
+@media (max-width: 480px) {
+    .star-rating img {
+        width: 16px;
+        height: 16px;
+    }
+}
+
 /* Send Button */
 .send-btn {
     background: none;
@@ -374,6 +472,13 @@ body {
 .send-btn img {
     width: 30px;
     height: 30px;
+}
+
+@media (max-width: 480px) {
+    .send-btn img {
+        width: 24px;
+        height: 24px;
+    }
 }
 
 /* Login Prompt */
@@ -391,45 +496,134 @@ body {
     text-decoration: underline;
 }
 
+@media (max-width: 480px) {
+    .login-prompt {
+        font-size: 12px;
+    }
+}
+
 /* Souvenir List Styles */
 .souvenir-list {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
+    justify-content: flex-start; /* Align items to the left */
 }
 
+@media (max-width: 480px) {
+    .souvenir-list {
+        gap: 10px;
+    }
+}
+
+/* Souvenir Item */
 .souvenir-item {
+    position: relative; /* Enables absolute positioning of children */
     background-color: #FFFFFF;
     border-radius: 10px;
     width: 140px;
-    /* Removed fixed height to allow dynamic sizing */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    overflow: visible; /* Changed from hidden to visible to allow buy button to protrude */
+    overflow: visible; /* Changed from hidden to visible to allow "Out of Stock" label outside */
     display: flex;
     flex-direction: column;
-    position: relative; /* Added for absolute positioning of buy button */
 }
 
+@media (max-width: 768px) {
+    .souvenir-item {
+        width: 45%;
+    }
+}
+
+@media (max-width: 480px) {
+    .souvenir-item {
+        width: 100%;
+    }
+}
+
+/* Souvenir Image */
 .souvenir-image {
-    width: 140px;
-    height: 140px;
+    width: 100%;
+    height: auto;
     object-fit: cover;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
+    display: block; /* Ensures the image takes up full width */
+    z-index: 1; /* Lower z-index to stay below the Buy Button */
+    position: relative; /* Create stacking context */
 }
 
-.souvenir-description {
-    background-color: #282A3A; /* Updated background color */
-    padding: 10px;
-    /* Removed flex-grow and justify-content to allow natural stacking */
+/* Buy Button Styles */
+.buy-button {
+    position: absolute;
+    top: -35px; /* Positioned within the image area */
+    right: -40px;
+    width: 100px; /* Adjust size as needed */
+    height: 100px;
+    border: none;
+    cursor: pointer;
+    z-index: 3; /* Ensure it's above the image and description */
     display: flex;
-    flex-direction: column;
-    /* Removed justify-content: space-between; */
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.3s ease;
+    background: none; /* Remove any background */
+    padding: 0; /* Remove any padding */
+    border-radius: 50%; /* Circular button */
+}
+
+.buy-button img {
+    width: 60%;
+    height: 60%;
+}
+
+.buy-button:hover {
+    opacity: 1; /* Maintain hover effect */
+}
+
+.buy-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5; /* Dim the button to indicate it's disabled */
+}
+
+.buy-button:disabled img {
+    filter: grayscale(100%); /* Optional: make the image grayscale */
+}
+
+/* "Out of Stock" Label */
+.out-of-stock-label {
+    position: absolute;
+    top: 50%; /* Position at the vertical center */
+    left: 50%; /* Position at the horizontal center */
+    transform: translate(-50%, -50%); /* Offset to truly center */
+    background-color: rgba(255, 0, 0, 0.8);
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-size: 14px;
+    white-space: nowrap;
+    z-index: 4; /* Ensure it's above all */
+    text-align: center;
+}
+
+/* Souvenir Description */
+.souvenir-description {
+    position: absolute; /* Position absolutely within the parent */
+    bottom: 0; /* Align to the bottom */
+    left: 0;
+    width: 100%;
+    background: rgba(40, 42, 58, 0.8); /* Semi-transparent background for readability */
+    color: #FFFFFF;
+    padding: 10px;
+    box-sizing: border-box;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
-    color: #FFFFFF; /* Set text color to white */
-    font-family: 'Geist', sans-serif; /* Ensure Geist font is applied */
-    text-align: left; /* Align text to the left */
+    z-index: 2; /* Lower than Buy Button */
+}
+
+@media (max-width: 480px) {
+    .souvenir-description {
+        padding: 8px;
+    }
 }
 
 .souvenir-name {
@@ -449,6 +643,7 @@ body {
 }
 
 .souvenir-stock {
+    display: block; /* Ensure it starts on a new line */
     color: #FFFFFF; /* Set text color to white */
     font-size: 14px; /* Increased font size for better readability */
     text-align: left;
@@ -458,61 +653,10 @@ body {
     font-weight: bold; /* Ensures the stock amount is bold */
 }
 
-/* Buy Button Styles */
-.buy-button {
-    position: absolute;
-    top: -35px; /* Adjusted positioning for better overlap */
-    right: -40px; /* Adjusted positioning for better overlap */
-    width: 100px;
-    height: 100px;
-    border: none;
-    cursor: pointer;
-    z-index: 2; /* Ensure it appears above other elements */
-    display: flex;
-    align-items: center; /* Center the image vertically */
-    justify-content: center; /* Center the image horizontally */
-    transition: opacity 0.3s ease;
-    background: none; /* Remove any background */
-    padding: 0; /* Remove any padding */
-}
-
-.buy-button img {
-    width: 60%;
-    height: 60%;
-}
-
-.buy-button:hover {
-    opacity: 1; /* Simple hover effect without glow */
-}
-
-/* Disabled Buy Button Styles */
-.buy-button:disabled {
-    cursor: not-allowed;
-    opacity: 0.5; /* Dim the button to indicate it's disabled */
-}
-
-.buy-button:disabled img {
-    filter: grayscale(100%); /* Optional: make the image grayscale */
-}
-
-/* Optional: Add a tooltip or message for disabled buttons */
-.buy-button:disabled::after {
-    content: "Out of Stock";
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: rgba(0,0,0,0.7);
-    color: #fff;
-    padding: 2px 5px;
-    border-radius: 3px;
-    font-size: 12px;
-    white-space: nowrap;
-}
-/* Optional Hover Effect */
+/* Optional Hover Effect for Description */
 .souvenir-item:hover .souvenir-description {
-    background-color: #3A3F58; /* Slightly lighter shade on hover */
-    transition: background-color 0.3s ease;
+    background: rgba(40, 42, 58, 0.9); /* Slightly more opaque on hover */
+    transition: background 0.3s ease;
 }
 
 /* Scrollbar Styling */
@@ -569,7 +713,7 @@ body {
     }
 
     .souvenir-list {
-        justify-content: center;
+        justify-content: flex-start; /* Ensure alignment to the left */
     }
 
     .latest-review-section {
@@ -676,7 +820,6 @@ body {
     box-sizing: border-box;
 }
 
-/* Edit Actions */
 .edit-actions {
     display: flex;
     justify-content: space-between;
@@ -692,7 +835,6 @@ body {
     margin-right: 5px;
 }
 
-/* Edit Buttons Container */
 .edit-buttons {
     display: flex;
     gap: 10px;
@@ -837,6 +979,7 @@ body.modal-open {
     visibility: visible;
 }
 
+/* Responsive Add to Collection Button */
 @media (max-width: 768px) {
     .add-to-collection-btn {
         font-size: 14px;
@@ -853,4 +996,101 @@ body.modal-open {
         font-size: 12px;
         padding: 8px 15px;
     }
+}
+
+/* Additional Styling for Accessibility and UX */
+
+/* Star Hover Effect */
+.star-rating img:hover {
+    transform: scale(1.2);
+    transition: transform 0.2s;
+}
+
+/* Send Button Hover Effect */
+.send-btn img:hover {
+    opacity: 0.8;
+    transition: opacity 0.2s;
+}
+
+.comment-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: auto; /* Allows the actions to align at the bottom */
+    justify-content: flex-end; /* Aligns buttons to the right */
+}
+
+.edit-btn, .delete-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.edit-btn img, .delete-btn img {
+    width: 24px;
+    height: 24px;
+    transition: opacity 0.2s;
+}
+
+/* Hover Effect for Edit and Delete Buttons */
+.edit-btn img:hover, .delete-btn img:hover {
+    opacity: 0.8;
+    transition: opacity 0.2s;
+}
+
+.edit-comment-form {
+    margin-top: 10px;
+}
+
+.edit-comment-textarea {
+    width: 100%;
+    min-height: 44px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+    font-family: 'Geist', sans-serif;
+    font-size: 14px;
+    resize: none;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.edit-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 5px;
+}
+
+/* Star Rating in Edit Form */
+.edit-star {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.edit-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+/* Send and Cancel Edit Buttons */
+.send-edit-btn, .cancel-edit-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.send-edit-btn img, .cancel-edit-btn img {
+    width: 30px;
+    height: 30px;
+    transition: opacity 0.2s;
+}
+
+/* Hover Effects */
+.send-edit-btn img:hover, .cancel-edit-btn img:hover {
+    opacity: 0.8;
+    transition: opacity 0.2s;
 }

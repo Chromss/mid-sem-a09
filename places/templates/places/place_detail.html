@@ -45,7 +45,7 @@
                     <!-- Add to Collection Button Section -->
                     <div class="add-to-collection-section">
                         {% if user.is_authenticated %}
-                            <button class="add-to-collection-btn">Add to Collection</button>
+                            <button class="add-to-collection-btn" aria-label="Add {{ place.name }} to your collection">Add to Collection</button>
                         {% else %}
                             <div class="login-prompt">
                                 <p>Please <a href="{% url 'login' %}?next={{ request.path }}">log in</a> to add to your collection.</p>
@@ -81,12 +81,12 @@
                         {% if user.is_authenticated %}
                             <form id="write-review-form">
                                 {% csrf_token %}
-                                <textarea id="review-input" name="comment" placeholder="Write your review here..."></textarea>
+                                <textarea id="review-input" name="comment" placeholder="Write your review here..." aria-label="Write your review"></textarea>
                                 <input type="hidden" name="rating" id="rating-value">
                                 <div class="review-actions">
                                     <div class="star-rating">
                                         {% for i in "12345" %}
-                                            <img src="{% static 'places/images/icon_empty_star.png' %}" class="star" data-value="{{ i }}" alt="Star">
+                                            <img src="{% static 'places/images/icon_empty_star.png' %}" class="star" data-value="{{ i }}" alt="Star {{ i }}">
                                         {% endfor %}
                                     </div>
                                     <button type="button" class="send-btn" id="submit-comment-btn" aria-label="Send Review">
@@ -109,20 +109,25 @@
                 <div class="souvenir-list">
                     {% for souvenir in souvenirs %}
                         <div class="souvenir-item" data-souvenir-id="{{ souvenir.id }}">
+                            <!-- Souvenir Image -->
+                            <img src="{{ souvenir.image.url }}" alt="{{ souvenir.name }}" class="souvenir-image">
+
                             <!-- Buy Button -->
                             <button class="buy-button" aria-label="Buy {{ souvenir.name }}" 
                                 {% if souvenir.stock == 0 %}disabled{% endif %}>
                                 <img src="{% static 'places/images/buy.svg' %}" alt="Buy">
                             </button>
 
-                            <!-- Souvenir Image -->
-                            <img src="{{ souvenir.image.url }}" alt="{{ souvenir.name }}" class="souvenir-image">
+                            <!-- "Out of Stock" Label -->
+                            {% if souvenir.stock == 0 %}
+                                <div class="out-of-stock-label">Out of Stock</div>
+                            {% endif %}
 
                             <!-- Souvenir Description -->
                             <div class="souvenir-description">
                                 <span class="souvenir-name">{{ souvenir.name }}</span>
                                 <span class="souvenir-price">IDR {{ souvenir.formatted_price }}</span>
-                                <span class="souvenir-stock">Stock: <strong>{{ souvenir.stock }}</strong></span>
+                                <div class="souvenir-stock">Stock: <strong>{{ souvenir.stock }}</strong></div>
                             </div>
                         </div>
                     {% endfor %}
@@ -229,9 +234,14 @@
             if (submitCommentBtn) {
                 submitCommentBtn.addEventListener('click', function(e) {
                     e.preventDefault();
-                    const commentContent = document.getElementById('review-input').value;
+                    const commentContent = document.getElementById('review-input').value.trim();
                     const ratingVal = document.getElementById('rating-value').value;
                     const placeId = "{{ place.id }}";
+
+                    if (!commentContent || !ratingVal) {
+                        alert('Please provide both a comment and a rating.');
+                        return;
+                    }
 
                     fetch("{% url 'add_comment_ajax' place.id %}", {
                         method: 'POST',
@@ -293,8 +303,13 @@
                     const commentId = button.getAttribute('data-comment-id');
                     const reviewItem = document.querySelector(`.review-item[data-comment-id="${commentId}"]`);
                     const editForm = reviewItem.querySelector('.edit-comment-form');
-                    const content = editForm.querySelector('.edit-comment-textarea').value;
+                    const content = editForm.querySelector('.edit-comment-textarea').value.trim();
                     const rating = editForm.querySelector('.edit-rating-value').value;
+
+                    if (!content || !rating) {
+                        alert('Please provide both a comment and a rating.');
+                        return;
+                    }
 
                     fetch("{% url 'edit_comment_ajax' 0 %}".replace('/0/', `/${commentId}/`), {
                         method: 'POST',
@@ -539,9 +554,17 @@
                                 button.disabled = true;
                                 button.style.cursor = 'not-allowed';
                                 button.style.opacity = '0.5';
-                                // Optionally, update the hover image back to original
+                                // Update the Buy Button image back to original
                                 const img = button.querySelector('img');
                                 img.setAttribute('src', "{% static 'places/images/buy.svg' %}");
+                                // Show "Out of Stock" label
+                                const outOfStockLabel = souvenirItem.querySelector('.out-of-stock-label');
+                                if (!outOfStockLabel) {
+                                    const label = document.createElement('div');
+                                    label.classList.add('out-of-stock-label');
+                                    label.textContent = 'Out of Stock';
+                                    souvenirItem.appendChild(label);
+                                }
                             }
                         } else if (data.error) {
                             alert(data.error);
@@ -560,6 +583,7 @@
                     notification.classList.remove('show');
                 }, 3000); // Show for 3 seconds
             }
+        });
     </script>
     
 </body>
