@@ -10,13 +10,16 @@
 </head>
 <body class="journal">
     <div class="div">
-        <h1>Your Journals</h1>
+        <div class="header">
+            <h1>Your Journals</h1>
+            <a href="{% url 'main:journal_home' %}" class="back-button">Back to Journal Home</a>
+        </div>
         <div class="overlap-3">
             {% for journal in journals %}
             <div class="post-card">
                 <div class="div-2">
                     <p class="span">{{ journal.title }}</p>
-                    <p class="text-wrapper-13"> - {{ journal.created_at }}</p>
+                    <p class="date">{{ journal.created_at|date:"F d, Y, H:i" }}</p>
                 </div>
                 <p class="text-wrapper-14">{{ journal.content }}</p>
                 <p class="text-wrapper-15">{{ journal.author.username }}</p>
@@ -30,4 +33,3 @@
     </div>
 </body>
 </html>
-

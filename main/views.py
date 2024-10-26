@@ -6,9 +6,10 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
+from django.utils import timezone
 from .models import Journal
 from .jurnalform import JournalForm
-
+from django.http import JsonResponse
 
 @login_required
 def journal_home(request):
@@ -31,11 +32,24 @@ def create_journal(request):
 @login_required(login_url='/login')
 def like_journal(request, journal_id):
     journal = get_object_or_404(Journal, id=journal_id)
-    if request.user in journal.likes.all():
-        journal.likes.remove(request.user)
-    else:
-        journal.likes.add(request.user)
-    return redirect('main:journal_home')
+    if request.user.is_authenticated:
+        if request.user in journal.likes.all():
+            journal.likes.remove(request.user)  # Hapus like jika sudah ada
+            liked = False
+        else:
+            journal.likes.add(request.user)  # Tambah like jika belum ada
+            liked = True
+        return JsonResponse({'liked': liked, 'likes_count': journal.likes.count()})
+    return JsonResponse({'error': 'User not authenticated'}, status=401)
+# def like_journal(request, journal_id):
+#     journal = get_object_or_404(Journal, id=journal_id)
+#     if request.user.is_authenticated:
+#         if request.user in journal.likes.all():
+#             journal.likes.remove(request.user)  # Hapus like jika sudah ada
+#         else:
+#             journal.likes.add(request.user)  # Tambah like jika belum ada
+#     return redirect('main:journal_home')  
+
 
 @login_required(login_url='/login')
 def journal_history(request):
@@ -48,12 +62,12 @@ def specific_journal(request, journal_id):
 
 @login_required(login_url='/login')
 def edit_journal(request, journal_id):
-    journal = get_object_or_404(Journal, id=journal_id, author=request.user)
+    journal = get_object_or_404(Journal, id=journal_id)
     if request.method == 'POST':
         form = JournalForm(request.POST, request.FILES, instance=journal)
         if form.is_valid():
             form.save()
-            return redirect('main:specific_journal', journal_id=journal.id)
+            return redirect('main:journal_history')
     else:
         form = JournalForm(instance=journal)
     return render(request, 'main/edit_journal.html', {'form': form, 'journal': journal})
@@ -88,21 +102,38 @@ def register(request):
     context = {'form': form, 'last_login': last_login}
     return render(request, 'register.html', context)
 
+# def login_user(request):
+#     if request.method == 'POST':
+#         username = request.POST['username']
+#         password = request.POST['password']
+#         user = authenticate(request, username=username, password=password)
+#         if user is not None:
+#             login(request, user)
+#             return redirect('main:journal_home')  # Ganti 'home' dengan nama URL halaman utama Anda
+#         else:
+#             # Tambahkan pesan error jika login gagal
+#             return render(request, 'login.html', {'error': 'Invalid username or password'})
+#     return render(request, 'login.html')
 def login_user(request):
     if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            return redirect('main:journal_home')  # Ganti 'home' dengan nama URL halaman utama Anda
-        else:
-            # Tambahkan pesan error jika login gagal
-            return render(request, 'login.html', {'error': 'Invalid username or password'})
-    return render(request, 'login.html')
+        form = AuthenticationForm(data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('main:journal_home')  # Arahkan ke journal_home setelah login
+            else:
+                form.add_error(None, "Invalid username or password.")  # Tambahkan error jika autentikasi gagal
+    else:
+        form = AuthenticationForm()
+    return render(request, 'main/login.html', {'form': form})
+
 
 def logout_user(request):
     logout(request)
     response = HttpResponseRedirect(reverse('main:login'))
     response.delete_cookie('last_login')
     return response
+

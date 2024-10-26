@@ -12,7 +12,18 @@
        <h1>Create a New Journal</h1>
        <form method="POST" enctype="multipart/form-data">
            {% csrf_token %}
-           {{ form.as_p }}
+           <div>
+               <label for="{{ form.title.id_for_label }}">Title:</label>
+               {{ form.title }}
+           </div>
+           <div>
+               <label for="{{ form.content.id_for_label }}">Content:</label>
+               {{ form.content }}
+           </div>
+           <div>
+               <label for="{{ form.image.id_for_label }}">Image:</label>
+               {{ form.image }}
+           </div>
            <button type="submit">Publish</button>
        </form>
        <a href="{% url 'main:journal_history' %}">Back to My Journals</a>

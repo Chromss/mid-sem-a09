@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{% static 'css/landing_page_journal.css' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Journal</title>
+</head>
+<body class="journal">
+    <div class="div">
+        <h1>Edit Journal</h1>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div>
+                <label for="{{ form.title.id_for_label }}">Title:</label>
+                {{ form.title }}
+            </div>
+            <div>
+                <label for="{{ form.content.id_for_label }}">Content:</label>
+                {{ form.content }}
+            </div>
+            <div>
+                <label for="{{ form.image.id_for_label }}">Image:</label>
+                {{ form.image }}
+                {% if journal.image %}
+                    <p>Current image: {{ journal.image.name }}</p>
+                {% endif %}
+            </div>
+            <button type="submit">Save Changes</button>
+        </form>
+        <a href="{% url 'main:journal_history' %}">Back to My Journals</a>
+    </div>
+</body>
+</html>
