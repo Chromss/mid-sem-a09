@@ -34,4 +34,7 @@ def itinerary_detail(request, pk):
     itinerary = get_object_or_404(Itinerary, pk=pk)
     return render(request, 'itinerary_detail.html', {'itinerary': itinerary})
 
+def landing_page(request):
+    return render(request, 'landing_page.html', {'user': request.user})
+
 
