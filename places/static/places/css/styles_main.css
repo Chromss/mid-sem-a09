@@ -461,8 +461,8 @@ body {
 /* Buy Button Styles */
 .buy-button {
     position: absolute;
-    top: -35px; /* Position 1/4 of the button inside the card */
-    right: -40px; /* Position 1/4 of the button inside the card */
+    top: -35px; /* Adjusted positioning for better overlap */
+    right: -40px; /* Adjusted positioning for better overlap */
     width: 100px;
     height: 100px;
     border: none;
@@ -790,6 +790,27 @@ body {
 
 body.modal-open {
     overflow: hidden; /* Prevent background scrolling */
+}
+
+/* Notification Popup */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #32BA7C; /* Green background */
+    color: #FFFFFF; /* White text */
+    padding: 15px 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+    z-index: 1001; /* Above modal */
+}
+
+.notification.show {
+    opacity: 1;
+    visibility: visible;
 }
 
 @media (max-width: 768px) {

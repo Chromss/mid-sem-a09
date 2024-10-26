@@ -107,7 +107,7 @@
                 <h2 class="section-title">Souvenir List</h2>
                 <div class="souvenir-list">
                     {% for souvenir in souvenirs %}
-                        <div class="souvenir-item">
+                        <div class="souvenir-item" data-souvenir-id="{{ souvenir.id }}">
                             <!-- Buy Button -->
                             <button class="buy-button" aria-label="Buy {{ souvenir.name }}">
                                 <img src="{% static 'places/images/buy.svg' %}" alt="Buy">
@@ -127,6 +127,11 @@
                 </div>
             </div>
         </div>
+    </div>
+    
+    <!-- Notification Popup -->
+    <div class="notification" id="notification">
+        Souvenir berhasil dibeli!
     </div>
     
     <!-- Add to Collection Modal -->
@@ -153,7 +158,7 @@
     </div>
     {% endif %}
 
-    <!-- JavaScript for Star Rating and AJAX -->
+    <!-- JavaScript for Star Rating, AJAX, Buy Button, and Notification -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // CSRF token
@@ -470,12 +475,11 @@
                     .catch(error => console.error('Error:', error));
                 });
             }
-        });
-            document.addEventListener('DOMContentLoaded', function() {
-            // Select all buy-button images
-            const buyButtons = document.querySelectorAll('.buy-button img');
 
-            buyButtons.forEach(function(img) {
+            // Buy Button Hover Effect (existing)
+            const buyButtonsImages = document.querySelectorAll('.buy-button img');
+
+            buyButtonsImages.forEach(function(img) {
                 // Store the original and hover image sources
                 const originalSrc = img.getAttribute('src');
                 const hoverSrc = originalSrc.replace('buy.svg', 'buyhover.svg');
@@ -489,6 +493,57 @@
                     img.setAttribute('src', originalSrc);
                 });
             });
+
+            // Buy Button Click Event
+            const buyButtons = document.querySelectorAll('.buy-button');
+
+            buyButtons.forEach(function(button) {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const souvenirItem = this.closest('.souvenir-item');
+                    const souvenirId = souvenirItem.getAttribute('data-souvenir-id');
+
+                    fetch("{% url 'buy_souvenir_ajax' 0 %}".replace('/0/', `/${souvenirId}/`), {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': csrftoken,
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({})
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Show notification
+                            showNotification("Souvenir berhasil dibeli!");
+                            // Update stock in DOM
+                            const stockElement = souvenirItem.querySelector('.souvenir-stock strong');
+                            stockElement.textContent = data.new_stock;
+
+                            // Optionally, disable buy button if stock is 0
+                            if (data.new_stock <= 0) {
+                                button.disabled = true;
+                                button.style.cursor = 'not-allowed';
+                                button.style.opacity = '0.5';
+                            }
+                        } else if (data.error) {
+                            alert(data.error);
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+                });
+            });
+
+            // Function to show notification
+            function showNotification(message) {
+                const notification = document.getElementById('notification');
+                notification.textContent = message;
+                notification.classList.add('show');
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 3000); // Show for 3 seconds
+            }
         });
     </script>
     

@@ -147,3 +147,18 @@ def add_to_collection_ajax(request, place_id):
             return JsonResponse({'error': 'No collections selected.'}, status=400)
     else:
         return JsonResponse({'error': 'Invalid request.'}, status=400)
+
+# New view for buying a souvenir
+@login_required
+@csrf_exempt
+def buy_souvenir_ajax(request, souvenir_id):
+    if request.method == 'POST' and request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        souvenir = get_object_or_404(Souvenir, pk=souvenir_id)
+        if souvenir.stock > 0:
+            souvenir.stock -= 1
+            souvenir.save()
+            return JsonResponse({'success': True, 'new_stock': souvenir.stock})
+        else:
+            return JsonResponse({'error': 'Souvenir is out of stock.'}, status=400)
+    else:
+        return JsonResponse({'error': 'Invalid request.'}, status=400)
