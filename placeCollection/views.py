@@ -14,16 +14,16 @@ def show_collections(request):
     }
     return render(request, "collection.html", context)
 
-
 def create_collection(request):
     if request.method == 'POST':
         name = request.POST.get('name')
         if name:
             collection = Collection.objects.create(name=name)
+            created_at = collection.created_at.strftime('%b %d, %Y')  # Format date manually
             return JsonResponse({
                 'success': True,
                 'name': collection.name,
-                'created_at': date_format(collection.created_at, format='M d, Y'),
+                'created_at': created_at,
                 'id': collection.id
             })
         return JsonResponse({'success': False, 'error': 'Name is required'})
