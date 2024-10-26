@@ -36,10 +36,16 @@
                                         <span>{{ coll.places.count|default:"0" }} places</span>
                                     </div>
                                     <div class="tags">
-                                        <span class="tag">Prambanan...</span>
-                                        <span class="tag">Parangtritis...</span>
-                                        <span class="tag">Malioboro</span>
-                                        <span class="tag">+3 more</span>
+                                        {% if coll.places.count > 0 %}
+                                            {% for place in coll.places.all|slice:":3" %}
+                                                <span class="tag">{{ place.name }}</span>
+                                            {% endfor %}
+                                            {% if coll.places.count > 3 %}
+                                                <span class="tag">+{{ coll.places.count|add:"-3" }} more</span>
+                                            {% endif %}
+                                        {% else %}
+                                            <span class="tag">No places yet</span>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
@@ -52,6 +58,8 @@
                 <div class="empty-state">No collections found. Start by creating your first collection!</div>
             {% endif %}
         </div>
+        
+        
     </section>
 
     <!-- Create Collection Modal -->
@@ -111,7 +119,7 @@
             const createdDate = new Date(data.created_at).toLocaleDateString();
             const collectionsGrid = document.getElementById('collectionsGrid');
 
-            // Create the new card with tags, matching the structure in your for-loop
+            // Create the new card with dynamic tags
             const newCard = document.createElement('div');
             newCard.classList.add('collection-card-container');
             newCard.id = `collection-${data.id}`;
@@ -124,13 +132,11 @@
                             <div class="card-meta">
                                 <span>Created ${createdDate}</span>
                                 <span class="dot-divider">•</span>
-                                <span>0 items</span>
+                                <span>0 places</span>
                             </div>
-                            <div class="tags">
-                                <span class="tag">Prambanan...</span>
-                                <span class="tag">Parangtritis...</span>
-                                <span class="tag">Malioboro</span>
-                                <span class="tag">+3 more</span>
+                            <div class="tags" id="tags-${data.id}">
+                                <!-- Placeholder tags until places are added -->
+                                <span class="tag">No places yet</span>
                             </div>
                         </div>
                     </div>
