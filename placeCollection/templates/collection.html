@@ -1,4 +1,14 @@
-{% extends 'base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/collections.css' %}">
+    <title>{% block title %}MlakuMlaku{% endblock %}</title>
+</head>
+<body>
+
 {% load static %}
 
 {% block content %}
@@ -21,18 +31,21 @@
         <div class="collections-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8" id="collectionsGrid">
             {% if collection %}
                 {% for coll in collection %}
-                    <div class="collection-card bg-white rounded-lg shadow-md overflow-hidden" id="collection-{{ coll.id }}">
-                        <div class="card-content">
-                            <div class="p-4">
-                                <h3 class="text-lg font-semibold mb-2">{{ coll.name }}</h3>
-                                <div class="card-meta text-sm text-gray-500">
-                                    <span>Created {{ coll.created_at }}</span>
-                                    <span class="mx-2">•</span>
-                                    <span>{{ coll.places.count }} items</span>
-                                </div>
+                <div class="collection-card bg-white rounded-lg shadow-md overflow-hidden" id="collection-{{ coll.id }}">
+                    <div class="card-content">
+                        <!-- Check if collection has an image; if not, show the default image -->
+                        <img src="{% static 'images/c.jpg' %}" alt="Default Image" class="w-full h-32 object-cover">
+                        <div class="p-4">
+                            <h3 class="text-lg font-semibold mb-2">{{ coll.name }}</h3>
+                            <div class="card-meta text-sm text-gray-500">
+                                <span>Created {{ coll.created_at|date:"M d, Y, h:i a" }}</span>
+                                <span class="mx-2">•</span>
+                                <span>{{ coll.places.count|default:"0" }} items</span>
                             </div>
                         </div>
                     </div>
+                </div>
+                
                 {% endfor %}
             {% else %}
                 <div class="empty-state text-center py-10 col-span-full">
@@ -116,6 +129,10 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
+                    // Format the created date to match the format after refresh
+                    const options = { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true };
+                    const createdDate = new Date(data.created_at).toLocaleString('en-US', options);
+
                     // Create new collection card
                     const newCard = document.createElement('div');
                     newCard.classList.add('collection-card', 'bg-white', 'rounded-lg', 'shadow-md', 'overflow-hidden');
@@ -127,7 +144,7 @@
                             <div class="p-4">
                                 <h3 class="text-lg font-semibold mb-2">${data.name}</h3>
                                 <div class="card-meta text-sm text-gray-500">
-                                    <span>Created ${data.created_at}</span>
+                                    <span>Created ${createdDate}</span>
                                     <span class="mx-2">•</span>
                                     <span>0 items</span>
                                 </div>
@@ -166,3 +183,7 @@
     </script>
 </div>
 {% endblock %}
+
+
+</body>
+</html>

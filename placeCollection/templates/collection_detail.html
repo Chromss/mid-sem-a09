@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="collection-detail-page">
+    <div class="header mb-6">
+        <h1 class="text-3xl font-bold">{{ collection.name }}</h1>
+        <p class="text-gray-500">Created {{ collection.created_at|date:"M d, Y, h:i a" }}</p>
+        <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors mt-4" onclick="location.href='{% url 'placeCollection:show_collections' %}'">Back to my collections</button>
+    </div>
+
+    <!-- Filter options -->
+    <div class="filters mb-4">
+        <h3 class="font-semibold">Filter by</h3>
+        <button class="text-blue-500 hover:underline" onclick="sortBy('latest')">Latest added</button>
+        <button class="text-blue-500 hover:underline" onclick="sortBy('asc')">Ascending (A - Z)</button>
+        <button class="text-blue-500 hover:underline" onclick="sortBy('desc')">Descending (Z - A)</button>
+    </div>
+
+    <!-- Placeholder for list of items in collection -->
+    <div class="content">
+        <p>This is the detail page for {{ collection.name }}. Add more details or actions as needed.</p>
+    </div>
+</div>
+
+<script>
+    function sortBy(order) {
+        alert('Sorting by ' + order);
+        // Implement sorting functionality if needed
+    }
+</script>
+{% endblock %}
