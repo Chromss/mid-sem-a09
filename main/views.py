@@ -130,14 +130,31 @@ def specific_journal(request, journal_id):
 @login_required(login_url='/login')
 def edit_journal(request, journal_id):
     journal = get_object_or_404(Journal, id=journal_id)
+
     if request.method == 'POST':
         form = JournalForm(request.POST, request.FILES, instance=journal)
         if form.is_valid():
-            form.save()
-            return redirect('main:journal_history')
+            # Cek apakah checkbox "Clear Image" dicentang
+            if 'clear_image' in request.POST:
+                journal.image.delete(save=False)  # Hapus gambar dari filesystem
+                journal.image = None  # Set gambar ke None
+
+            form.save()  # Simpan perubahan
+            return redirect('main:journal_history')  # Redirect setelah menyimpan
     else:
         form = JournalForm(instance=journal)
-    return render(request, 'main/edit_journal.html', {'form': form, 'journal': journal})
+
+    return render(request, 'main/edit_journal.html', {'form': form})
+# def edit_journal(request, journal_id):
+#     journal = get_object_or_404(Journal, id=journal_id)
+#     if request.method == 'POST':
+#         form = JournalForm(request.POST, request.FILES, instance=journal)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('main:journal_history')
+#     else:
+#         form = JournalForm(instance=journal)
+#     return render(request, 'main/edit_journal.html', {'form': form, 'journal': journal})
 
 @login_required(login_url='/login')
 def delete_journal(request, journal_id):

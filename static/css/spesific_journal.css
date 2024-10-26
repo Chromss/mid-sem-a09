@@ -1,111 +1,129 @@
-.spesific-journal {
-  background-color: #f3f4f8;
+/* Base styles */
+body {
+  font-family: 'Geist', 'Geist';
+  margin: 0;
+  padding: 0;
+  background-color: #f8f9fa; /* Warna latar belakang */
+  color: #333; /* Warna teks */
+}
+
+/* Container */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Navbar styles */
+.navbar {
   display: flex;
-  justify-content: center;
-  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #1b1b32; /* Warna latar belakang navbar */
 }
 
-.spesific-journal .div {
-  background-color: var(--primary-light);
-  overflow: hidden;
-  max-width: 1440px; /* Lebar maksimum */
-  margin: 20px; /* Margin untuk kontainer */
-  border-radius: 8px; /* Sudut melengkung */
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Bayangan */
+.nav-link {
+  color: white;
+  text-decoration: none;
+  margin: 0 10px;
 }
 
-.spesific-journal header {
-  padding: 20px; /* Padding untuk header */
-  text-align: center; /* Rata tengah */
+.nav-logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
 }
 
-.spesific-journal .p {
-  font-family: "Geist-SemiBold", Helvetica;
-  font-weight: 600;
-  color: var(--dark-text);
-  font-size: 32px; /* Ukuran font judul */
-  margin-bottom: 10px; /* Jarak bawah judul */
+.nav-menu a {
+  color: white;
+  margin: 0 10px;
+  text-decoration: none;
 }
 
-.spesific-journal .profile {
-  display: flex; /* Menggunakan flexbox untuk tata letak */
-  align-items: center; /* Rata tengah secara vertikal */
-  justify-content: center; /* Rata tengah secara horizontal */
-  margin-bottom: 20px; /* Jarak bawah */
+/* Journal Details */
+.journal-details {
+  background-color: white; /* Latar belakang putih untuk konten jurnal */
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
 }
 
-.spesific-journal .img {
-  width: 26px; /* Ukuran gambar profil */
-  height: 26px; /* Ukuran gambar profil */
-  border-radius: 50%; /* Membuat gambar bulat */
-  margin-right: 10px; /* Jarak antara gambar dan teks */
+.journal-title {
+  font-size: 28px;
+  margin-bottom: 10px;
 }
 
-.spesific-journal .username {
-  font-family: "Geist-Medium", Helvetica;
-  font-weight: 500;
-  color: var(--dark-text);
-  font-size: 16px; /* Ukuran font username */
+.journal-meta {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
-.spesific-journal .kinardes-oct {
-  font-family: "Geist-Regular", Helvetica;
-  font-weight: 400;
-  color: var(--fade-text);
-  font-size: 16px; /* Ukuran font tanggal */
-  margin-left: 5px; /* Jarak antara username dan tanggal */
+.profile {
+  display: flex;
+  align-items: center;
 }
 
-.spesific-journal .overlap {
-  position: relative;
-  width: 100%; /* Lebar penuh */
-  height: auto; /* Tinggi otomatis */
+.profile-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
 }
 
-.spesific-journal .rectangle {
-  width: 100%; /* Lebar penuh */
-  height: auto; /* Tinggi otomatis */
-  border-radius: 8px; /* Sudut melengkung */
+.journal-content {
+  margin: 20px 0;
 }
 
-.spesific-journal .content {
-  padding: 20px; /* Padding untuk konten */
-  font-family: "Geist-Regular", Helvetica;
-  font-weight: 400;
-  color: var(--dark-text);
-  font-size: 18px; /* Ukuran font konten */
-  line-height: 1.6; /* Jarak antar baris */
+.journal-image {
+  max-width: 100%;
+  border-radius: 8px;
+  margin-bottom: 20px;
 }
 
-.spesific-journal .footer {
-  padding: 20px; /* Padding untuk footer */
-  text-align: center; /* Rata tengah */
+/* Related Journals */
+.related-journals {
+  margin-top: 20px;
 }
 
-.spesific-journal .overlap-group {
-  background-color: var(--primary-dark);
-  padding: 10px; /* Padding untuk grup */
-  border-radius: 8px; /* Sudut melengkung */
+.related-link {
+  color: #007BFF;
+  text-decoration: none;
 }
 
-.spesific-journal .text-wrapper {
-  color: var(--light-text); /* Warna teks footer */
-  font-size: 16px; /* Ukuran font footer */
+.related-link:hover {
+  text-decoration: underline;
 }
 
+/* Footer styles */
+.footer {
+  background-color: #252525; /* Warna latar belakang footer */
+  color: #FFFFFF; /* Warna teks footer */
+  padding: 20px 0; /* Padding atas dan bawah */
+  margin-top: 20px; /* Jarak atas */
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* Back Button */
 .back-button {
-  text-align: center; /* Rata tengah */
-  margin: 20px 0; /* Jarak atas dan bawah */
+  margin-top: 20px;
+  text-align: center;
 }
 
 .back-link {
-  background-color: var(--blue-accent); /* Warna tombol */
-  color: #ffffff; /* Warna teks tombol */
-  padding: 10px 20px; /* Padding tombol */
-  border-radius: 5px; /* Sudut melengkung */
-  text-decoration: none; /* Menghilangkan garis bawah */
+  color: #007BFF;
+  text-decoration: none;
 }
 
 .back-link:hover {
-  background-color: #0056b3; /* Warna saat hover */
+  text-decoration: underline;
 }

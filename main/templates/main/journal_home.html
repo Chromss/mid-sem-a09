@@ -9,17 +9,17 @@
 </head>
 <body class="journal">
     <div class="div">
-        <div class="overlap">
-            <a href="{% url 'main:register' %}" class="overlap-group">
-                <div class="text-wrapper">Sign Up</div>
-            </a>
-            <a href="{% url 'main:login' %}" class="overlap-2">
-                <div class="text-wrapper-2">Log in</div>
-            </a>
-            <div class="text-wrapper-3">MlakuMlaku</div>
-            <div class="text-wrapper-4">Itinerary</div>
-            <a href="{% url 'main:journal_home' %}" class="text-wrapper-5">Journal</a>
-            <div class="text-wrapper-6">Collection</div>
+        <div class="navbar">
+            <div>
+                <a href="{% url 'main:register' %}" class="nav-link">Sign Up</a>
+                <a href="{% url 'main:login' %}" class="nav-link">Log In</a>
+            </div>
+            <div class="nav-logo">MlakuMlaku</div>
+            <nav class="nav-menu">
+                <a href="#" class="nav-link">Itinerary</a>
+                <a href="{% url 'main:journal_home' %}" class="nav-link">Journal</a>
+                <a href="#" class="nav-link">Collection</a>
+            </nav>
         </div>
         
         <div class="journal-container">
@@ -41,7 +41,7 @@
                             </svg>
                             <div class="user-info">
                                 <p class="username">{{ journal.author.username }}</p>
-                                <p class="date">{{ journal.created_at|date:"F d, Y" }}</p>
+                                <p class="date">{{ journal.created_at|date:"F d, Y H:i" }}</p>
                             </div>
                         </div>
                         <h2 class="title">{{ journal.title }}</h2>

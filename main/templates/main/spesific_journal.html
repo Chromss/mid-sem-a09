@@ -1,65 +1,194 @@
-<!DOCTYPE html>
 {% load static %}
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="{% static 'css/spesific_journal.css' %}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/spesific_journal.css' %}">
     <title>{{ journal.title }}</title>
+    <style>
+        /* CSS tambahan untuk memperbaiki tata letak */
+        body {
+            font-family: 'Geist', 'Geist';
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .nav-link {
+            color: #333;
+            text-decoration: none;
+            margin-right: 1rem;
+        }
+
+        .nav-menu a {
+            margin: 0 1rem;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 2rem;
+        }
+
+        .journal-details {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .journal-title {
+            font-size: 28px;
+            margin-bottom: 1rem;
+            font-weight: bold;
+            text-align: center;
+            color: #333;
+        }
+
+        .journal-meta {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 1rem;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+        }
+
+        .profile-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+        }
+
+        .journal-image {
+            width: 100%;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .journal-content {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #333;
+            margin-bottom: 2rem;
+        }
+
+        .related-journals h2 {
+            font-size: 20px;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .related-journals ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .related-link {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .footer-link {
+            color: #007bff;
+            text-decoration: none;
+            margin-left: 1rem;
+        }
+
+        .back-button {
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .back-link {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 16px;
+        }
+    </style>
 </head>
 <body class="spesific-journal">
-    <div class="div">
-        <div class="navbar">
-            <a href="{% url 'main:register' %}" class="text-wrapper-2">Sign Up</a>
-            <a href="{% url 'main:login' %}" class="text-wrapper-3">Log in</a>
-            <div class="text-wrapper-4">MlakuMlaku</div>
-            <div class="text-wrapper-5">Itinerary</div>
-            <a href="{% url 'main:journal_home' %}" class="text-wrapper-6">Journal</a>
-            <div class="text-wrapper-7">Collection</div>
+    <div class="navbar">
+        <div>
+            <a href="{% url 'main:register' %}" class="nav-link">Sign Up</a>
+            <a href="{% url 'main:login' %}" class="nav-link">Log In</a>
         </div>
-        <div class="overlap">
-            <div class="text-wrapper-10">Journal Details</div>
-            <div class="text-wrapper-11">{{ journal.title }}</div>
-        </div>
-        <div class="overlap-2">
-            <p class="p">{{ journal.title }}</p>
-            <div class="profile">
-                <img class="img" src="{% static 'images/profile.png' %}" alt="Profile">
-                <div class="kinardes-oct">{{ journal.author.username }} - {{ journal.created_at|date:"F d, Y" }}</div>
+        <div class="nav-logo">MlakuMlaku</div>
+        <nav class="nav-menu">
+            <a href="#">Itinerary</a>
+            <a href="{% url 'main:journal_home' %}">Journal</a>
+            <a href="#">Collection</a>
+        </nav>
+    </div>
+
+    <div class="container">
+        <!-- Journal Details -->
+        <div class="journal-details">
+            <h1 class="journal-title">{{ journal.title }}</h1>
+            <div class="journal-meta">
+                <div class="profile">
+                    <img class="profile-img" src="{% static 'images/profile.png' %}" alt="Profile">
+                    <span class="author">{{ journal.author.username }} - {{ journal.created_at|date:"F d, Y" }}</span>
+                </div>
             </div>
             {% if journal.image %}
-                <img class="rectangle" src="{{ journal.image.url }}" alt="{{ journal.title }}">
+                <img class="journal-image" src="{{ journal.image.url }}" alt="{{ journal.title }}">
             {% endif %}
-            <div class="it-started-as-a">{{ journal.content }}</div>
-            <div class="line"></div>
-            <div class="text-wrapper-14">Related Journals</div>
-            <div class="line-2"></div>
-            <div class="next-card">
-                <div class="text-wrapper-15">Next Journal 1</div>
-            </div>
-            <div class="next-card-2">
-                <div class="text-wrapper-15">Next Journal 2</div>
-            </div>
-            <div class="next-card-3">
-                <div class="text-wrapper-15">Next Journal 3</div>
-            </div>
-            <div class="next-card-4">
-                <div class="text-wrapper-15">Next Journal 4</div>
-            </div>
-            <div class="next-card-5">
-                <div class="text-wrapper-15">Next Journal 5</div>
-            </div>
-            <div class="next-card-6">
-                <div class="text-wrapper-15">Next Journal 6</div>
+            <p class="journal-content">{{ journal.content }}</p>
+            <div class="related-journals">
+                <h2>Related Journals</h2>
+                <ul>
+                    <li><a href="#" class="related-link">Next Journal 1</a></li>
+                    <li><a href="#" class="related-link">Next Journal 2</a></li>
+                    <li><a href="#" class="related-link">Next Journal 3</a></li>
+                    <li><a href="#" class="related-link">Next Journal 4</a></li>
+                    <li><a href="#" class="related-link">Next Journal 5</a></li>
+                    <li><a href="#" class="related-link">Next Journal 6</a></li>
+                </ul>
             </div>
         </div>
-        <div class="footer">
-            <div class="overlap-group">
-                <div class="text-wrapper">UI Design by Chroms</div>
-                <div class="text-wrapper-2">&copy; 2024 MlakuMlaku. All rights reserved.</div>
-                <div class="text-wrapper-3">About</div>
-            </div>
-        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <span>UI Design by Chroms</span>
+            <span>&copy; 2024 MlakuMlaku. All rights reserved.</span>
+            <a href="#" class="footer-link">About</a>
+        </footer>
+
+        <!-- Back Button -->
         <div class="back-button">
             <a href="{% url 'main:journal_home' %}" class="back-link">Back to Journal Home</a>
         </div>

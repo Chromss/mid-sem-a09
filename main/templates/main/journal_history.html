@@ -1,35 +1,45 @@
-<!-- mlaku-mlaku/main/templates/main/journal_history.html -->
-<!DOCTYPE html>
 {% load static %}
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="{% static 'css/landing_page_journal.css' %}">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Journal History</title>
+    <link rel="stylesheet" href="{% static 'css/landing_page_journal.css' %}">
+    <title>Your Journals</title>
 </head>
 <body class="journal">
-    <div class="div">
-        <div class="header">
-            <h2 class="your-journals-title">Your Journals</h2>
-            <a href="{% url 'main:journal_home' %}" class="back-button">Back to Journal Home</a>
+    <div class="navbar">
+        <div>
+            <a href="{% url 'main:register' %}" class="nav-link">Sign Up</a>
+            <a href="{% url 'main:login' %}" class="nav-link">Log In</a>
         </div>
-        <div class="overlap-3">
-            {% for journal in journals %}
+        <div class="nav-logo">MlakuMlaku</div>
+        <nav class="nav-menu">
+            <a href="#" class="nav-link">Itinerary</a>
+            <a href="{% url 'main:journal_home' %}" class="nav-link">Journal</a>
+            <a href="#" class="nav-link">Collection</a>
+        </nav>
+    </div>
+
+    <div class="container">
+        <h1>Your Journals</h1>
+        {% for journal in journals %}
             <div class="post-card">
-                <div class="div-2">
-                    <p class="span">{{ journal.title }}</p>
-                    <p class="date">{{ journal.created_at|date:"F d, Y, H:i" }}</p>
+                <h2 class="title">{{ journal.title }}</h2>
+                <p class="date">{{ journal.created_at|date:"F d, Y, H:i" }}</p>
+                <p class="content">{{ journal.content }}</p>
+                <div class="card-footer">
+                    <a href="{% url 'main:edit_journal' journal.id %}" class="edit-button">Edit</a>
+                    <form action="{% url 'main:delete_journal' journal.id %}" method="POST" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="delete-button">Delete</button>
+                    </form>
                 </div>
-                <p class="text-wrapper-14">{{ journal.content }}</p>
-                <p class="text-wrapper-15">{{ journal.author.username }}</p>
-                <p class="text-wrapper-16">{{ journal.description }}</p>
-                <button class="button-2" onclick="location.href='{% url 'main:edit_journal' journal.id %}'">Edit</button>
-                <button class="button-2" onclick="location.href='{% url 'main:delete_journal' journal.id %}'">Delete</button>
             </div>
-            <div class="line-2"></div>
-            {% endfor %}
-        </div>
+        {% empty %}
+            <p>No journals available.</p>
+        {% endfor %}
+        <a href="{% url 'main:journal_home' %}" class="back-button">Back to Journal Home</a>
     </div>
 </body>
 </html>
