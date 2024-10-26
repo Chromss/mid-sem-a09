@@ -37,7 +37,8 @@
                             <span class="section-text">/5</span>
                         </div>
                         <div class="info-item">
-                            <span class="section-text">{{ souvenirs.count }} Souvenirs</span>
+                            <!-- Updated Souvenir Count Display with ID -->
+                            <span class="section-text" id="souvenir-count">{{ available_souvenirs_count }}/{{ total_souvenirs_count }} Souvenirs</span>
                         </div>
                     </div>
 
@@ -109,7 +110,8 @@
                     {% for souvenir in souvenirs %}
                         <div class="souvenir-item" data-souvenir-id="{{ souvenir.id }}">
                             <!-- Buy Button -->
-                            <button class="buy-button" aria-label="Buy {{ souvenir.name }}">
+                            <button class="buy-button" aria-label="Buy {{ souvenir.name }}" 
+                                {% if souvenir.stock == 0 %}disabled{% endif %}>
                                 <img src="{% static 'places/images/buy.svg' %}" alt="Buy">
                             </button>
 
@@ -130,7 +132,7 @@
     </div>
     
     <!-- Notification Popup -->
-    <div class="notification" id="notification">
+    <div class="notification" id="notification" role="alert" aria-live="assertive">
         Souvenir berhasil dibeli!
     </div>
     
@@ -486,7 +488,10 @@
 
                 // Add event listeners for mouseover and mouseout
                 img.addEventListener('mouseover', function() {
-                    img.setAttribute('src', hoverSrc);
+                    // Only change image if button is not disabled
+                    if (!img.parentElement.disabled) {
+                        img.setAttribute('src', hoverSrc);
+                    }
                 });
 
                 img.addEventListener('mouseout', function() {
@@ -500,6 +505,10 @@
             buyButtons.forEach(function(button) {
                 button.addEventListener('click', function(e) {
                     e.preventDefault();
+
+                    // Prevent action if button is disabled
+                    if (button.disabled) return;
+
                     const souvenirItem = this.closest('.souvenir-item');
                     const souvenirId = souvenirItem.getAttribute('data-souvenir-id');
 
@@ -521,11 +530,18 @@
                             const stockElement = souvenirItem.querySelector('.souvenir-stock strong');
                             stockElement.textContent = data.new_stock;
 
+                            // Update souvenir count in banner
+                            const souvenirCountElement = document.getElementById('souvenir-count');
+                            souvenirCountElement.textContent = `${data.available_souvenirs_count}/${data.total_souvenirs_count} Souvenirs`;
+
                             // Optionally, disable buy button if stock is 0
                             if (data.new_stock <= 0) {
                                 button.disabled = true;
                                 button.style.cursor = 'not-allowed';
                                 button.style.opacity = '0.5';
+                                // Optionally, update the hover image back to original
+                                const img = button.querySelector('img');
+                                img.setAttribute('src', "{% static 'places/images/buy.svg' %}");
                             }
                         } else if (data.error) {
                             alert(data.error);
@@ -544,7 +560,6 @@
                     notification.classList.remove('show');
                 }, 3000); // Show for 3 seconds
             }
-        });
     </script>
     
 </body>

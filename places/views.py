@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
 from django.template.loader import render_to_string
-from django.db.models import Avg
+from django.db.models import Avg, Count, Q
 from django.contrib import messages
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
@@ -23,13 +23,22 @@ def format_price(price):
 
 def place_detail(request, place_id):
     place = get_object_or_404(Place, pk=place_id)
+    
+    # Aggregate average rating
     average_rating = Comment.objects.filter(place=place).aggregate(Avg('rating'))['rating__avg'] or 0
+    
+    # Fetch all souvenirs for the place
     souvenirs = Souvenir.objects.filter(place=place)
+    
+    # Calculate total and available souvenirs
+    total_souvenirs_count = souvenirs.count()
+    available_souvenirs_count = souvenirs.filter(stock__gt=0).count()
 
     # Format the price for each souvenir
     for souvenir in souvenirs:
         souvenir.formatted_price = format_price(souvenir.price)
 
+    # Fetch the latest 10 comments
     comments = Comment.objects.filter(place=place).order_by('-created_at')[:10]  # Limit to recent 10 reviews
 
     # Get the user's collections if authenticated
@@ -41,6 +50,8 @@ def place_detail(request, place_id):
         'souvenirs': souvenirs,
         'comments': comments,
         'user_collections': user_collections,  # Added to context
+        'total_souvenirs_count': total_souvenirs_count,  # New context variable
+        'available_souvenirs_count': available_souvenirs_count,  # New context variable
     }
     return render(request, 'places/place_detail.html', context)
 
@@ -70,7 +81,6 @@ def add_comment_ajax(request, place_id):
             # Update average rating
             average_rating = Comment.objects.filter(place=place).aggregate(Avg('rating'))['rating__avg'] or 0
             average_rating = round(average_rating, 1)
-            # Format the new comment's price if needed (assuming comments don't have prices)
             # Return the rendered HTML for the new comment and updated average rating
             rendered_comment = render_to_string('places/comment_partial.html', {'comment': comment, 'user': request.user})
             return JsonResponse({
@@ -157,7 +167,19 @@ def buy_souvenir_ajax(request, souvenir_id):
         if souvenir.stock > 0:
             souvenir.stock -= 1
             souvenir.save()
-            return JsonResponse({'success': True, 'new_stock': souvenir.stock})
+            
+            # Recalculate available and total souvenirs
+            place = souvenir.place
+            souvenirs = Souvenir.objects.filter(place=place)
+            total_souvenirs_count = souvenirs.count()
+            available_souvenirs_count = souvenirs.filter(stock__gt=0).count()
+            
+            return JsonResponse({
+                'success': True,
+                'new_stock': souvenir.stock,
+                'available_souvenirs_count': available_souvenirs_count,
+                'total_souvenirs_count': total_souvenirs_count
+            })
         else:
             return JsonResponse({'error': 'Souvenir is out of stock.'}, status=400)
     else:

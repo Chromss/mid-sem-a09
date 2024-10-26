@@ -485,6 +485,30 @@ body {
     opacity: 1; /* Simple hover effect without glow */
 }
 
+/* Disabled Buy Button Styles */
+.buy-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5; /* Dim the button to indicate it's disabled */
+}
+
+.buy-button:disabled img {
+    filter: grayscale(100%); /* Optional: make the image grayscale */
+}
+
+/* Optional: Add a tooltip or message for disabled buttons */
+.buy-button:disabled::after {
+    content: "Out of Stock";
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0,0,0,0.7);
+    color: #fff;
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-size: 12px;
+    white-space: nowrap;
+}
 /* Optional Hover Effect */
 .souvenir-item:hover .souvenir-description {
     background-color: #3A3F58; /* Slightly lighter shade on hover */
