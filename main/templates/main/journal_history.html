@@ -1,0 +1,33 @@
+<!-- mlaku-mlaku/main/templates/main/journal_history.html -->
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{% static 'css/landing_page_journal.css' %}">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Journal History</title>
+</head>
+<body class="journal">
+    <div class="div">
+        <h1>Your Journals</h1>
+        <div class="overlap-3">
+            {% for journal in journals %}
+            <div class="post-card">
+                <div class="div-2">
+                    <p class="span">{{ journal.title }}</p>
+                    <p class="text-wrapper-13"> - {{ journal.created_at }}</p>
+                </div>
+                <p class="text-wrapper-14">{{ journal.content }}</p>
+                <p class="text-wrapper-15">{{ journal.author.username }}</p>
+                <p class="text-wrapper-16">{{ journal.description }}</p>
+                <button class="button-2" onclick="location.href='{% url 'main:edit_journal' journal.id %}'">Edit</button>
+                <button class="button-2" onclick="location.href='{% url 'main:delete_journal' journal.id %}'">Delete</button>
+            </div>
+            <div class="line-2"></div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
+
