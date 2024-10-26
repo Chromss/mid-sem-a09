@@ -2,6 +2,21 @@
 from django.shortcuts import render, get_object_or_404
 from .models import PlaceCollection
 from django.http import JsonResponse
+from django.views.decorators.http import require_http_methods
+from django.http import JsonResponse
+from django.views.decorators.http import require_http_methods
+
+@require_http_methods(["DELETE"])
+def delete_collection(request, collection_id):
+    try:
+        collection = PlaceCollection.objects.get(id=collection_id)
+        collection.delete()
+        return JsonResponse({'success': True})
+    except PlaceCollection.DoesNotExist:
+        return JsonResponse({'success': False, 'error': 'Collection not found'}, status=404)
+    except Exception as e:
+        return JsonResponse({'success': False, 'error': str(e)}, status=500)
+
 
 def create_collection(request):
     if request.method == 'POST':

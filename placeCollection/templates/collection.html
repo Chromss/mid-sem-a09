@@ -29,21 +29,25 @@
         <div class="collections-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8" id="collectionsGrid">
             {% if collections %}
                 {% for coll in collections %}
-                <a href="{% url 'placeCollection:show_collection_places' coll.id %}" class="no-underline block transform transition-all duration-200 hover:-translate-y-1">
-                    <div class="collection-card bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg" id="collection-{{ coll.id }}">
-                        <div class="card-content">
-                            <img src="{% static 'images/d.png' %}" alt="Default Image" class="w-full h-32 object-cover">
-                            <div class="p-4">
-                                <h3 class="text-lg font-semibold mb-2 text-gray-800">{{ coll.name }}</h3>
-                                <div class="card-meta text-sm text-gray-500">
-                                    <span>Created {{ coll.created_at|date:"M d, Y, h:i a" }}</span>
-                                    <span class="mx-2">•</span>
-                                    <span>{{ coll.places.count|default:"0" }} items</span>
+                    <div class="collection-card-container" id="collection-{{ coll.id }}">
+                        <a href="{% url 'placeCollection:show_collection_places' coll.id %}" class="no-underline block transform transition-all duration-200 hover:-translate-y-1">
+                            <div class="collection-card bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg">
+                                <div class="card-content">
+                                    <img src="{% static 'images/d.png' %}" alt="Default Image" class="w-full h-32 object-cover">
+                                    <div class="p-4">
+                                        <h3 class="text-lg font-semibold mb-2 text-gray-800">{{ coll.name }}</h3>
+                                        <div class="card-meta text-sm text-gray-500">
+                                            <span>Created {{ coll.created_at|date:"M d, Y, h:i a" }}</span>
+                                            <span class="mx-2">•</span>
+                                            <span>{{ coll.places.count|default:"0" }} items</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
+                        <!-- Delete button here -->
+                        <button onclick="deleteCollection({{ coll.id }})" class="delete-button">✖</button>
                     </div>
-                </a>
                 {% endfor %}
             {% else %}
                 <div class="empty-state text-center py-10 col-span-full">
@@ -51,7 +55,6 @@
                 </div>
             {% endif %}
         </div>
-        
     </section>
 
     <!-- Popup Menu for Create Collection -->
@@ -120,55 +123,43 @@
 
             fetch("{% url 'placeCollection:create_collection' %}", {
                 method: 'POST',
-                headers: {
-                    'X-CSRFToken': '{{ csrf_token }}',
-                },
                 body: formData
             })
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    // Format the created date to match the format after refresh
+                    // Add new collection card to the DOM
                     const options = { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true };
                     const createdDate = new Date(data.created_at).toLocaleString('en-US', options);
-
-                    // Create new collection card with link wrapper
-                    const newCardWrapper = document.createElement('a');
-                    newCardWrapper.href = `/collections/${data.id}/places/`;  // Update this URL pattern if needed
-                    newCardWrapper.classList.add('no-underline', 'block', 'transform', 'transition-all', 'duration-200', 'hover:-translate-y-1');
+                    const collectionsGrid = document.getElementById('collectionsGrid');
 
                     const newCard = document.createElement('div');
-                    newCard.classList.add('collection-card', 'bg-white', 'rounded-lg', 'shadow-md', 'overflow-hidden', 'hover:shadow-lg');
+                    newCard.classList.add('collection-card-container');
                     newCard.id = `collection-${data.id}`;
-                    
                     newCard.innerHTML = `
-                        <div class="card-content">
-                            <img src="{% static 'images/d.png' %}" alt="Default Image" class="w-full h-32 object-cover">
-                            <div class="p-4">
-                                <h3 class="text-lg font-semibold mb-2 text-gray-800">${data.name}</h3>
-                                <div class="card-meta text-sm text-gray-500">
-                                    <span>Created ${createdDate}</span>
-                                    <span class="mx-2">•</span>
-                                    <span>0 items</span>
+                        <a href="/collections/${data.id}/places/" class="no-underline block transform transition-all duration-200 hover:-translate-y-1">
+                            <div class="collection-card bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg">
+                                <div class="card-content">
+                                    <img src="{% static 'images/d.png' %}" alt="Default Image" class="w-full h-32 object-cover">
+                                    <div class="p-4">
+                                        <h3 class="text-lg font-semibold mb-2 text-gray-800">${data.name}</h3>
+                                        <div class="card-meta text-sm text-gray-500">
+                                            <span>Created ${createdDate}</span>
+                                            <span class="mx-2">•</span>
+                                            <span>0 items</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
+                        <button onclick="deleteCollection(${data.id})" class="delete-button">✖</button>
                     `;
 
-                    newCardWrapper.appendChild(newCard);
-                    
-                    const collectionsGrid = document.getElementById('collectionsGrid');
-                    const emptyState = collectionsGrid.querySelector('.empty-state');
-                    
-                    if (emptyState) {
-                        emptyState.remove();
-                    }
-                    
-                    collectionsGrid.insertBefore(newCardWrapper, collectionsGrid.firstChild);
-                    
+                    collectionsGrid.prepend(newCard);
+
                     // Close menu and reset input
                     document.getElementById('createMenu').classList.add('hidden');
-                    document.getElementById('collectionName').value = '';
+                    input.value = '';
                 } else {
                     alert(data.error || "Error creating collection. Please try again.");
                 }
@@ -179,7 +170,34 @@
             });
         }
 
-        // Handle Enter key in input
+        function deleteCollection(collectionId) {
+            if (!confirm("Are you sure you want to delete this collection?")) {
+                return;
+            }
+
+            fetch(`/placecollections/delete/${collectionId}/`, {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',  // Ensure CSRF token is passed for authentication
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const collectionCard = document.getElementById(`collection-${collectionId}`);
+                    if (collectionCard) {
+                        collectionCard.remove();
+                    }
+                } else {
+                    alert("Error deleting collection: " + (data.error || "Unknown error"));
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("An error occurred while deleting the collection. Please try again.");
+            });
+        }
+
         document.getElementById('collectionName').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 createCollection();
