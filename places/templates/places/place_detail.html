@@ -1,0 +1,205 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ place.name }}</title>
+    <link rel="stylesheet" href="{% static 'places/css/styles_main.css' %}">
+</head>
+<body>
+
+    <!-- Messages -->
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <div class="message {{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <!-- Main Container -->
+    <div class="container">
+    
+        <!-- Banner Section -->
+        <div class="banner">
+            <img src="{{ place.image.url }}" alt="{{ place.name }}" class="banner-image">
+            <div class="banner-overlay">
+                <div class="rounded-rectangle">
+                    <!-- Primary Information Row -->
+                    <div class="rectangle-section">
+                        <div class="info-item">
+                            <span class="section-text">{{ place.name }}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="section-text">{{ average_rating }}</span>
+                            <img src="{% static 'places/images/star.png' %}" alt="Star" class="rating-star">
+                            <span class="section-text">/5</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="section-text">{{ souvenirs.count }} Souvenirs</span>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-item add-to-collection-btn-container"> 
+                                <button class="add-to-collection-btn">Add to Collection</button>
+                        
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Labels Row -->
+                    <div class="label-section">
+                        <div class="label-item">
+                            <img src="{% static 'places/images/ket_nama.svg' %}" alt="Name Logo" class="label-logo">
+                            <span class="label-text">Name</span>
+                        </div>
+                        <div class="label-item">
+                            <img src="{% static 'places/images/ket_rating.svg' %}" alt="Rating Logo" class="label-logo">
+                            <span class="label-text">Rating</span>
+                        </div>
+                        <div class="label-item">
+                            <img src="{% static 'places/images/ket_souvenir.svg' %}" alt="Souvenir Logo" class="label-logo">
+                            <span class="label-text">Souvenir</span>
+                        </div>
+                        <div class="label-item"></div> <!-- Empty div for button alignment -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Content Sections -->
+        <div class="content-sections">
+            <!-- Overview Section -->
+            <div class="overview-section">
+                <h2 class="section-title">Overview</h2>
+                <!-- Removed horizontal divider as per your instruction -->
+                <p class="overview-content">{{ place.description }}</p>
+
+                <!-- Latest Review Section -->
+                <div class="latest-review-section">
+                    <h3 class="section-title">Latest Reviews</h3>
+                    <!-- Removed horizontal divider -->
+                    <div class="reviews-container">
+                        <div class="user-reviews">
+                            {% for comment in comments %}
+                                <div class="review-item">
+                                    <div class="review-header">
+                                        <img src="{% static 'places/images/profile_placeholder.svg' %}" alt="Profile" class="profile-pic">
+                                        <div class="review-user-info">
+                                            <span class="username">{{ comment.user.username }}</span>
+                                            <span class="review-date">{{ comment.created_at|date:"M d, Y" }}</span>
+                                        </div>
+                                        <div class="review-stars">
+                                            {% for i in "12345" %}
+                                                {% if i|add:"0" <= comment.rating %}
+                                                    <img src="{% static 'places/images/star.png' %}" class="star-icon" alt="Star">
+                                                {% else %}
+                                                    <img src="{% static 'places/images/icon_empty_star.png' %}" class="star-icon" alt="Empty Star">
+                                                {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                    <p class="review-content">{{ comment.content }}</p>
+                                </div>
+                            {% empty %}
+                                <p>No reviews yet. Be the first to review!</p>
+                            {% endfor %}
+                        </div>
+
+                        <!-- Write Your Review Section -->
+                        <div class="write-review-container">
+                            {% if user.is_authenticated %}
+                                <form method="post" action="">
+                                    {% csrf_token %}
+                                    <textarea id="review-input" name="comment" placeholder="Write your review here...">{{ review_data.comment|default_if_none:'' }}</textarea>
+                                    <input type="hidden" name="rating" id="rating-value" value="{{ review_data.rating|default_if_none:'' }}">
+                                    <div class="review-actions">
+                                        <div class="star-rating">
+                                            {% for i in "12345" %}
+                                                <img src="{% if i|add:"0" <= review_data.rating %}{% static 'places/images/star.png' %}{% else %}{% static 'places/images/icon_empty_star.png' %}{% endif %}" class="star" data-value="{{ i }}" alt="{% if i|add:"0" <= review_data.rating %}Star{% else %}Empty Star{% endif %}">
+                                            {% endfor %}
+                                        </div>
+                                        <button type="submit" class="send-btn" aria-label="Send Review">
+                                            <img src="{% static 'places/images/icon_send.png' %}" alt="Send">
+                                        </button>
+                                    </div>
+                                </form>
+                            {% else %}
+                                <div class="login-prompt">
+                                    <p>Please <a href="{% url 'login' %}?next={{ request.path }}">log in</a> to write a review.</p>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Souvenir List Section -->
+            <div class="souvenir-section">
+                <h2 class="section-title">Souvenir List</h2>
+                <!-- Removed horizontal divider -->
+                <div class="souvenir-list">
+                    {% for souvenir in souvenirs %}
+                        <div class="souvenir-item">
+                            <img src="{{ souvenir.image.url }}" alt="{{ souvenir.name }}" class="souvenir-image">
+                            <div class="souvenir-description">
+                                <span class="souvenir-name">{{ souvenir.name }}</span>
+                                <span class="souvenir-price">IDR {{ souvenir.price }}</span>
+                                <span class="souvenir-stock">Stock: <strong>{{ souvenir.stock }}</strong></span>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <!-- Removed horizontal divider -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- JavaScript for Star Rating and Textarea Expansion -->
+    <script>
+        // Star Rating Functionality
+        const stars = document.querySelectorAll('.star-rating .star');
+        const ratingValue = document.getElementById('rating-value');
+        let currentRating = ratingValue.value || 0;
+
+        stars.forEach(star => {
+            star.addEventListener('click', function() {
+                const value = this.getAttribute('data-value');
+                currentRating = value;
+                ratingValue.value = value;
+                updateStars(value);
+            });
+
+            star.addEventListener('mouseover', function() {
+                const value = this.getAttribute('data-value');
+                updateStars(value);
+            });
+
+            star.addEventListener('mouseout', function() {
+                updateStars(currentRating);
+            });
+        });
+
+        function updateStars(rating) {
+            stars.forEach(s => {
+                if (s.getAttribute('data-value') <= rating) {
+                    s.src = "{% static 'places/images/star.png' %}";
+                } else {
+                    s.src = "{% static 'places/images/icon_empty_star.png' %}";
+                }
+            });
+        }
+        
+        // Initialize stars based on existing rating
+        updateStars(currentRating);
+
+        // Auto-expand textarea
+        const reviewInput = document.getElementById('review-input');
+        reviewInput.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = this.scrollHeight + 'px';
+        });
+    </script>
+    
+</body>
+</html>
