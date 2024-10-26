@@ -1,7 +1,8 @@
 /* Base styles */
 body {
     font-family: Arial, sans-serif;
-    line-height: 1.6;
+    background-color: #FFFFFF; /* Latar belakang putih */
+    color: #252525; /* Teks gelap */
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -79,11 +80,11 @@ body {
 
 /* Post card */
 .post-card {
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    padding: 20px;
-    margin-bottom: 20px;
+    background-color: #F9F9F9; /* Latar belakang abu-abu muda */
+    border-radius: 10px; /* Sudut melengkung */
+    padding: 15px; /* Padding untuk setiap jurnal */
+    margin-bottom: 20px; /* Jarak antar jurnal */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Bayangan */
 }
 
 .post-card .header {
@@ -182,31 +183,52 @@ body {
 
 .header {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #2D3748; /* Warna latar belakang */
-    padding: 10px 20px; /* Padding atas dan bawah */
-    border-radius: 20px; /* Membuat sudut melengkung */
-    margin-bottom: 20px; /* Jarak bawah untuk memisahkan dari konten */
+    align-items: center; /* Rata tengah secara vertikal */
 }
 
-.header-item {
-    color: white; /* Warna teks */
-    font-size: 16px; /* Ukuran font */
-    margin: 0 15px; /* Margin kiri dan kanan */
+.header-links {
+    margin-left: auto; /* Memindahkan elemen ini ke kanan */
+}
+
+.publish-button, .nav-link {
+    margin-left: 15px; /* Jarak antara tombol */
+}
+
+.user-info {
+    margin-left: 10px; /* Jarak antara ikon profil dan informasi pengguna */
+    display: flex;
+    flex-direction: column; /* Menempatkan username dan tanggal dalam kolom */
+}
+
+.username-date {
+    display: flex;
+    flex-direction: column; /* Menempatkan username dan tanggal dalam kolom */
+    margin: 0; /* Menghilangkan margin default */
+}
+
+.username {
+    font-weight: bold; /* Menebalkan teks username */
+    color: #252525; /* Warna teks gelap */
+    margin-bottom: 2px; /* Jarak kecil antara username dan tanggal */
+}
+
+.date {
+    color: #6B6B6B; /* Warna teks abu-abu untuk tanggal */
+    font-size: 14px; /* Ukuran font lebih kecil untuk tanggal */
+    margin: 0; /* Menghilangkan margin default */
 }
 
 .publish-button {
-    background-color: #007BFF; /* Warna tombol */
-    color: #FFFFFF; /* Warna teks tombol */
+    background-color: #3279E6; /* Warna tombol biru */
+    color: #FFFFFF; /* Warna teks putih */
     padding: 10px 20px; /* Padding tombol */
-    border-radius: 20px; /* Sudut melengkung */
+    border-radius: 5px; /* Sudut melengkung */
     text-decoration: none; /* Menghilangkan garis bawah */
     transition: background-color 0.3s; /* Efek transisi */
 }
 
 .publish-button:hover {
-    background-color: #0056b3; /* Warna saat hover */
+    background-color: #32BA7C; /* Warna hijau saat hover */
 }
 
 .journal-content {
@@ -231,4 +253,32 @@ body {
 .journal-card h2, /* Untuk username */
 .journal-card .date { /* Untuk tanggal */
     color: #FFFFFF; /* Mengubah warna teks menjadi putih */
+}
+
+.like-button {
+    background-color: #3279E6; /* Warna tombol biru */
+    color: #FFFFFF; /* Warna teks putih */
+    border: none; /* Menghilangkan border */
+    cursor: pointer; /* Pointer saat hover */
+    padding: 10px; /* Padding tombol */
+    border-radius: 5px; /* Sudut melengkung */
+}
+
+.like-button:hover {
+    background-color: #32BA7C; /* Warna hijau saat hover */
+}
+
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column; /* Kolom untuk tampilan kecil */
+        align-items: flex-start; /* Rata kiri */
+    }
+
+    .header-item {
+        margin: 5px 0; /* Margin vertikal */
+    }
+
+    .post-card {
+        padding: 10px; /* Padding lebih kecil untuk tampilan kecil */
+    }
 }

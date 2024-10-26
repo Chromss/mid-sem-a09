@@ -24,19 +24,26 @@
         
         <div class="journal-container">
             <div class="left-column">
-                <div class="navigation">
-                    <span>For You</span>
-                    <a href="{% url 'main:create_journal' %}" class="nav-link">Publish</a>
-                    <a href="{% url 'main:journal_history' %}" class="nav-link">My Journals</a>
+                <!-- Header untuk For You dan tombol -->
+                <div class="header">
+                    <div class="header-item">For You</div>
+                    <div class="header-links">
+                        <a href="{% url 'main:create_journal' %}" class="publish-button">Publish</a>
+                        <a href="{% url 'main:journal_history' %}" class="nav-link">My Journals</a>
+                    </div>
                 </div>
+
+                <!-- Bagian untuk postingan jurnal -->
                 <div class="journal-posts">
                     {% for journal in journals %}
                     <div class="post-card">
                         <div class="header">
                             <img class="profile" src="{% static 'images/profile.png' %}" alt="Profile">
                             <div class="user-info">
-                                <p class="username">{{ journal.author.username }}</p>
-                                <p class="date">{{ journal.created_at|date:"F d, Y" }}</p>
+                                <div class="username-date">
+                                    <p class="username">{{ journal.author.username }}</p>
+                                    <p class="date">{{ journal.created_at|date:"F d, Y" }}</p>
+                                </div>
                             </div>
                         </div>
                         <h2 class="title">{{ journal.title }}</h2>
@@ -49,7 +56,7 @@
                                 {% csrf_token %}
                                 <button type="button" class="like-button">
                                     <img src="{% static 'images/like_icon.png' %}" alt="Like" class="like-icon">
-                                    <span class="likes-count">{{ journal.likes.count }}</span> <!-- Menampilkan jumlah likes -->
+                                    <span class="likes-count">{{ journal.likes.count }}</span>
                                 </button>
                             </form>
                             <a href="{% url 'main:journal_detail' journal.id %}" class="show-detail-link">Show Detail</a>
