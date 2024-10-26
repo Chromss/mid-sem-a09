@@ -58,10 +58,10 @@
                 
                     <div id="days-container"></div>
                 
-                    <button type="button" id="add-day" class="bg-blue-600 text-white px-4 py-2 rounded mb-4">Add Day</button>
-                    <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded">Create Itinerary</button>
+                    <button type="button" id="add-day" class="bg-blue-600 text-white px-4 py-2 rounded-full mb-4 style="border-radius: 20px;">Add Day</button>
+                    <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded-full style="border-radius: 20px;">Create Itinerary</button>
                     <!-- Tambahkan tombol Confirm Editing di sini -->
-                    <button type="button" id="confirm-editing" class="bg-yellow-500 text-white px-4 py-2 rounded ml-2 hidden">Confirm Editing</button>
+                    <button type="button" id="confirm-editing" class="bg-yellow-500 text-white px-4 py-2 rounded-full ml-2 hidden style="border-radius: 20px;">Confirm Editing</button>
                 </form>                
             </div>
         </div>
@@ -145,7 +145,7 @@
 
             // Add destination event listener
             const addDestinationButton = document.createElement('button');
-            addDestinationButton.classList.add('bg-blue-600', 'text-white', 'px-2', 'py-1', 'rounded', 'add-destination');
+            addDestinationButton.classList.add('bg-custom', 'text-black', 'px-2', 'py-1', 'rounded-full', 'add-destination');
             addDestinationButton.textContent = "Add Destination at the Same Day";
             addDestinationButton.onclick = function () {
                 const destinationDiv = document.createElement('div');
@@ -291,8 +291,8 @@
                 <img src="${coverImageUrl}" alt="Cover Image" class="w-full h-48 object-cover rounded-lg mb-4">
                 <h3 class="text-xl font-semibold mb-2">${itineraryName}</h3>
                 <div class="flex justify-between mb-4">
-                    <button class="bg-yellow-500 text-white px-4 py-2 rounded edit-button">Edit</button>
-                    <button class="bg-red-500 text-white px-4 py-2 rounded delete-button">Delete</button>
+                    <button class="bg-yellow-500 text-white px-4 py-2 rounded-full hover:bg-yellow-700 edit-button style="border-radius: 20px;">Edit</button>
+                    <button class="bg-red-500 text-white px-4 py-2 rounded-full hover:bg-red-700 delete-button style="border-radius: 20px;">Delete</button>
                 </div>
             `;
 
@@ -315,12 +315,29 @@
             });
 
             itineraryCard.appendChild(daysContainer);
+
+            // Add share button
+            const shareButton = document.createElement('div');
+            shareButton.classList.add('text-center', 'mt-4');
+            shareButton.innerHTML = `
+                <button class="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-700 transition-colors share-button style="border-radius: 20px;">
+                    Share
+                </button>
+
+            `;
+            itineraryCard.appendChild(shareButton);
+
             document.getElementById('itinerary-cards').appendChild(itineraryCard);
 
             // Set up Edit and Delete button functionality
             setupEditAndDeleteButtons(itineraryCard, itineraryName, coverImageUrl, daysData);
-        }
 
+            // Add share button functionality
+            itineraryCard.querySelector('.share-button').onclick = function() {
+                alert("Shared! Ready to MlakuMlaku? :)");
+            };
+        }
+        
         function setupEditAndDeleteButtons(itineraryCard, itineraryName, coverImageUrl, daysData) {
             itineraryCard.querySelector('.edit-button').onclick = function () {
                 // Isi form dengan data dari card untuk editing
