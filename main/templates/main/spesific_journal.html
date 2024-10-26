@@ -9,10 +9,13 @@
     <style>
         /* CSS tambahan untuk memperbaiki tata letak */
         body {
-            font-family: 'Geist', 'Geist';
-            margin: 0;
-            padding: 0;
-            background-color: #f8f9fa;
+        font-family: 'Geist', 'Geist';
+        margin: 0;
+        padding: 0;
+        background-image: url('{% static "images/spec.png" %}'); /* Ganti dengan path gambar Anda */
+        background-size: cover; /* Mengatur ukuran gambar agar menutupi seluruh halaman */
+        background-position: center; /* Memposisikan gambar di tengah */
+        background-repeat: no-repeat; /* Menghindari pengulangan gambar */
         }
 
         .navbar {
@@ -97,16 +100,8 @@
             margin-bottom: 2rem;
         }
 
-        .related-journals h2 {
-            font-size: 20px;
-            margin-bottom: 1rem;
-            color: #333;
-        }
-
-        .related-journals ul {
-            list-style: none;
-            padding: 0;
-        }
+        
+        
 
         .related-link {
             color: #007bff;
@@ -161,37 +156,27 @@
             <div class="journal-meta">
                 <div class="profile">
                     <img class="profile-img" src="{% static 'images/profile.png' %}" alt="Profile">
-                    <span class="author">{{ journal.author.username }} - {{ journal.created_at|date:"F d, Y" }}</span>
+                    <span class="author">{{ journal.author.username }} - {{ journal.created_at|date:"F d, Y H:i" }}</span>
                 </div>
             </div>
             {% if journal.image %}
                 <img class="journal-image" src="{{ journal.image.url }}" alt="{{ journal.title }}">
             {% endif %}
             <p class="journal-content">{{ journal.content }}</p>
-            <div class="related-journals">
-                <h2>Related Journals</h2>
-                <ul>
-                    <li><a href="#" class="related-link">Next Journal 1</a></li>
-                    <li><a href="#" class="related-link">Next Journal 2</a></li>
-                    <li><a href="#" class="related-link">Next Journal 3</a></li>
-                    <li><a href="#" class="related-link">Next Journal 4</a></li>
-                    <li><a href="#" class="related-link">Next Journal 5</a></li>
-                    <li><a href="#" class="related-link">Next Journal 6</a></li>
-                </ul>
-            </div>
-        </div>
+            
 
-        <!-- Footer -->
-        <footer class="footer">
-            <span>UI Design by Chroms</span>
-            <span>&copy; 2024 MlakuMlaku. All rights reserved.</span>
-            <a href="#" class="footer-link">About</a>
-        </footer>
+       
 
         <!-- Back Button -->
         <div class="back-button">
             <a href="{% url 'main:journal_home' %}" class="back-link">Back to Journal Home</a>
         </div>
     </div>
+     <!-- Footer -->
+     <footer class="footer">
+        <span>UI Design by Chroms</span>
+        <span>&copy; 2024 MlakuMlaku. All rights reserved.</span>
+        <a href="#" class="footer-link">About</a>
+    </footer>
 </body>
 </html>

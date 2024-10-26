@@ -87,7 +87,7 @@ body {
   border-radius: 10px; /* Sudut melengkung */
   padding: 15px; /* Padding untuk setiap jurnal */
   margin-bottom: 20px; /* Jarak antar jurnal */
-  box-shadow: 0 2px 5px rgba(177, 64, 64, 0.722); /* Bayangan */
+  box-shadow: 0 2px 5px gray; /* Ubah warna bayangan di sini */
 }
 
 .post-card .header {
