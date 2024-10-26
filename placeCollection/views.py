@@ -42,10 +42,11 @@ def show_collections(request):
         'collections': collections,
     })
 
+
 def show_collection_places(request, collection_id):
     collection = get_object_or_404(PlaceCollection, id=collection_id)
     places = collection.places.all()
     return render(request, 'collection_places.html', {
         'collection': collection,
-        'places': places,
+        'places': places
     })

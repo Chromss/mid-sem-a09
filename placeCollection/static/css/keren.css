@@ -128,38 +128,57 @@ aside ul li:hover {
     background-color: #e2e8f0;
 }
 
+/* Places Container Styling */
+.places-container {
+    flex: 1;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
+    max-height: 500px;
+    overflow-y: auto;
+}
+
 /* Places Grid Styling */
 .places-grid {
-    width: 75%;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     gap: 16px;
 }
 
 .place-card {
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s;
     text-align: center;
-    padding-bottom: 10px;
+    color: #333;
+    text-decoration: none;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.2s;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .place-card:hover {
     transform: scale(1.03);
 }
 
-.place-card img {
+.place-image-container {
     width: 100%;
-    height: 150px;
+    padding-top: 100%; /* 1:1 Aspect Ratio */
+    position: relative;
+    background-color: #eee;
+}
+
+.place-card img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
 }
 
 .place-card h3 {
     font-size: 14px;
     font-weight: 600;
     color: #333333;
-    margin-top: 8px;
+    margin: 8px 0;
 }

@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 {% load static %}
 <html lang="en">
 <head>
@@ -13,10 +12,7 @@
         <!-- Sidebar -->
         <aside>
             <h2>{{ collection.name }}</h2>
-            <p>25 items</p>
-            <p>14 itineraries</p>
-            <p>4.6 <span class="star">⭐</span> (average)</p>
-
+            <p>{{ places.count }} items</p>
             <hr>
             <h3>Sort by</h3>
             <ul>
@@ -28,19 +24,22 @@
             <div class="back-button-container">
                 <a href="{% url 'placeCollection:show_collections' %}" class="back-button">Back to my collections</a>
             </div>
-            
         </aside>
 
         <!-- Places Grid -->
-        <section class="places-grid">
-            {% for place in places %}
-            <div class="place-card">
-                <img src="{% static 'path/to/image.jpg' %}" alt="{{ place.title }}">
-                <h3>{{ place.title }}</h3>
+        <section class="places-container">
+            <div class="places-grid">
+                {% for place in places %}
+                <a href="{% url 'place_detail' place.id %}" class="place-card">
+                    <div class="place-image-container">
+                        <img src="{{ place.image.url }}" alt="{{ place.name }}" class="place-image">
+                    </div>
+                    <h3 class="place-name">{{ place.name }}</h3>
+                </a>
+                {% empty %}
+                <p>No places in this collection.</p>
+                {% endfor %}
             </div>
-            {% empty %}
-            <p>No places in this collection.</p>
-            {% endfor %}
         </section>
     </div>
 </body>

@@ -1,12 +1,6 @@
 # models.py
 from django.db import models
-
-class Place(models.Model):
-    title = models.CharField(max_length=200)
-    content = models.TextField()
-
-    def __str__(self):
-        return self.title
+from places.models import Place
 
 class PlaceCollection(models.Model):
     id = models.AutoField(primary_key=True)  # Explicitly define AutoField
