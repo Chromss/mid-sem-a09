@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="collection-places-page">
+    <h2 class="text-2xl font-bold mb-2">{{ collection.name }}</h2>
+    <p class="text-gray-600 mb-4">Places in this collection:</p>
+
+    <div class="places-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for place in places %}
+        <div class="place-card bg-white rounded-lg shadow-md overflow-hidden">
+            <img src="{{ place.image.url }}" alt="{{ place.name }}" class="w-full h-32 object-cover">
+            <div class="p-4">
+                <h3 class="text-lg font-semibold mb-2">{{ place.name }}</h3>
+                <p class="text-sm text-gray-500">{{ place.description }}</p>
+                <span class="text-yellow-500">{{ place.rating_avg }} ★</span>
+            </div>
+        </div>
+        {% empty %}
+        <p>No places found in this collection.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
