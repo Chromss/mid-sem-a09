@@ -1,462 +1,111 @@
 .spesific-journal {
-    background-color: #f3f4f8;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    width: 100%;
-  }
-  
-  .spesific-journal .div {
-    background-color: var(--primary-light);
-    height: 2330px;
-    overflow: hidden;
-    position: relative;
-    width: 1440px;
-  }
-  
-  .spesific-journal .footer {
-    background-color: black;
-    height: 80px;
-    left: 0;
-    position: absolute;
-    top: 2250px;
-    width: 1446px;
-  }
-  
-  .spesific-journal .overlap-group {
-    background-color: var(--primary-dark);
-    height: 80px;
-    position: relative;
-    width: 1440px;
-  }
-  
-  .spesific-journal .text-wrapper {
-    color: var(--light-text);
-    font-family: "Geist-Medium", Helvetica;
-    font-size: 16px;
-    font-weight: 500;
-    height: 19px;
-    left: 574px;
-    letter-spacing: -0.36px;
-    line-height: 19.2px;
-    position: absolute;
-    text-align: center;
-    top: 30px;
-    white-space: nowrap;
-  }
-  
-  .spesific-journal .text-wrapper-2 {
-    color: var(--light-text);
-    font-family: "Geist-Medium", Helvetica;
-    font-size: 16px;
-    font-weight: 500;
-    height: 19px;
-    left: 58px;
-    letter-spacing: -0.36px;
-    line-height: 19.2px;
-    position: absolute;
-    top: 30px;
-    white-space: nowrap;
-  }
-  
-  .spesific-journal .text-wrapper-3 {
-    color: var(--light-text);
-    font-family: "Geist-Medium", Helvetica;
-    font-size: 16px;
-    font-weight: 500;
-    height: 19px;
-    left: 1337px;
-    letter-spacing: -0.36px;
-    line-height: 19.2px;
-    position: absolute;
-    text-align: right;
-    top: 30px;
-    white-space: nowrap;
-  }
-  
-  .spesific-journal .navbar {
-    height: 36px;
-    left: 87px;
-    position: absolute;
-    top: 30px;
-    width: 1276px;
-  }
-  
-  .spesific-journal .text-wrapper-4 {
-    color: var(--dark-text);
-    font-family: "Geist-Medium", Helvetica;
-    font-size: 16px;
-    font-weight: 500;
-    height: 19px;
-    left: 918px;
-    letter-spacing: -0.36px;
-    line-height: 19.2px;
-    position: absolute;
-    top: 9px;
-    white-space: nowrap;
-  }
-  
-  .spesific-journal .text-wrapper-5 {
-    color: var(--dark-text);
-    font-family: "Geist-Medium", Helvetica;
-    font-size: 16px;
-    font-weight: 500;
-    height: 19px;
-    left: 1057px;
-    letter-spacing: -0.36px;
-    line-height: 19.2px;
-    position: absolute;
-    top: 9px;
-    white-space: nowrap;
-  }
-  
-  .spesific-journal .text-wrapper-6 {
-    color: var(--dark-text);
-    font-family: "Geist-Medium", Helvetica;
-    font-size: 16px;
-    font-weight: 500;
-    height: 19px;
-    left: 1191px;
-    letter-spacing: -0.36px;
-    line-height: 19.2px;
-    position: absolute;
-    top: 9px;
-    white-space: nowrap;
-  }
-  
-  .spesific-journal .text-wrapper-7 {
-    color: var(--dark-text);
-    font-family: "Geist-Bold", Helvetica;
-    font-size: 16px;
-    font-weight: 700;
-    height: 19px;
-    left: 585px;
-    letter-spacing: -0.36px;
-    line-height: 19.2px;
-    position: absolute;
-    text-align: center;
-    top: 9px;
-    white-space: nowrap;
-  }
-  
-  .spesific-journal .text-wrapper-8 {
-    color: var(--dark-text);
-    font-family: "Geist-Medium", Helvetica;
-    font-size: 16px;
-    font-weight: 500;
-    height: 19px;
-    left: 166px;
-    letter-spacing: -0.36px;
-    line-height: 19.2px;
-    position: absolute;
-    top: 9px;
-    white-space: nowrap;
-  }
-  
-  .spesific-journal .button {
-    all: unset;
-    box-sizing: border-box;
-    height: 36px;
-    left: 0;
-    position: absolute;
-    top: 0;
-    width: 122px;
-  }
-  
-  .spesific-journal .div-wrapper {
-    background-color: var(--blue-accent);
-    border-radius: 999px;
-    height: 36px;
-    position: relative;
-    width: 120px;
-  }
-  
-  .spesific-journal .text-wrapper-9 {
-    color: var(--light-text);
-    font-family: "Geist-SemiBold", Helvetica;
-    font-size: 16px;
-    font-weight: 600;
-    height: 17px;
-    left: 32px;
-    letter-spacing: -0.48px;
-    line-height: 16.8px;
-    position: absolute;
-    text-align: center;
-    top: 9px;
-    white-space: nowrap;
-  }
-  
-  .spesific-journal .overlap {
-    background-color: var(--primary-dark);
-    border-radius: 999px;
-    height: 56px;
-    left: 220px;
-    position: absolute;
-    top: 146px;
-    width: 1000px;
-  }
-  
-  .spesific-journal .text-wrapper-10 {
-    color: var(--light-text);
-    font-family: "Geist-Medium", Helvetica;
-    font-size: 16px;
-    font-weight: 500;
-    height: 19px;
-    left: 70px;
-    letter-spacing: -0.36px;
-    line-height: 19.2px;
-    position: absolute;
-    top: 18px;
-    white-space: nowrap;
-  }
-  
-  .spesific-journal .text-wrapper-11 {
-    color: var(--light-text);
-    font-family: "Geist-Bold", Helvetica;
-    font-size: 16px;
-    font-weight: 700;
-    height: 19px;
-    left: 423px;
-    letter-spacing: -0.36px;
-    line-height: 19.2px;
-    position: absolute;
-    top: 18px;
-    white-space: nowrap;
-  }
-  
-  .spesific-journal .overlap-2 {
-    background-image: url(./rectangle-76.svg);
-    background-size: 100% 100%;
-    height: 340px;
-    left: 215px;
-    position: absolute;
-    top: 212px;
-    width: 1010px;
-  }
-  
-  .spesific-journal .p {
-    color: var(--dark-text);
-    font-family: "Geist-SemiBold", Helvetica;
-    font-size: 48px;
-    font-weight: 600;
-    height: 116px;
-    left: 85px;
-    letter-spacing: -1.08px;
-    line-height: 57.6px;
-    position: absolute;
-    text-align: center;
-    top: 58px;
-    width: 839px;
-  }
-  
-  .spesific-journal .profile {
-    height: 24px;
-    left: 402px;
-    position: absolute;
-    top: 193px;
-    width: 209px;
-  }
-  
-  .spesific-journal .kinardes-oct {
-    color: var(--fade-text);
-    font-family: "Geist-Regular", Helvetica;
-    font-size: 16px;
-    font-weight: 400;
-    height: 19px;
-    left: 36px;
-    letter-spacing: -0.36px;
-    line-height: 19.2px;
-    position: absolute;
-    text-align: center;
-    top: 2px;
-    white-space: nowrap;
-  }
-  
-  .spesific-journal .img {
-    height: 26px;
-    left: -1px;
-    position: absolute;
-    top: -1px;
-    width: 26px;
-  }
-  
-  .spesific-journal .overlap-wrapper {
-    all: unset;
-    box-sizing: border-box;
-    height: 30px;
-    left: 355px;
-    position: absolute;
-    top: 244px;
-    width: 142px;
-  }
-  
-  .spesific-journal .overlap-3 {
-    background-color: var(--green-accent);
-    border-radius: 999px;
-    height: 30px;
-    position: relative;
-    width: 140px;
-  }
-  
-  .spesific-journal .text-wrapper-12 {
-    color: var(--dark-text);
-    font-family: "Geist-Medium", Helvetica;
-    font-size: 14px;
-    font-weight: 500;
-    height: 17px;
-    left: 56px;
-    letter-spacing: -0.42px;
-    line-height: 16.8px;
-    position: absolute;
-    top: 6px;
-    white-space: nowrap;
-  }
-  
-  .spesific-journal .overlap-group-wrapper {
-    all: unset;
-    box-sizing: border-box;
-    height: 30px;
-    left: 515px;
-    position: absolute;
-    top: 244px;
-    width: 142px;
-  }
-  
-  .spesific-journal .overlap-4 {
-    background-color: var(--light-text);
-    border: 0.75px solid;
-    border-color: var(--line);
-    border-radius: 999px;
-    height: 30px;
-    position: relative;
-    width: 140px;
-  }
-  
-  .spesific-journal .text-wrapper-13 {
-    color: var(--fade-text);
-    font-family: "Geist-Medium", Helvetica;
-    font-size: 14px;
-    font-weight: 500;
-    height: 17px;
-    left: 53px;
-    letter-spacing: -0.42px;
-    line-height: 16.8px;
-    position: absolute;
-    top: 5px;
-    white-space: nowrap;
-  }
-  
-  .spesific-journal .it-started-as-a {
-    color: var(--dark-text);
-    font-family: "Geist-Regular", Helvetica;
-    font-size: 18px;
-    font-weight: 400;
-    left: 248px;
-    letter-spacing: -0.41px;
-    line-height: 23.4px;
-    position: absolute;
-    top: 1086px;
-    width: 940px;
-  }
-  
-  .spesific-journal .text-wrapper-14 {
-    color: var(--dark-text);
-    font-family: "Geist-Medium", Helvetica;
-    font-size: 20px;
-    font-weight: 500;
-    left: 248px;
-    letter-spacing: -0.45px;
-    line-height: 26.0px;
-    position: absolute;
-    top: 1583px;
-    white-space: nowrap;
-  }
-  
-  .spesific-journal .text-wrapper-15 {
-    color: var(--dark-text);
-    font-family: "Geist-Medium", Helvetica;
-    font-size: 20px;
-    font-weight: 500;
-    left: 248px;
-    letter-spacing: -0.45px;
-    line-height: 26.0px;
-    position: absolute;
-    top: 1899px;
-    white-space: nowrap;
-  }
-  
-  .spesific-journal .rectangle {
-    height: 400px;
-    left: 220px;
-    object-fit: cover;
-    position: absolute;
-    top: 607px;
-    width: 1000px;
-  }
-  
-  .spesific-journal .line {
-    height: 1px;
-    left: 240px;
-    object-fit: cover;
-    position: absolute;
-    top: 1056px;
-    width: 961px;
-  }
-  
-  .spesific-journal .line-2 {
-    height: 1px;
-    left: 240px;
-    object-fit: cover;
-    position: absolute;
-    top: 1554px;
-    width: 961px;
-  }
-  
-  .spesific-journal .next-card {
-    height: 254px;
-    left: 243px;
-    position: absolute;
-    top: 1620px;
-    width: 290px;
-  }
-  
-  .spesific-journal .next-card-2 {
-    height: 254px;
-    left: 243px;
-    position: absolute;
-    top: 1936px;
-    width: 290px;
-  }
-  
-  .spesific-journal .next-card-3 {
-    height: 254px;
-    left: 575px;
-    position: absolute;
-    top: 1936px;
-    width: 290px;
-  }
-  
-  .spesific-journal .next-card-4 {
-    height: 254px;
-    left: 907px;
-    position: absolute;
-    top: 1936px;
-    width: 290px;
-  }
-  
-  .spesific-journal .next-card-5 {
-    height: 254px;
-    left: 575px;
-    position: absolute;
-    top: 1620px;
-    width: 290px;
-  }
-  
-  .spesific-journal .next-card-6 {
-    height: 254px;
-    left: 907px;
-    position: absolute;
-    top: 1620px;
-    width: 290px;
-  }
-  
+  background-color: #f3f4f8;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.spesific-journal .div {
+  background-color: var(--primary-light);
+  overflow: hidden;
+  max-width: 1440px; /* Lebar maksimum */
+  margin: 20px; /* Margin untuk kontainer */
+  border-radius: 8px; /* Sudut melengkung */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Bayangan */
+}
+
+.spesific-journal header {
+  padding: 20px; /* Padding untuk header */
+  text-align: center; /* Rata tengah */
+}
+
+.spesific-journal .p {
+  font-family: "Geist-SemiBold", Helvetica;
+  font-weight: 600;
+  color: var(--dark-text);
+  font-size: 32px; /* Ukuran font judul */
+  margin-bottom: 10px; /* Jarak bawah judul */
+}
+
+.spesific-journal .profile {
+  display: flex; /* Menggunakan flexbox untuk tata letak */
+  align-items: center; /* Rata tengah secara vertikal */
+  justify-content: center; /* Rata tengah secara horizontal */
+  margin-bottom: 20px; /* Jarak bawah */
+}
+
+.spesific-journal .img {
+  width: 26px; /* Ukuran gambar profil */
+  height: 26px; /* Ukuran gambar profil */
+  border-radius: 50%; /* Membuat gambar bulat */
+  margin-right: 10px; /* Jarak antara gambar dan teks */
+}
+
+.spesific-journal .username {
+  font-family: "Geist-Medium", Helvetica;
+  font-weight: 500;
+  color: var(--dark-text);
+  font-size: 16px; /* Ukuran font username */
+}
+
+.spesific-journal .kinardes-oct {
+  font-family: "Geist-Regular", Helvetica;
+  font-weight: 400;
+  color: var(--fade-text);
+  font-size: 16px; /* Ukuran font tanggal */
+  margin-left: 5px; /* Jarak antara username dan tanggal */
+}
+
+.spesific-journal .overlap {
+  position: relative;
+  width: 100%; /* Lebar penuh */
+  height: auto; /* Tinggi otomatis */
+}
+
+.spesific-journal .rectangle {
+  width: 100%; /* Lebar penuh */
+  height: auto; /* Tinggi otomatis */
+  border-radius: 8px; /* Sudut melengkung */
+}
+
+.spesific-journal .content {
+  padding: 20px; /* Padding untuk konten */
+  font-family: "Geist-Regular", Helvetica;
+  font-weight: 400;
+  color: var(--dark-text);
+  font-size: 18px; /* Ukuran font konten */
+  line-height: 1.6; /* Jarak antar baris */
+}
+
+.spesific-journal .footer {
+  padding: 20px; /* Padding untuk footer */
+  text-align: center; /* Rata tengah */
+}
+
+.spesific-journal .overlap-group {
+  background-color: var(--primary-dark);
+  padding: 10px; /* Padding untuk grup */
+  border-radius: 8px; /* Sudut melengkung */
+}
+
+.spesific-journal .text-wrapper {
+  color: var(--light-text); /* Warna teks footer */
+  font-size: 16px; /* Ukuran font footer */
+}
+
+.back-button {
+  text-align: center; /* Rata tengah */
+  margin: 20px 0; /* Jarak atas dan bawah */
+}
+
+.back-link {
+  background-color: var(--blue-accent); /* Warna tombol */
+  color: #ffffff; /* Warna teks tombol */
+  padding: 10px 20px; /* Padding tombol */
+  border-radius: 5px; /* Sudut melengkung */
+  text-decoration: none; /* Menghilangkan garis bawah */
+}
+
+.back-link:hover {
+  background-color: #0056b3; /* Warna saat hover */
+}

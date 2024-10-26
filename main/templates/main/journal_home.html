@@ -24,26 +24,24 @@
         
         <div class="journal-container">
             <div class="left-column">
-                <!-- Header untuk For You dan tombol -->
                 <div class="header">
-                    <div class="header-item">For You</div>
+                    <h2>For You</h2>
                     <div class="header-links">
                         <a href="{% url 'main:create_journal' %}" class="publish-button">Publish</a>
-                        <a href="{% url 'main:journal_history' %}" class="nav-link">My Journals</a>
+                        <a href="{% url 'main:journal_history' %}" class="my-journals-button">My Journals</a>
                     </div>
                 </div>
 
-                <!-- Bagian untuk postingan jurnal -->
-                <div class="journal-posts">
-                    {% for journal in journals %}
+                {% for journal in journals %}
                     <div class="post-card">
                         <div class="header">
-                            <img class="profile" src="{% static 'images/profile.png' %}" alt="Profile">
+                            <svg class="profile-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="11" fill="white" stroke="black" stroke-width="2"/> <!-- Lingkaran putih dengan outline hitam -->
+                                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-3.31 0-6 1.69-6 4v1h12v-1c0-2.31-2.69-4-6-4z" fill="black"/> <!-- Ikon wajah -->
+                            </svg>
                             <div class="user-info">
-                                <div class="username-date">
-                                    <p class="username">{{ journal.author.username }}</p>
-                                    <p class="date">{{ journal.created_at|date:"F d, Y" }}</p>
-                                </div>
+                                <p class="username">{{ journal.author.username }}</p>
+                                <p class="date">{{ journal.created_at|date:"F d, Y" }}</p>
                             </div>
                         </div>
                         <h2 class="title">{{ journal.title }}</h2>
@@ -62,23 +60,49 @@
                             <a href="{% url 'main:journal_detail' journal.id %}" class="show-detail-link">Show Detail</a>
                         </div>
                     </div>
-                    {% if not forloop.last %}
-                    <div class="card-separator"></div>
-                    {% endif %}
-                    {% endfor %}
-                </div>
+                {% empty %}
+                    <p>No journals available.</p>
+                {% endfor %}
             </div>
             <div class="right-column">
-                <div class="top-journals">
-                    <h2>Top Journals</h2>
-                    <p>Top Journals Description</p>
-                    <!-- Daftar top journals -->
+                <h2>Top Journals</h2>
+                <p>Top Journals Description</p>
+
+                <h2>Filter Souvenir</h2>
+                <form method="GET" action="{% url 'main:journal_home' %}">
+                    <label for="price">Filter by Price:</label>
+                    <select name="price" id="price">
+                        <option value="">Select</option>
+                        <option value="low_to_high">Lowest to Highest</option>
+                        <option value="high_to_low">Highest to Lowest</option>
+                    </select>
+
+                    <label for="rating">Filter by Rating:</label>
+                    <select name="rating" id="rating">
+                        <option value="">Select</option>
+                        <option value="high_to_low">Highest to Lowest</option>
+                        <option value="low_to_high">Lowest to Highest</option>
+                    </select>
+
+                    <button type="submit">Filter</button>
+                </form>
+
+                <h2>Available Souvenirs</h2>
+                <div class="souvenir-list">
+                    {% for souvenir in souvenirs %}
+                        <div class="souvenir-item">
+                            <h3>{{ souvenir.name }}</h3>
+                            <p>Price: {{ souvenir.price }}</p>
+                            <p>Rating: {{ souvenir.rating }}</p>
+                            <p>{{ souvenir.description }}</p>
+                        </div>
+                    {% empty %}
+                        <p>No souvenirs available.</p>
+                    {% endfor %}
                 </div>
-                <div class="recent-journals">
-                    <h2>Recent Journals</h2>
-                    <p>Recent Journals Description</p>
-                    <!-- Daftar recent journals -->
-                </div>
+
+                <h2>Recent Journals</h2>
+                <p>Recent Journals Description</p>
             </div>
         </div>
     </div>
@@ -115,5 +139,19 @@
             });
         });
     </script>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-left">
+                <p>UI Design by Chroms</p>
+            </div>
+            <div class="footer-center">
+                <p>&copy; 2024 MlakuMlaku. All rights reserved.</p>
+            </div>
+            <div class="footer-right">
+                <p>About</p>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>

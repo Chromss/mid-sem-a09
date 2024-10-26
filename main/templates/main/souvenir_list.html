@@ -1,0 +1,29 @@
+<form method="GET" action="{% url 'main:souvenir_list' %}">
+    <label for="price">Filter by Price:</label>
+    <select name="price" id="price">
+        <option value="">Select</option>
+        <option value="low_to_high">Lowest to Highest</option>
+        <option value="high_to_low">Highest to Lowest</option>
+    </select>
+
+    <label for="rating">Filter by Rating:</label>
+    <select name="rating" id="rating">
+        <option value="">Select</option>
+        <option value="high_to_low">Highest to Lowest</option>
+        <option value="low_to_high">Lowest to Highest</option>
+    </select>
+
+    <button type="submit">Filter</button>
+</form>
+
+<div class="souvenir-list">
+    {% for souvenir in souvenirs %}
+        <div class="souvenir-item">
+            <h2>{{ souvenir.name }}</h2>
+            <p>Price: {{ souvenir.price }}</p>
+            <p>Rating: {{ souvenir.rating }}</p>
+            <p>{{ souvenir.description }}</p>
+            <a href="{% url 'main:create_journal' %}?souvenir_id={{ souvenir.id }}" class="create-journal-button">Create Journal</a>
+        </div>
+    {% endfor %}
+</div>

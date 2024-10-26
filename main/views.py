@@ -7,27 +7,75 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.utils import timezone
-from .models import Journal
+from .models import Journal, Souvenir
 from .jurnalform import JournalForm
 from django.http import JsonResponse
 
+
+@login_required
+def landing_page(request):
+    return render(request, 'main/landing_page.html', {'user': request.user})
+
 @login_required
 def journal_home(request):
-    journals = Journal.objects.all().order_by('-created_at')  # Urutkan berdasarkan tanggal terbaru
+    journals = Journal.objects.all().order_by('-created_at')
     return render(request, 'main/journal_home.html', {'journals': journals})
+    # journals = Journal.objects.all().order_by('-created_at')  # Urutkan berdasarkan tanggal terbaru
+    # souvenirs = Souvenir.objects.all()  # Ambil semua souvenir untuk filter
 
+    # # Filter berdasarkan harga
+    # price_filter = request.GET.get('price')
+    # if price_filter == 'low_to_high':
+    #     souvenirs = souvenirs.order_by('price')
+    # elif price_filter == 'high_to_low':
+    #     souvenirs = souvenirs.order_by('-price')
+
+    # # Filter berdasarkan rating
+    # rating_filter = request.GET.get('rating')
+    # if rating_filter == 'high_to_low':
+    #     souvenirs = souvenirs.order_by('-rating')
+    # elif rating_filter == 'low_to_high':
+    #     souvenirs = souvenirs.order_by('rating')
+
+    # return render(request, 'main/journal_home.html', {'journals': journals, 'souvenirs': souvenirs})
+# def journal_home(request):
+#     journals = Journal.objects.all().order_by('-created_at')  # Urutkan berdasarkan tanggal terbaru
+#     return render(request, 'main/journal_home.html', {'journals': journals})
+
+# @login_required(login_url='/login')
+# def create_journal(request):
+#        if request.method == 'POST':
+#            form = JournalForm(request.POST, request.FILES)
+#            if form.is_valid():
+#                journal = form.save(commit=False)
+#                journal.author = request.user
+#                journal.save()
+#                return redirect('main:journal_home')
+#        else:
+#            form = JournalForm()
+#        return render(request, 'main/create_journal.html', {'form': form})
 @login_required(login_url='/login')
 def create_journal(request):
-       if request.method == 'POST':
-           form = JournalForm(request.POST, request.FILES)
-           if form.is_valid():
-               journal = form.save(commit=False)
-               journal.author = request.user
-               journal.save()
-               return redirect('main:journal_home')
-       else:
-           form = JournalForm()
-       return render(request, 'main/create_journal.html', {'form': form})
+    # Ambil souvenir_id dari query parameter jika ada
+    souvenir_id = request.GET.get('souvenir_id')
+
+    if request.method == 'POST':
+        form = JournalForm(request.POST, request.FILES)
+        if form.is_valid():
+            journal = form.save(commit=False)
+            journal.author = request.user
+            
+            # Jika souvenir_id ada, kaitkan dengan jurnal
+            if souvenir_id:
+                souvenir = get_object_or_404(Souvenir, id=souvenir_id)
+                journal.souvenir = souvenir  # Asumsikan ada field 'souvenir' di model Journal
+            
+            journal.save()
+            return redirect('main:journal_home')
+    else:
+        form = JournalForm()
+    
+    return render(request, 'main/create_journal.html', {'form': form, 'souvenir_id': souvenir_id})
 
 @login_required(login_url='/login')
 def like_journal(request, journal_id):
@@ -41,6 +89,25 @@ def like_journal(request, journal_id):
             liked = True
         return JsonResponse({'liked': liked, 'likes_count': journal.likes.count()})
     return JsonResponse({'error': 'User not authenticated'}, status=401)
+
+def souvenir_list(request):
+    souvenirs = Souvenir.objects.all()
+
+    # Filter berdasarkan harga
+    price_filter = request.GET.get('price')
+    if price_filter == 'low_to_high':
+        souvenirs = souvenirs.order_by('price')
+    elif price_filter == 'high_to_low':
+        souvenirs = souvenirs.order_by('-price')
+
+    # Filter berdasarkan rating
+    rating_filter = request.GET.get('rating')
+    if rating_filter == 'high_to_low':
+        souvenirs = souvenirs.order_by('-rating')
+    elif rating_filter == 'low_to_high':
+        souvenirs = souvenirs.order_by('rating')
+
+    return render(request, 'main/souvenir_list.html', {'souvenirs': souvenirs})
 # def like_journal(request, journal_id):
 #     journal = get_object_or_404(Journal, id=journal_id)
 #     if request.user.is_authenticated:

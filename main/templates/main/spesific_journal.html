@@ -7,16 +7,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ journal.title }}</title>
 </head>
-<body class="journal">
+<body class="spesific-journal">
     <div class="div">
-        <h1>{{ journal.title }}</h1>
-        <p class="date">{{ journal.created_at|date:"F d, Y, H:i" }}</p>
-        <p class="author">By: {{ journal.author.username }}</p>
-        {% if journal.image %}
-            <img src="{{ journal.image.url }}" alt="{{ journal.title }}" class="journal-image">
-        {% endif %}
-        <p>{{ journal.content }}</p>
-        <a href="{% url 'main:journal_home' %}" class="back-button">Back to Journal Home</a>
+        <div class="navbar">
+            <a href="{% url 'main:register' %}" class="text-wrapper-2">Sign Up</a>
+            <a href="{% url 'main:login' %}" class="text-wrapper-3">Log in</a>
+            <div class="text-wrapper-4">MlakuMlaku</div>
+            <div class="text-wrapper-5">Itinerary</div>
+            <a href="{% url 'main:journal_home' %}" class="text-wrapper-6">Journal</a>
+            <div class="text-wrapper-7">Collection</div>
+        </div>
+        <div class="overlap">
+            <div class="text-wrapper-10">Journal Details</div>
+            <div class="text-wrapper-11">{{ journal.title }}</div>
+        </div>
+        <div class="overlap-2">
+            <p class="p">{{ journal.title }}</p>
+            <div class="profile">
+                <img class="img" src="{% static 'images/profile.png' %}" alt="Profile">
+                <div class="kinardes-oct">{{ journal.author.username }} - {{ journal.created_at|date:"F d, Y" }}</div>
+            </div>
+            {% if journal.image %}
+                <img class="rectangle" src="{{ journal.image.url }}" alt="{{ journal.title }}">
+            {% endif %}
+            <div class="it-started-as-a">{{ journal.content }}</div>
+            <div class="line"></div>
+            <div class="text-wrapper-14">Related Journals</div>
+            <div class="line-2"></div>
+            <div class="next-card">
+                <div class="text-wrapper-15">Next Journal 1</div>
+            </div>
+            <div class="next-card-2">
+                <div class="text-wrapper-15">Next Journal 2</div>
+            </div>
+            <div class="next-card-3">
+                <div class="text-wrapper-15">Next Journal 3</div>
+            </div>
+            <div class="next-card-4">
+                <div class="text-wrapper-15">Next Journal 4</div>
+            </div>
+            <div class="next-card-5">
+                <div class="text-wrapper-15">Next Journal 5</div>
+            </div>
+            <div class="next-card-6">
+                <div class="text-wrapper-15">Next Journal 6</div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="overlap-group">
+                <div class="text-wrapper">UI Design by Chroms</div>
+                <div class="text-wrapper-2">&copy; 2024 MlakuMlaku. All rights reserved.</div>
+                <div class="text-wrapper-3">About</div>
+            </div>
+        </div>
+        <div class="back-button">
+            <a href="{% url 'main:journal_home' %}" class="back-link">Back to Journal Home</a>
+        </div>
     </div>
 </body>
 </html>
