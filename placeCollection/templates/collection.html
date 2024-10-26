@@ -1,0 +1,190 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/collections.css' %}">
+    <title>{% block title %}MlakuMlaku{% endblock %}</title>
+</head>
+<body>
+
+{% load static %}
+
+{% block content %}
+<div class="collections-page">
+    <!-- Collections Section -->
+    <section class="section-container">
+        <div class="section-header">
+            <div class="header-content">
+                <h2 class="text-2xl font-bold mb-2">Your Collections</h2>
+                <p class="text-gray-600">Discover your favorite destinations neatly organized into personalized albums.</p>
+            </div>
+            <div class="header-actions">
+                <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors" 
+                        onclick="openCreateMenu(event)">
+                    Create Collection
+                </button>
+            </div>
+        </div>
+
+        <div class="collections-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8" id="collectionsGrid">
+            {% if collection %}
+                {% for coll in collection %}
+                <a href="{% url 'placeCollection:show_collection_places' coll.id %}" class="no-underline">
+                    <div class="collection-card bg-white rounded-lg shadow-md overflow-hidden" id="collection-{{ coll.id }}">
+                        <div class="card-content">
+                            <img src="{% static 'images/d.png' %}" alt="Default Image" class="w-full h-32 object-cover">
+                            <div class="p-4">
+                                <h3 class="text-lg font-semibold mb-2">{{ coll.name }}</h3>
+                                <div class="card-meta text-sm text-gray-500">
+                                    <span>Created {{ coll.created_at|date:"M d, Y, h:i a" }}</span>
+                                    <span class="mx-2">•</span>
+                                    <span>{{ coll.places.count|default:"0" }} items</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+            {% else %}
+                <div class="empty-state text-center py-10 col-span-full">
+                    <p class="text-gray-500">No collections found. Start by creating your first collection!</p>
+                </div>
+            {% endif %}
+        </div>
+        
+    </section>
+
+    <!-- Popup Menu for Create Collection -->
+    <div id="createMenu" class="hidden fixed bg-white rounded-lg shadow-xl" style="min-width: 200px;">
+        <div class="p-4">
+            <input type="text" 
+                   id="collectionName" 
+                   placeholder="Collection name"
+                   maxlength="20"
+                   class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mb-3">
+            <button onclick="createCollection()" 
+                    class="w-full bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition-colors">
+                Create
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let currentButton = null;
+
+        function openCreateMenu(event) {
+            const button = event.target;
+            const menu = document.getElementById('createMenu');
+            const input = document.getElementById('collectionName');
+            
+            // Get button position
+            const buttonRect = button.getBoundingClientRect();
+            
+            // Position menu below button
+            menu.style.position = 'absolute';
+            menu.style.top = `${buttonRect.bottom + window.scrollY + 5}px`;
+            menu.style.left = `${buttonRect.left + window.scrollX}px`;
+            
+            // Show menu
+            menu.classList.remove('hidden');
+            
+            // Focus input
+            input.value = '';
+            input.focus();
+            
+            // Store current button
+            currentButton = button;
+            
+            // Close menu when clicking outside
+            document.addEventListener('click', closeMenuOnClickOutside);
+        }
+
+        function closeMenuOnClickOutside(event) {
+            const menu = document.getElementById('createMenu');
+            if (!menu.contains(event.target) && event.target !== currentButton) {
+                menu.classList.add('hidden');
+                document.removeEventListener('click', closeMenuOnClickOutside);
+            }
+        }
+
+        function createCollection() {
+            const name = document.getElementById('collectionName').value.trim();
+            if (!name) {
+                alert('Please enter a collection name');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('name', name);
+            formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+
+            fetch("{% url 'placeCollection:create_collection' %}", {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                },
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Format the created date to match the format after refresh
+                    const options = { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true };
+                    const createdDate = new Date(data.created_at).toLocaleString('en-US', options);
+
+                    // Create new collection card
+                    const newCard = document.createElement('div');
+                    newCard.classList.add('collection-card', 'bg-white', 'rounded-lg', 'shadow-md', 'overflow-hidden');
+                    newCard.id = `collection-${data.id}`;
+                    
+                    newCard.innerHTML = `
+                        <div class="card-content">
+                            <img src="{% static 'images/c.jpg' %}" alt="Default Image" class="w-full h-32 object-cover">
+                            <div class="p-4">
+                                <h3 class="text-lg font-semibold mb-2">${data.name}</h3>
+                                <div class="card-meta text-sm text-gray-500">
+                                    <span>Created ${createdDate}</span>
+                                    <span class="mx-2">•</span>
+                                    <span>0 items</span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+
+                    const collectionsGrid = document.getElementById('collectionsGrid');
+                    const emptyState = collectionsGrid.querySelector('.empty-state');
+                    
+                    if (emptyState) {
+                        emptyState.remove();
+                    }
+                    
+                    collectionsGrid.insertBefore(newCard, collectionsGrid.firstChild);
+                    
+                    // Close menu and reset input
+                    document.getElementById('createMenu').classList.add('hidden');
+                    document.getElementById('collectionName').value = '';
+                } else {
+                    alert(data.error || "Error creating collection. Please try again.");
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("An error occurred. Please try again.");
+            });
+        }
+
+        // Handle Enter key in input
+        document.getElementById('collectionName').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                createCollection();
+            }
+        });
+    </script>
+</div>
+{% endblock %}
+
+
+</body>
+</html>

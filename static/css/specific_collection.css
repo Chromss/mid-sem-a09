@@ -1,0 +1,153 @@
+/* Basic Styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f7fa;
+    color: #333;
+    margin: 0;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.header-button {
+    background-color: #3182ce;
+    color: #fff;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+    font-size: 14px;
+}
+
+.header-button:hover {
+    background-color: #2b6cb0;
+}
+
+.site-title {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.nav-links a {
+    color: #333;
+    text-decoration: none;
+    margin: 0 10px;
+    font-weight: bold;
+}
+
+.collection-places-page {
+    display: flex;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+/* Sidebar Styling */
+aside {
+    width: 25%;
+    background-color: #ffffff;
+    padding: 20px;
+    border-right: 1px solid #e2e8f0;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    margin-right: 20px;
+}
+
+aside h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+aside p {
+    color: #4a5568;
+    font-weight: bold;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+aside h3 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+aside ul {
+    list-style: none;
+    padding: 0;
+}
+
+aside ul li {
+    color: #3182ce;
+    cursor: pointer;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+aside ul li:hover {
+    text-decoration: underline;
+}
+
+/* Back Button Styling */
+.back-button-container {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.back-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #4a5568;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.back-button:hover {
+    background-color: #2d3748;
+}
+
+/* Places Grid Styling */
+.places-grid {
+    width: 75%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 16px;
+}
+
+.place-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+    text-align: center;
+    padding-bottom: 10px;
+}
+
+.place-card:hover {
+    transform: scale(1.03);
+}
+
+.place-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.place-card h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333333;
+    margin-top: 8px;
+}
