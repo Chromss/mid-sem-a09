@@ -1,10 +1,10 @@
 from django.urls import path
 from . import views
 
-app_name = 'placeCollection'
+app_name = 'placeCollection'  # Define namespace here
 
 urlpatterns = [
-    path('show-collections/', views.show_collections, name='show_collections'),
+    path('', views.show_collections, name='show_collections'),
     path('create/', views.create_collection, name='create_collection'),
-    path('collections/<int:collection_id>/places/', views.show_collection_places, name='show_collection_places'),  # URL baru
+    path('<int:collection_id>/places/', views.show_collection_places, name='show_collection_places'),
 ]

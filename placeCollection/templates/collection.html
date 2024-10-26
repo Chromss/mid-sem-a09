@@ -9,8 +9,6 @@
 </head>
 <body>
 
-{% load static %}
-
 {% block content %}
 <div class="collections-page">
     <!-- Collections Section -->
@@ -29,14 +27,14 @@
         </div>
 
         <div class="collections-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8" id="collectionsGrid">
-            {% if collection %}
-                {% for coll in collection %}
-                <a href="{% url 'placeCollection:show_collection_places' coll.id %}" class="no-underline">
-                    <div class="collection-card bg-white rounded-lg shadow-md overflow-hidden" id="collection-{{ coll.id }}">
+            {% if collections %}
+                {% for coll in collections %}
+                <a href="{% url 'placeCollection:show_collection_places' coll.id %}" class="no-underline block transform transition-all duration-200 hover:-translate-y-1">
+                    <div class="collection-card bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg" id="collection-{{ coll.id }}">
                         <div class="card-content">
                             <img src="{% static 'images/d.png' %}" alt="Default Image" class="w-full h-32 object-cover">
                             <div class="p-4">
-                                <h3 class="text-lg font-semibold mb-2">{{ coll.name }}</h3>
+                                <h3 class="text-lg font-semibold mb-2 text-gray-800">{{ coll.name }}</h3>
                                 <div class="card-meta text-sm text-gray-500">
                                     <span>Created {{ coll.created_at|date:"M d, Y, h:i a" }}</span>
                                     <span class="mx-2">•</span>
@@ -134,16 +132,20 @@
                     const options = { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true };
                     const createdDate = new Date(data.created_at).toLocaleString('en-US', options);
 
-                    // Create new collection card
+                    // Create new collection card with link wrapper
+                    const newCardWrapper = document.createElement('a');
+                    newCardWrapper.href = `/collections/${data.id}/places/`;  // Update this URL pattern if needed
+                    newCardWrapper.classList.add('no-underline', 'block', 'transform', 'transition-all', 'duration-200', 'hover:-translate-y-1');
+
                     const newCard = document.createElement('div');
-                    newCard.classList.add('collection-card', 'bg-white', 'rounded-lg', 'shadow-md', 'overflow-hidden');
+                    newCard.classList.add('collection-card', 'bg-white', 'rounded-lg', 'shadow-md', 'overflow-hidden', 'hover:shadow-lg');
                     newCard.id = `collection-${data.id}`;
                     
                     newCard.innerHTML = `
                         <div class="card-content">
-                            <img src="{% static 'images/c.jpg' %}" alt="Default Image" class="w-full h-32 object-cover">
+                            <img src="{% static 'images/d.png' %}" alt="Default Image" class="w-full h-32 object-cover">
                             <div class="p-4">
-                                <h3 class="text-lg font-semibold mb-2">${data.name}</h3>
+                                <h3 class="text-lg font-semibold mb-2 text-gray-800">${data.name}</h3>
                                 <div class="card-meta text-sm text-gray-500">
                                     <span>Created ${createdDate}</span>
                                     <span class="mx-2">•</span>
@@ -153,6 +155,8 @@
                         </div>
                     `;
 
+                    newCardWrapper.appendChild(newCard);
+                    
                     const collectionsGrid = document.getElementById('collectionsGrid');
                     const emptyState = collectionsGrid.querySelector('.empty-state');
                     
@@ -160,7 +164,7 @@
                         emptyState.remove();
                     }
                     
-                    collectionsGrid.insertBefore(newCard, collectionsGrid.firstChild);
+                    collectionsGrid.insertBefore(newCardWrapper, collectionsGrid.firstChild);
                     
                     // Close menu and reset input
                     document.getElementById('createMenu').classList.add('hidden');
@@ -184,7 +188,6 @@
     </script>
 </div>
 {% endblock %}
-
 
 </body>
 </html>
