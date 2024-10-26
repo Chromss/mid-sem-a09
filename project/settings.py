@@ -19,13 +19,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main',
-<<<<<<< HEAD
-    'places'
- 
-=======
     'placeCollection',
     'places',
->>>>>>> 808260af87de6ee6770e42be6bc5e3575fff2403
 ]
 
 MIDDLEWARE = [
