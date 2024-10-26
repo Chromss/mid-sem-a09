@@ -17,8 +17,6 @@ def show_collection_places(request, collection_id):
     }
     return render(request, "collection_places.html", context)
 
-
-
 def show_collections(request):
     collection = Collection.objects.all()
     context = {

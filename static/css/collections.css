@@ -7,6 +7,23 @@ body {
     background-color: #ffffff; /* Dark background for the page */
 }
 
+/* Hilangkan underline pada link */
+a.no-underline {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Membuat seluruh card area klik */
+a.no-underline .collection-card {
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+a.no-underline .collection-card:hover {
+    transform: scale(1.02); /* Menambahkan efek hover pada card */
+}
+
+
 .section-container {
     padding: 2rem 2rem; /* Adjusted padding */
     background-color: white; /* Switch to white background */

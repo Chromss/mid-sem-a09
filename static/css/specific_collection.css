@@ -1,0 +1,140 @@
+/* Basic Styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f7fa;
+    color: #333;
+    margin: 0;
+}
+
+/* Collection Places Page Layout */
+.collection-places-page {
+    display: flex;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Sidebar Styling */
+aside {
+    width: 25%;
+    background-color: #fff;
+    padding: 20px;
+    border-right: 1px solid #e2e8f0;
+}
+
+aside h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+aside ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+aside ul li {
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+aside p {
+    color: #4a5568;
+    font-weight: bold;
+}
+
+aside ul.text-blue-600 li {
+    color: #3182ce;
+    cursor: pointer;
+    margin-bottom: 5px;
+}
+
+aside ul.text-blue-600 li:hover {
+    text-decoration: underline;
+}
+
+/* Button Styling */
+button {
+    width: 100%;
+    padding: 10px 0;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button.bg-blue-500 {
+    background-color: #3182ce;
+    color: #fff;
+    border: none;
+    margin-bottom: 10px;
+}
+
+button.bg-blue-500:hover {
+    background-color: #2b6cb0;
+}
+
+button.border {
+    background-color: #fff;
+    color: #4a5568;
+    border: 1px solid #cbd5e0;
+}
+
+button.border:hover {
+    background-color: #edf2f7;
+}
+
+/* Places Grid */
+.places-grid {
+    width: 75%;
+    padding-left: 20px;
+    display: grid;
+    gap: 16px;
+}
+
+.places-grid .place-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+    overflow: hidden;
+    text-align: center;
+}
+
+.places-grid .place-card:hover {
+    transform: scale(1.03);
+}
+
+.places-grid .place-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.places-grid .place-card h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    margin-top: 8px;
+}
+
+/* Footer Styling */
+footer {
+    background-color: #2d3748;
+    color: #a0aec0;
+    padding: 20px;
+    text-align: center;
+    font-size: 14px;
+}
+
+footer a {
+    color: #a0aec0;
+    text-decoration: none;
+    margin-left: 10px;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}

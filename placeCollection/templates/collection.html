@@ -31,21 +31,21 @@
         <div class="collections-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8" id="collectionsGrid">
             {% if collection %}
                 {% for coll in collection %}
-                <div class="collection-card bg-white rounded-lg shadow-md overflow-hidden" id="collection-{{ coll.id }}">
-                    <div class="card-content">
-                        <!-- Check if collection has an image; if not, show the default image -->
-                        <img src="{% static 'images/c.jpg' %}" alt="Default Image" class="w-full h-32 object-cover">
-                        <div class="p-4">
-                            <h3 class="text-lg font-semibold mb-2">{{ coll.name }}</h3>
-                            <div class="card-meta text-sm text-gray-500">
-                                <span>Created {{ coll.created_at|date:"M d, Y, h:i a" }}</span>
-                                <span class="mx-2">•</span>
-                                <span>{{ coll.places.count|default:"0" }} items</span>
+                <a href="{% url 'placeCollection:show_collection_places' coll.id %}" class="no-underline">
+                    <div class="collection-card bg-white rounded-lg shadow-md overflow-hidden" id="collection-{{ coll.id }}">
+                        <div class="card-content">
+                            <img src="{% static 'images/c.jpg' %}" alt="Default Image" class="w-full h-32 object-cover">
+                            <div class="p-4">
+                                <h3 class="text-lg font-semibold mb-2">{{ coll.name }}</h3>
+                                <div class="card-meta text-sm text-gray-500">
+                                    <span>Created {{ coll.created_at|date:"M d, Y, h:i a" }}</span>
+                                    <span class="mx-2">•</span>
+                                    <span>{{ coll.places.count|default:"0" }} items</span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                
+                </a>
                 {% endfor %}
             {% else %}
                 <div class="empty-state text-center py-10 col-span-full">
@@ -53,6 +53,7 @@
                 </div>
             {% endif %}
         </div>
+        
     </section>
 
     <!-- Popup Menu for Create Collection -->
