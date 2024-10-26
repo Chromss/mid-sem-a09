@@ -39,28 +39,17 @@
                         <div class="info-item">
                             <span class="section-text">{{ souvenirs.count }} Souvenirs</span>
                         </div>
-                        <div class="info-item">
-                            <div class="add-to-collection-btn-container"> 
-                                <button class="add-to-collection-btn">Add to Collection</button>
-                            </div>
-                        </div>
                     </div>
-                    
-                    <!-- Labels Row -->
-                    <div class="label-section">
-                        <div class="label-item">
-                            <img src="{% static 'places/images/ket_nama.svg' %}" alt="Name Logo" class="label-logo">
-                            <span class="label-text">Name</span>
-                        </div>
-                        <div class="label-item">
-                            <img src="{% static 'places/images/ket_rating.svg' %}" alt="Rating Logo" class="label-logo">
-                            <span class="label-text">Rating</span>
-                        </div>
-                        <div class="label-item">
-                            <img src="{% static 'places/images/ket_souvenir.svg' %}" alt="Souvenir Logo" class="label-logo">
-                            <span class="label-text">Souvenir</span>
-                        </div>
-                        <div class="label-item"></div> <!-- Empty div for button alignment -->
+
+                    <!-- Add to Collection Button Section -->
+                    <div class="add-to-collection-section">
+                        {% if user.is_authenticated %}
+                            <button class="add-to-collection-btn">Add to Collection</button>
+                        {% else %}
+                            <div class="login-prompt">
+                                <p>Please <a href="{% url 'login' %}?next={{ request.path }}">log in</a> to add to your collection.</p>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -132,6 +121,28 @@
         </div>
     </div>
     
+    <!-- Add to Collection Modal -->
+    {% if user.is_authenticated %}
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal" id="collection-modal">
+            <h2 class="modal-title">Add to Your Collection</h2>
+            <form id="add-to-collection-form">
+                {% csrf_token %}
+                <div class="collection-list">
+                    {% for collection in user_collections %}
+                        <div class="collection-item">
+                            <input type="checkbox" name="collections" value="{{ collection.id }}" id="collection-{{ collection.id }}">
+                            <label for="collection-{{ collection.id }}">{{ collection.name }}</label>
+                        </div>
+                    {% empty %}
+                        <p>You have no collections. <a href="{% url 'create_collection' %}">Create one</a>.</p>
+                    {% endfor %}
+                </div>
+                <button type="submit" class="modal-add-btn">Add</button>
+            </form>
+        </div>
+    </div>
+    {% endif %}
     <!-- JavaScript for Star Rating and AJAX -->
     <script>
         // CSRF token
@@ -382,6 +393,54 @@
 
         // Call the function initially
         initializeEditStars();
+        // Modal functionality
+        const addToCollectionBtn = document.querySelector('.add-to-collection-btn');
+        const modalOverlay = document.getElementById('modal-overlay');
+        const collectionModal = document.getElementById('collection-modal');
+
+        if (addToCollectionBtn) {
+            addToCollectionBtn.addEventListener('click', function() {
+                modalOverlay.style.display = 'flex';
+            });
+        }
+
+        // Close modal when clicking outside of it
+        if (modalOverlay) {
+            modalOverlay.addEventListener('click', function(e) {
+                if (e.target === modalOverlay) {
+                    modalOverlay.style.display = 'none';
+                }
+            });
+        }
+
+        // Handle form submission
+        const addToCollectionForm = document.getElementById('add-to-collection-form');
+        if (addToCollectionForm) {
+            addToCollectionForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const formData = new FormData(addToCollectionForm);
+
+                fetch("{% url 'add_to_collection_ajax' place.id %}", {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': csrftoken,
+                        'X-Requested-With': 'XMLHttpRequest',
+                    },
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Place added to your collection(s) successfully!');
+                        modalOverlay.style.display = 'none';
+                    } else if (data.error) {
+                        alert(data.error);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            });
+        }
     </script>
     
 </body>

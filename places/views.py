@@ -12,17 +12,24 @@ from django.views.decorators.csrf import csrf_exempt
 # Import your models here
 from .models import Place, Souvenir, Comment
 
+# Import the Collection models
+from placeCollection.models import Collection, CollectionItem  # Added import
+
 def place_detail(request, place_id):
     place = get_object_or_404(Place, pk=place_id)
     average_rating = Comment.objects.filter(place=place).aggregate(Avg('rating'))['rating__avg'] or 0
     souvenirs = Souvenir.objects.filter(place=place)
     comments = Comment.objects.filter(place=place).order_by('-created_at')[:10]  # Limit to recent 10 reviews
 
+    # Get the user's collections if authenticated
+    user_collections = Collection.objects.filter(user=request.user) if request.user.is_authenticated else []
+
     context = {
         'place': place,
         'average_rating': round(average_rating, 1),
         'souvenirs': souvenirs,
         'comments': comments,
+        'user_collections': user_collections,  # Added to context
     }
     return render(request, 'places/place_detail.html', context)
 
@@ -106,5 +113,25 @@ def delete_comment_ajax(request, comment_id):
             'comment_id': comment_id,
             'average_rating': average_rating
         })
+    else:
+        return JsonResponse({'error': 'Invalid request.'}, status=400)
+
+# New view for adding a place to collections
+@csrf_exempt
+@login_required
+def add_to_collection_ajax(request, place_id):
+    if request.method == 'POST' and request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        place = get_object_or_404(Place, pk=place_id)
+        collection_ids = request.POST.getlist('collections')
+        if collection_ids:
+            for collection_id in collection_ids:
+                collection = get_object_or_404(Collection, pk=collection_id, user=request.user)
+                # Check if the place is already in the collection
+                existing_item = CollectionItem.objects.filter(collection=collection, place=place).first()
+                if not existing_item:
+                    CollectionItem.objects.create(collection=collection, place=place)
+            return JsonResponse({'success': True})
+        else:
+            return JsonResponse({'error': 'No collections selected.'}, status=400)
     else:
         return JsonResponse({'error': 'Invalid request.'}, status=400)
