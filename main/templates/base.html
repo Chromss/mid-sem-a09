@@ -128,6 +128,29 @@
             dayCount = 1;
             editingCard = null;
         }
+
+        // Function to fetch and populate destinations from JSON file
+        function populateDestinations() {
+            fetch("{% static 'json/DATASET_MLAKUMLAKU_FIX_FILLED_FORMATTED.json' %}")
+                .then(response => response.json())
+                .then(data => {
+                    const uniquePlaces = [...new Set(data.map(item => item['Place Name']))]; // Remove duplicates
+                    const destinationDropdowns = document.querySelectorAll('.destination-dropdown');
+
+                    destinationDropdowns.forEach(dropdown => {
+                        uniquePlaces.forEach(place => {
+                            const option = document.createElement('option');
+                            option.value = place;
+                            option.textContent = place;
+                            dropdown.appendChild(option);
+                        });
+                    });
+                })
+                .catch(error => console.error('Error loading destinations:', error));
+        }
+
+        // Call populateDestinations when the page loads
+        window.onload = populateDestinations;
     
         // Add day input fields
         addDayButton.onclick = function () {
@@ -137,7 +160,9 @@
                 <h3 class="font-semibold mb-2">Day ${dayCount}</h3>
                 <div class="destinations-container mb-2">
                     <label class="block mb-1">Destination:</label>
-                    <input type="text" class="border p-2 w-full mb-1" required>
+                    <select class="border p-2 w-full mb-1 destination-dropdown" required>
+                        <option value="" disabled selected>Choose your Destination</option>
+                    </select>
                     <label class="block mb-1">Date:</label>
                     <input type="date" class="border p-2 w-full mb-1" required>
                     <label class="block mb-1">Time:</label>
@@ -152,7 +177,9 @@
                 destinationDiv.classList.add('destinations-container', 'mb-2');
                 destinationDiv.innerHTML = `
                     <label class="block mb-1">Destination:</label>
-                    <input type="text" class="border p-2 w-full mb-1" required>
+                    <select class="border p-2 w-full mb-1 destination-dropdown" required>
+                        <option value="" disabled selected>Choose your Destination</option>
+                    </select>
                     <label class="block mb-1">Time:</label>
                     <input type="time" class="border p-2 w-full mb-2" required>
                 `;
@@ -161,6 +188,8 @@
             };
     
             daysContainer.appendChild(dayDiv);
+            // Populate the new dropdown with destinations
+            populateDestinations();
             dayCount++;
         };
     
@@ -172,31 +201,32 @@
             const itineraryCover = document.getElementById('itinerary-cover').files[0];
             const reader = new FileReader();
             
-            // Collect day details dynamically
+            // Ambil detail data setiap hari
             const daysData = [];
             const dayContainers = document.querySelectorAll('#days-container > div');
+            
             dayContainers.forEach((dayDiv, index) => {
                 const dayData = {
                     day: index + 1,
                     date: dayDiv.querySelector('input[type="date"]').value,
                     destinations: []
                 };
-    
-                const destinationInputs = dayDiv.querySelectorAll('input[type="text"]');
+
+                const destinationSelects = dayDiv.querySelectorAll('select.destination-dropdown');
                 const timeInputs = dayDiv.querySelectorAll('input[type="time"]');
-    
-                destinationInputs.forEach((input, idx) => {
-                    if (input.value) {
+
+                destinationSelects.forEach((select, idx) => {
+                    if (select.value) {
                         dayData.destinations.push({
-                            destination: input.value,
+                            destination: select.value, // Ambil value dari dropdown
                             time: timeInputs[idx] ? timeInputs[idx].value : ''
                         });
                     }
                 });
-    
+
                 daysData.push(dayData);
             });
-            
+
             reader.onload = function (e) {
                 const coverImageUrl = e.target.result;
                 
@@ -219,30 +249,35 @@
         };
     
         function updateCard(card, itineraryName, coverImageUrl, daysData) {
+            // Update judul itinerary dan gambar cover pada card
             card.querySelector('h3').innerText = itineraryName;
             card.querySelector('img').src = coverImageUrl;
-            
+
+            // Kosongkan kontainer hari yang sudah ada dan isi dengan data yang baru
             const existingDaysContainer = card.querySelector('div:nth-child(2)');
             existingDaysContainer.innerHTML = '';
-    
+
+            // Tambahkan data baru untuk setiap hari ke dalam card
             daysData.forEach(dayData => {
                 const dayItem = document.createElement('div');
                 dayItem.classList.add('mb-4', 'p-4', 'border', 'border-gray-300', 'rounded-lg');
                 dayItem.innerHTML = `<h4 class="text-lg font-semibold mb-2">Day ${dayData.day} - ${dayData.date}</h4>`;
-                
+
+                // Tambahkan data destinasi dan waktu yang dipilih user
                 dayData.destinations.forEach(dest => {
                     const destItem = document.createElement('p');
                     destItem.innerHTML = `<strong>Destination:</strong> ${dest.destination} <strong>Time:</strong> ${dest.time}`;
                     dayItem.appendChild(destItem);
                 });
+
                 existingDaysContainer.appendChild(dayItem);
             });
         }
-    
+
         function createCard(itineraryName, coverImageUrl, daysData) {
             const itineraryCard = document.createElement('div');
             itineraryCard.classList.add('bg-white', 'rounded-lg', 'shadow-lg', 'p-6');
-            
+
             itineraryCard.innerHTML = `
                 <img src="${coverImageUrl}" alt="Cover Image" class="w-full h-48 object-cover rounded-lg mb-4">
                 <h3 class="text-xl font-semibold mb-2">${itineraryName}</h3>
@@ -251,27 +286,38 @@
                     <button class="bg-red-500 text-white px-4 py-2 rounded delete-button">Delete</button>
                 </div>
             `;
-    
+
             const daysContainer = document.createElement('div');
+
+            // Tambahkan data hari dan destinasi ke dalam card
             daysData.forEach(dayData => {
                 const dayItem = document.createElement('div');
                 dayItem.classList.add('mb-4', 'p-4', 'border', 'border-gray-300', 'rounded-lg');
                 dayItem.innerHTML = `<h4 class="text-lg font-semibold mb-2">Day ${dayData.day} - ${dayData.date}</h4>`;
-    
+
+                // Tambahkan destinasi dan waktu yang dipilih user
                 dayData.destinations.forEach(dest => {
                     const destItem = document.createElement('p');
                     destItem.innerHTML = `<strong>Destination:</strong> ${dest.destination} <strong>Time:</strong> ${dest.time}`;
                     dayItem.appendChild(destItem);
                 });
+
                 daysContainer.appendChild(dayItem);
             });
-            
+
             itineraryCard.appendChild(daysContainer);
             document.getElementById('itinerary-cards').appendChild(itineraryCard);
-    
+
+            // Set up Edit and Delete button functionality
+            setupEditAndDeleteButtons(itineraryCard, itineraryName, coverImageUrl, daysData);
+        }
+
+        function setupEditAndDeleteButtons(itineraryCard, itineraryName, coverImageUrl, daysData) {
             itineraryCard.querySelector('.edit-button').onclick = function () {
+                // Isi form dengan data dari card untuk editing
                 document.getElementById('itinerary-name').value = itineraryName;
                 clearDaysContainer();
+
                 daysData.forEach(dayData => {
                     const dayDiv = document.createElement('div');
                     dayDiv.classList.add('mb-4');
@@ -279,15 +325,17 @@
                         <h3 class="font-semibold mb-2">Day ${dayData.day}</h3>
                         <div class="destinations-container mb-2">
                             <label class="block mb-1">Destination:</label>
-                            <input type="text" class="border p-2 w-full mb-1" value="${dayData.destinations[0].destination}" required>
+                            <input type="text" class="border p-2 w-full mb-1" value="${dayData.destinations[0]?.destination || ''}" required>
                             <label class="block mb-1">Date:</label>
                             <input type="date" class="border p-2 w-full mb-1" value="${dayData.date}" required>
                             <label class="block mb-1">Time:</label>
-                            <input type="time" class="border p-2 w-full mb-2" value="${dayData.destinations[0].time}" required>
+                            <input type="time" class="border p-2 w-full mb-2" value="${dayData.destinations[0]?.time || ''}" required>
                         </div>
                     `;
                     daysContainer.appendChild(dayDiv);
                 });
+
+                // Tampilkan modal untuk editing
                 editingCard = itineraryCard;
                 document.getElementById('confirm-editing').classList.remove('hidden');
                 document.getElementById('confirm-editing').onclick = function () {
@@ -296,12 +344,12 @@
                 };
                 tourModal.classList.toggle('hidden');
             };
-    
+
             itineraryCard.querySelector('.delete-button').onclick = function () {
                 itineraryCard.remove();
             };
         }
-    
+
         function clearDaysContainer() {
             daysContainer.innerHTML = '';
             dayCount = 1;
