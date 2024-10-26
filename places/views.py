@@ -18,15 +18,11 @@ def place_detail(request, place_id):
     souvenirs = Souvenir.objects.filter(place=place)
     comments = Comment.objects.filter(place=place).order_by('-created_at')[:10]  # Limit to recent 10 reviews
 
-    # Check if there's review data stored in session
-    review_data = request.session.pop('review_data', None)
-
     context = {
         'place': place,
         'average_rating': round(average_rating, 1),
         'souvenirs': souvenirs,
         'comments': comments,
-        'review_data': review_data,  # Pass any existing review data to the template
     }
     return render(request, 'places/place_detail.html', context)
 
@@ -35,10 +31,6 @@ class CustomLoginView(LoginView):
     redirect_authenticated_user = True  # Redirect users who are already logged in
 
     def get_success_url(self):
-        """
-        Override this method to redirect users after successful login.
-        If a 'next' parameter exists, redirect there; otherwise, use a default URL.
-        """
         url = self.get_redirect_url()
         return url or reverse_lazy('home')  # Replace 'home' with your desired default view name
 
@@ -50,28 +42,23 @@ def add_comment_ajax(request, place_id):
         content = request.POST.get('comment')
         rating = request.POST.get('rating')
         if content and rating:
-            # Check if the user already has a comment on this place
-            existing_comment = Comment.objects.filter(place=place, user=request.user).first()
-            if existing_comment:
-                return JsonResponse({'error': 'You have already reviewed this place.'}, status=400)
-            else:
-                comment = Comment.objects.create(
-                    place=place,
-                    user=request.user,
-                    content=content,
-                    rating=int(rating),
-                    created_at=timezone.now()
-                )
-                # Update average rating
-                average_rating = Comment.objects.filter(place=place).aggregate(Avg('rating'))['rating__avg'] or 0
-                average_rating = round(average_rating, 1)
-                # Return the rendered HTML for the new comment and updated average rating
-                rendered_comment = render_to_string('places/comment_partial.html', {'comment': comment, 'user': request.user})
-                return JsonResponse({
-                    'message': 'Your review has been submitted successfully.',
-                    'comment_html': rendered_comment,
-                    'average_rating': average_rating
-                })
+            comment = Comment.objects.create(
+                place=place,
+                user=request.user,
+                content=content,
+                rating=int(rating),
+                created_at=timezone.now()
+            )
+            # Update average rating
+            average_rating = Comment.objects.filter(place=place).aggregate(Avg('rating'))['rating__avg'] or 0
+            average_rating = round(average_rating, 1)
+            # Return the rendered HTML for the new comment and updated average rating
+            rendered_comment = render_to_string('places/comment_partial.html', {'comment': comment, 'user': request.user})
+            return JsonResponse({
+                'message': 'Your review has been submitted successfully.',
+                'comment_html': rendered_comment,
+                'average_rating': average_rating
+            })
         else:
             return JsonResponse({'error': 'Please provide both a comment and a rating.'}, status=400)
     else:
