@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect
 from .forms import CollectionForm
 from .models import Collection
 from django.shortcuts import render, get_object_or_404
-# from .models import Place  # Asumsi model Place sudah ada nantinya
+# from places.models import Place  # Asumsi model Place sudah ada nantinya
 
 def show_collection_places(request, collection_id):
     collection = get_object_or_404(Collection, id=collection_id)
