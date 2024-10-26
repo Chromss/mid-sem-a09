@@ -21,6 +21,7 @@ body {
     width: 100%;
     margin: 0 auto;
     padding: 20px;
+    box-sizing: border-box; /* Ensure padding is included in width */
 }
 
 /* Banner Styles */
@@ -33,6 +34,7 @@ body {
     background-color: #F3F4F8;
 }
 
+/* Banner Image */
 .banner-image {
     width: 100%;
     height: 100%;
@@ -40,38 +42,63 @@ body {
     border-radius: 10px;
 }
 
+/* Banner Overlay */
 .banner-overlay {
     position: absolute;
-    bottom: -56px; /* Half of the rounded rectangle height */
+    bottom: -56px;
     left: 50%;
     transform: translateX(-50%);
 }
 
+/* Rounded Rectangle Section */
 .rounded-rectangle {
     width: 900px;
     background-color: #F7F7F7;
     border-radius: 20px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     display: flex;
-    flex-direction: column; /* Stack the two rows vertically */
-    padding: 20px 30px; /* Adjusted padding for better spacing */
-    align-items: flex-start; /* Align all items to the start (left) */
+    flex-direction: column;
+    padding: 20px 30px;
+    align-items: flex-start;
+    gap: 15px;
+    box-sizing: border-box;
+    margin-top: 30px;
 }
 
+@media (max-width: 1024px) {
+    .rounded-rectangle {
+        width: 100%;
+        padding: 15px 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .rounded-rectangle {
+        padding: 10px 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .rounded-rectangle {
+        padding: 5px 10px;
+    }
+}
+
+/* Rectangle and Label Sections */
 .rectangle-section, .label-section {
     display: flex;
     width: 100%;
-    justify-content: flex-start; /* Align items to the start (left) */
+    justify-content: flex-start;
     align-items: center;
-    gap: 15px; /* Ensure spacing between each item */
-    margin-bottom: 10px; /* Space between the rows */
+    gap: 15px;
+    margin-bottom: 10px;
 }
 
 .info-item, .label-item {
     display: flex;
     align-items: center;
-    justify-content: flex-start; /* Align content to the start (left) */
-    flex: 1; /* Ensures equal spacing */
+    justify-content: flex-start;
+    flex: 1;
     position: relative;
 }
 
@@ -81,19 +108,33 @@ body {
     position: absolute;
     right: 0;
     top: 0;
-    bottom: 0; /* This ensures the line spans the full height */
+    bottom: 0;
     width: 1px;
     background-color: #A1A1A1;
 }
 
+/* Section Text Styles */
 .section-text {
     color: #252525;
     font-size: 20px;
     font-weight: 500;
     margin-right: 5px;
-    text-align: left; /* Ensure text is left-aligned */
+    text-align: left;
 }
 
+@media (max-width: 768px) {
+    .section-text {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    .section-text {
+        font-size: 16px;
+    }
+}
+
+/* Rating and Label Styles */
 .rating-star {
     width: 18px;
     height: 18px;
@@ -109,17 +150,17 @@ body {
 .label-text {
     color: #6B6B6B;
     font-size: 14px;
-    text-align: left; /* Ensure text is left-aligned */
+    text-align: left;
 }
-/* Centering the Add to Collection button within the rectangle */
+
+/* Add to Collection Button */
 .add-to-collection-btn-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100%; /* Make it take the full height of the section */
+    height: 100%;
 }
 
-/* Button styling */
 .add-to-collection-btn {
     background-color: #3279E6;
     color: #FFFFFF;
@@ -128,35 +169,53 @@ body {
     border: none;
     border-radius: 20px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-    /* Center-align within the allocated height */
+    transition: background-color 0.3s ease, transform 0.2s ease;
     display: flex;
     align-items: center;
 }
 
 .add-to-collection-btn:hover {
     background-color: #2868C7;
+    transform: scale(1.05);
 }
-/* Removed the horizontal divider as per your request */
-/* .section-divider {
-    border: none;
-    height: 1px;
-    background-color: #A1A1A1;
-    width: 587px;
-    margin: 10px 0 20px 0;
-} */
 
 /* Content Sections */
 .content-sections {
     display: flex;
     justify-content: space-between;
-    margin-top: 100px; /* Adjusted for banner overlap */
-    flex-wrap: wrap; /* Ensures responsiveness */
+    margin-top: 100px;
+    flex-wrap: wrap;
 }
 
+@media (max-width: 1024px) {
+    .content-sections {
+        flex-direction: column;
+        margin-top: 80px;
+    }
+}
+
+@media (max-width: 768px) {
+    .content-sections {
+        margin-top: 70px;
+    }
+}
+
+@media (max-width: 480px) {
+    .content-sections {
+        margin-top: 50px;
+    }
+}
+
+/* Overview and Souvenir Sections */
 .overview-section, .souvenir-section {
     width: 48%;
     box-sizing: border-box;
+}
+
+@media (max-width: 1024px) {
+    .overview-section, .souvenir-section {
+        width: 100%;
+    }
 }
 
 /* Section Titles */
@@ -177,14 +236,18 @@ body {
 /* Latest Review Section */
 .latest-review-section {
     margin-top: 40px;
+    position: relative; /* Added */
 }
 
+/* Reviews Container */
 .reviews-container {
-    max-height: 360px; /* 3 reviewers * 105px + spacing */
+    max-height: 360px;
     overflow-y: auto;
-    padding-right: 10px; /* To prevent content hiding behind scrollbar */
+    padding-right: 10px;
+    margin-bottom: 10px; /* Space between reviews and write-review */
 }
 
+/* Review Item */
 .review-item {
     background-color: #f9f9f9;
     border-radius: 10px;
@@ -195,12 +258,14 @@ body {
     flex-direction: column;
 }
 
+/* Review Header */
 .review-header {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
 }
 
+/* Profile Picture */
 .profile-pic {
     width: 50px;
     height: 50px;
@@ -208,11 +273,13 @@ body {
     margin-right: 15px;
 }
 
+/* Review User Info */
 .review-user-info {
     display: flex;
     flex-direction: column;
 }
 
+/* Username and Date */
 .username {
     color: #252525;
     font-size: 14px;
@@ -224,6 +291,7 @@ body {
     font-size: 12px;
 }
 
+/* Review Stars */
 .review-stars {
     display: flex;
     margin-left: auto;
@@ -235,6 +303,7 @@ body {
     margin-left: 2px;
 }
 
+/* Review Content */
 .review-content {
     color: #252525;
     font-size: 14px;
@@ -243,17 +312,16 @@ body {
 
 /* Write Your Review */
 .write-review-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start; /* Align to start */
-    width: 100%;
+    position: sticky; /* Added */
+    bottom: 0; /* Added */
     background-color: #252525;
     border-radius: 10px;
     padding: 10px;
     box-sizing: border-box;
-    /* Removed min-height to eliminate extra space */
+    z-index: 1; /* Added */
 }
 
+/* Write Review Textarea */
 .write-review-container textarea {
     width: 100%;
     min-height: 44px;
@@ -265,7 +333,7 @@ body {
     resize: none;
     outline: none;
     overflow: hidden;
-    padding-right: 50px; /* Space for the send button if needed */
+    padding-right: 50px;
     box-sizing: border-box;
 }
 
@@ -279,7 +347,7 @@ body {
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    margin-top: 10px; /* Optional */
+    margin-top: 10px;
 }
 
 /* Star Rating */
@@ -292,7 +360,7 @@ body {
     width: 20px;
     height: 20px;
     cursor: pointer;
-    margin-right: 5px; /* Spacing between stars */
+    margin-right: 5px;
 }
 
 /* Send Button */
@@ -399,43 +467,90 @@ body {
         padding: 10px;
     }
 
-    .banner {
-        width: 100%;
+    .content-sections {
+        margin-top: 80px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .content-sections {
+        margin-top: 80px;
     }
 
-    .rounded-rectangle {
-        width: 100%;
+    .latest-review-section {
+        height: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
     }
 
     .content-sections {
-        flex-direction: column;
-        margin-top: 70px; /* Reduced margin for better spacing */
+        margin-top: 70px;
     }
 
-    .overview-section, .souvenir-section {
-        width: 100%;
+    .section-text {
+        font-size: 18px;
+    }
+
+    .review-stars img {
+        width: 18px;
+        height: 18px;
     }
 
     .souvenir-list {
         justify-content: center;
     }
 
-    .write-review-container {
-        width: 100%;
+    .latest-review-section {
+        height: auto;
     }
 }
 
-/* Make user reviews scrollable */
-.user-reviews {
-    max-height: 300px;
-    overflow-y: auto;
+@media (max-width: 480px) {
+    .container {
+        padding: 5px;
+    }
+
+    .content-sections {
+        margin-top: 50px;
+    }
+
+    .section-text {
+        font-size: 16px;
+    }
+
+    .review-stars img {
+        width: 16px;
+        height: 16px;
+    }
+
+    .souvenir-item {
+        width: 100%;
+        height: auto;
+    }
+
+    .souvenir-image {
+        width: 100%;
+        height: auto;
+    }
+
+    .souvenir-description {
+        padding: 8px;
+    }
+
+    .latest-review-section {
+        height: auto;
+    }
 }
 
 /* Additional Styling for Accessibility and UX */
 
 /* Star Hover Effect */
 .star-rating img:hover {
-    transform: scale(1.1);
+    transform: scale(1.2);
     transition: transform 0.2s;
 }
 
@@ -445,13 +560,53 @@ body {
     transition: opacity 0.2s;
 }
 
-.add-to-collection-btn:hover {
-    background-color: #2868C7;
-    transform: scale(1.05);
-    transition: background-color 0.3s ease, transform 0.2s ease;
+/* Comment Actions */
+.comment-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: auto; /* Allows the actions to align at the bottom */
+    justify-content: flex-end; /* Aligns buttons to the right */
 }
 
-.star-rating img:hover {
-    transform: scale(1.2);
-    transition: transform 0.2s;
+.edit-btn, .delete-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.edit-btn img, .delete-btn img {
+    width: 24px;
+    height: 24px;
+}
+
+.edit-comment-form {
+    margin-top: 10px;
+}
+
+.edit-comment-textarea {
+    width: 100%;
+    min-height: 44px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+    font-family: 'Geist', sans-serif;
+    font-size: 14px;
+    resize: none;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.edit-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 5px;
+}
+
+.edit-star {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    margin-right: 5px;
 }
