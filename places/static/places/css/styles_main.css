@@ -112,7 +112,12 @@ body {
     text-align: left; /* Ensure text is left-aligned */
 }
 /* Centering the Add to Collection button within the rectangle */
-
+.add-to-collection-btn-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%; /* Make it take the full height of the section */
+}
 
 /* Button styling */
 .add-to-collection-btn {

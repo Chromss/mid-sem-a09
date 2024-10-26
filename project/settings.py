@@ -19,12 +19,18 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main',
+<<<<<<< HEAD
     'places'
  
+=======
+    'placeCollection',
+    'places',
+>>>>>>> 808260af87de6ee6770e42be6bc5e3575fff2403
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
