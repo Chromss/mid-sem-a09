@@ -1,3 +1,5 @@
+# places/views.py
+
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
@@ -15,10 +17,19 @@ from .models import Place, Souvenir, Comment
 # Import the Collection models
 from placeCollection.models import Collection, CollectionItem  # Added import
 
+def format_price(price):
+    """Formats the price with commas (e.g., 10000 -> 10,000)."""
+    return "{:,}".format(price)
+
 def place_detail(request, place_id):
     place = get_object_or_404(Place, pk=place_id)
     average_rating = Comment.objects.filter(place=place).aggregate(Avg('rating'))['rating__avg'] or 0
     souvenirs = Souvenir.objects.filter(place=place)
+
+    # Format the price for each souvenir
+    for souvenir in souvenirs:
+        souvenir.formatted_price = format_price(souvenir.price)
+
     comments = Comment.objects.filter(place=place).order_by('-created_at')[:10]  # Limit to recent 10 reviews
 
     # Get the user's collections if authenticated
@@ -59,6 +70,7 @@ def add_comment_ajax(request, place_id):
             # Update average rating
             average_rating = Comment.objects.filter(place=place).aggregate(Avg('rating'))['rating__avg'] or 0
             average_rating = round(average_rating, 1)
+            # Format the new comment's price if needed (assuming comments don't have prices)
             # Return the rendered HTML for the new comment and updated average rating
             rendered_comment = render_to_string('places/comment_partial.html', {'comment': comment, 'user': request.user})
             return JsonResponse({
