@@ -6,135 +6,148 @@ body {
     margin: 0;
 }
 
-/* Collection Places Page Layout */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.header-button {
+    background-color: #3182ce;
+    color: #fff;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+    font-size: 14px;
+}
+
+.header-button:hover {
+    background-color: #2b6cb0;
+}
+
+.site-title {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.nav-links a {
+    color: #333;
+    text-decoration: none;
+    margin: 0 10px;
+    font-weight: bold;
+}
+
 .collection-places-page {
     display: flex;
     max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
+    margin: 20px auto;
+    padding: 0 20px;
 }
 
 /* Sidebar Styling */
 aside {
     width: 25%;
-    background-color: #fff;
+    background-color: #ffffff;
     padding: 20px;
     border-right: 1px solid #e2e8f0;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    margin-right: 20px;
 }
 
 aside h2 {
     font-size: 24px;
     font-weight: bold;
-    margin-bottom: 10px;
-}
-
-aside ul {
-    list-style: none;
-    padding: 0;
-    margin-bottom: 20px;
-}
-
-aside ul li {
-    font-size: 16px;
     margin-bottom: 5px;
 }
 
 aside p {
     color: #4a5568;
     font-weight: bold;
+    margin-bottom: 20px;
+    font-size: 14px;
 }
 
-aside ul.text-blue-600 li {
+aside h3 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+aside ul {
+    list-style: none;
+    padding: 0;
+}
+
+aside ul li {
     color: #3182ce;
     cursor: pointer;
     margin-bottom: 5px;
+    font-size: 14px;
 }
 
-aside ul.text-blue-600 li:hover {
+aside ul li:hover {
     text-decoration: underline;
 }
 
-/* Button Styling */
-button {
-    width: 100%;
-    padding: 10px 0;
-    font-size: 16px;
+/* Back Button Styling */
+.back-button-container {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.back-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #4a5568;
+    color: #ffffff;
+    text-decoration: none;
     border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    font-size: 14px;
+    transition: background-color 0.3s;
 }
 
-button.bg-blue-500 {
-    background-color: #3182ce;
-    color: #fff;
-    border: none;
-    margin-bottom: 10px;
+.back-button:hover {
+    background-color: #2d3748;
 }
 
-button.bg-blue-500:hover {
-    background-color: #2b6cb0;
-}
-
-button.border {
-    background-color: #fff;
-    color: #4a5568;
-    border: 1px solid #cbd5e0;
-}
-
-button.border:hover {
-    background-color: #edf2f7;
-}
-
-/* Places Grid */
+/* Places Grid Styling */
 .places-grid {
     width: 75%;
-    padding-left: 20px;
     display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     gap: 16px;
 }
 
-.places-grid .place-card {
-    background-color: #fff;
+.place-card {
+    background-color: #ffffff;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease-in-out;
-    overflow: hidden;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
     text-align: center;
+    padding-bottom: 10px;
 }
 
-.places-grid .place-card:hover {
+.place-card:hover {
     transform: scale(1.03);
 }
 
-.places-grid .place-card img {
+.place-card img {
     width: 100%;
     height: 150px;
     object-fit: cover;
-    border-bottom: 1px solid #e2e8f0;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
 }
 
-.places-grid .place-card h3 {
+.place-card h3 {
     font-size: 14px;
     font-weight: 600;
-    color: #333;
+    color: #333333;
     margin-top: 8px;
-}
-
-/* Footer Styling */
-footer {
-    background-color: #2d3748;
-    color: #a0aec0;
-    padding: 20px;
-    text-align: center;
-    font-size: 14px;
-}
-
-footer a {
-    color: #a0aec0;
-    text-decoration: none;
-    margin-left: 10px;
-}
-
-footer a:hover {
-    text-decoration: underline;
 }

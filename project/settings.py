@@ -20,6 +20,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'main',
     'placeCollection',
+    'places',
 ]
 
 MIDDLEWARE = [
@@ -92,3 +93,11 @@ else:
     STATIC_ROOT = BASE_DIR / 'static'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Login settings
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'home'  # Ensure 'home' is correctly defined in your URLs
+LOGOUT_REDIRECT_URL = 'home'

@@ -29,8 +29,11 @@
         </ul>
 
         <!-- Action Buttons -->
-        <button class="bg-blue-500 text-white w-full py-2 mb-2 rounded">Add place</button>
-        <button class="border border-gray-300 w-full py-2 rounded">Back to my collections</button>
+        <div class="back-button-container mt-8">
+            <a href="{% url 'placeCollection:show_collections' %}" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg transition-colors">
+                Back to my collections
+            </a>
+        </div>
     </aside>
 
     <!-- Main Content Section -->
