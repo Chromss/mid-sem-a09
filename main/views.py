@@ -10,16 +10,59 @@ from django.utils import timezone
 from .models import Journal, Souvenir
 from .jurnalform import JournalForm
 from django.http import JsonResponse
-
+import json
 
 @login_required
 def landing_page(request):
     return render(request, 'main/landing_page.html', {'user': request.user})
 
-@login_required
+
+
+
+
+
+@login_required(login_url='/login')
 def journal_home(request):
     journals = Journal.objects.all().order_by('-created_at')
-    return render(request, 'main/journal_home.html', {'journals': journals})
+
+    # Membaca data dari file JSON
+    with open('main/DATASET.json', 'r', encoding='utf-8') as file:
+        data = json.load(file)
+
+    # Memasukkan data ke dalam model Souvenir
+    for item in data:
+        Souvenir.objects.get_or_create(
+            name=item['Product Name'],
+            defaults={
+                'price': item['Price'],
+                'description': item['Description Product'],
+                'place_name': item['Place Name']
+            }
+        )
+
+    # Ambil semua souvenir dari database
+    souvenirs = Souvenir.objects.all()
+
+    # Filter berdasarkan nama tempat
+    place_name_filter = request.GET.get('place_name')
+    if place_name_filter:
+        souvenirs = souvenirs.filter(place_name=place_name_filter)
+
+    # Filter berdasarkan harga
+    price_filter = request.GET.get('price')
+    if price_filter == 'low_to_high':
+        souvenirs = souvenirs.order_by('price')
+    elif price_filter == 'high_to_low':
+        souvenirs = souvenirs.order_by('-price')
+
+    # Ambil semua nama tempat untuk dropdown
+    places = Souvenir.objects.values_list('place_name', flat=True).distinct()
+
+    return render(request, 'main/journal_home.html', {
+        'journals': journals,
+        'souvenirs': souvenirs,
+        'places': places,
+    })
     # journals = Journal.objects.all().order_by('-created_at')  # Urutkan berdasarkan tanggal terbaru
     # souvenirs = Souvenir.objects.all()  # Ambil semua souvenir untuk filter
 
@@ -108,14 +151,6 @@ def souvenir_list(request):
         souvenirs = souvenirs.order_by('rating')
 
     return render(request, 'main/souvenir_list.html', {'souvenirs': souvenirs})
-# def like_journal(request, journal_id):
-#     journal = get_object_or_404(Journal, id=journal_id)
-#     if request.user.is_authenticated:
-#         if request.user in journal.likes.all():
-#             journal.likes.remove(request.user)  # Hapus like jika sudah ada
-#         else:
-#             journal.likes.add(request.user)  # Tambah like jika belum ada
-#     return redirect('main:journal_home')  
 
 
 @login_required(login_url='/login')
@@ -145,16 +180,7 @@ def edit_journal(request, journal_id):
         form = JournalForm(instance=journal)
 
     return render(request, 'main/edit_journal.html', {'form': form})
-# def edit_journal(request, journal_id):
-#     journal = get_object_or_404(Journal, id=journal_id)
-#     if request.method == 'POST':
-#         form = JournalForm(request.POST, request.FILES, instance=journal)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('main:journal_history')
-#     else:
-#         form = JournalForm(instance=journal)
-#     return render(request, 'main/edit_journal.html', {'form': form, 'journal': journal})
+
 
 @login_required(login_url='/login')
 def delete_journal(request, journal_id):
@@ -212,7 +238,7 @@ def login_user(request):
                 form.add_error(None, "Invalid username or password.")  # Tambahkan error jika autentikasi gagal
     else:
         form = AuthenticationForm()
-    return render(request, 'main/login.html', {'form': form})
+    return render(request, 'login.html', {'form': form})
 
 
 def logout_user(request):
@@ -220,4 +246,3 @@ def logout_user(request):
     response = HttpResponseRedirect(reverse('main:login'))
     response.delete_cookie('last_login')
     return response
-

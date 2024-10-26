@@ -11,7 +11,6 @@ class Journal(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     image = models.ImageField(upload_to='journal_images/', null=True, blank=True)
     likes = models.ManyToManyField(User, related_name='liked_journals', blank=True)
-    # saved_by = models.ManyToManyField(User, related_name='saved_journals', blank=True)
     souvenir = models.ForeignKey('Souvenir', on_delete=models.SET_NULL, null=True, blank=True)  # Relasi dengan Souvenir
 
     def __str__(self):
@@ -26,5 +25,6 @@ class Journal(models.Model):
 class Souvenir(models.Model):
     name = models.CharField(max_length=200)
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    rating = models.FloatField()  # Rating antara 1.0 hingga 5.0
+    # rating = models.FloatField()  # Rating antara 1.0 hingga 5.0
+    place_name = models.CharField(max_length=200)  # 
     description = models.TextField()

@@ -36,8 +36,8 @@
                     <div class="post-card">
                         <div class="header">
                             <svg class="profile-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                <circle cx="12" cy="12" r="11" fill="white" stroke="black" stroke-width="2"/> <!-- Lingkaran putih dengan outline hitam -->
-                                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-3.31 0-6 1.69-6 4v1h12v-1c0-2.31-2.69-4-6-4z" fill="black"/> <!-- Ikon wajah -->
+                                <circle cx="12" cy="12" r="11" fill="white" stroke="black" stroke-width="2"/>
+                                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-3.31 0-6 1.69-6 4v1h12v-1c0-2.31-2.69-4-6-4z" fill="black"/>
                             </svg>
                             <div class="user-info">
                                 <p class="username">{{ journal.author.username }}</p>
@@ -64,45 +64,49 @@
                     <p>No journals available.</p>
                 {% endfor %}
             </div>
+
             <div class="right-column">
-                <h2>Top Journals</h2>
-                <p>Top Journals Description</p>
-
                 <h2>Filter Souvenir</h2>
-                <form method="GET" action="{% url 'main:journal_home' %}">
-                    <label for="price">Filter by Price:</label>
-                    <select name="price" id="price">
-                        <option value="">Select</option>
-                        <option value="low_to_high">Lowest to Highest</option>
-                        <option value="high_to_low">Highest to Lowest</option>
-                    </select>
+                <div class="filter-container">
+                    <form method="GET" action="{% url 'main:journal_home' %}">
+                        <label for="price">Filter by Price:</label>
+                        <select name="price" id="price">
+                            <option value="">Select</option>
+                            <option value="low_to_high">Lowest to Highest</option>
+                            <option value="high_to_low">Highest to Lowest</option>
+                        </select>
 
-                    <label for="rating">Filter by Rating:</label>
-                    <select name="rating" id="rating">
-                        <option value="">Select</option>
-                        <option value="high_to_low">Highest to Lowest</option>
-                        <option value="low_to_high">Lowest to Highest</option>
-                    </select>
+                        <label for="place_name">Filter by Place Name:</label>
+                        <select name="place_name" id="place_name">
+                            <option value="">Select Place</option>
+                            {% for place in places %}
+                                <option value="{{ place }}">{{ place }}</option>
+                            {% endfor %}
+                        </select>
 
-                    <button type="submit">Filter</button>
-                </form>
+                        <button type="submit">Filter</button>
+                    </form>
+                </div>
 
                 <h2>Available Souvenirs</h2>
                 <div class="souvenir-list">
-                    {% for souvenir in souvenirs %}
-                        <div class="souvenir-item">
-                            <h3>{{ souvenir.name }}</h3>
-                            <p>Price: {{ souvenir.price }}</p>
-                            <p>Rating: {{ souvenir.rating }}</p>
-                            <p>{{ souvenir.description }}</p>
-                        </div>
-                    {% empty %}
+                    {% if souvenirs %}
+                        <ul>
+                            {% for souvenir in souvenirs %}
+                                <li>
+                                    <strong>{{ souvenir.name }}</strong> -  <strong>IDR {{ souvenir.price }} </strong> 
+                                    {{ souvenir.description }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
                         <p>No souvenirs available.</p>
-                    {% endfor %}
+                    {% endif %}
                 </div>
 
-                <h2>Recent Journals</h2>
-                <p>Recent Journals Description</p>
+                <h2>Mlaku-Mlaku's Handpicked Souvenir</h2>
+                <p>Batik Wall Art</p>
+                    <img src="{% static 'images/wall.webp' %}" alt="Recent Journals" />
             </div>
         </div>
     </div>
@@ -121,11 +125,9 @@
                     },
                     success: function(response) {
                         if (response.liked) {
-                            // Update jumlah likes
                             var likesCount = form.find('.likes-count');
                             likesCount.text(parseInt(likesCount.text()) + 1);
                         } else {
-                            // Update jumlah likes
                             var likesCount = form.find('.likes-count');
                             likesCount.text(parseInt(likesCount.text()) - 1);
                         }
