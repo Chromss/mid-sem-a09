@@ -1,0 +1,375 @@
+/* Import Geist Font */
+@font-face {
+    font-family: 'Geist';
+    src: url('/static/places/font/Geist/Geist-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+/* Global Styles */
+body {
+    background-color: #F3F4F8;
+    font-family: 'Geist', sans-serif;
+    letter-spacing: -2.25%;
+    line-height: 160%;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1440px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Banner Styles */
+.banner {
+    position: relative;
+    width: 100%;
+    max-width: 1240px;
+    height: 400px;
+    margin: 0 auto;
+    background-color: #F3F4F8;
+}
+
+.banner-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.banner-overlay {
+    position: absolute;
+    bottom: -56px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.rounded-rectangle {
+    width: 900px;
+    height: 112px;
+    background-color: #F7F7F7;
+    border-radius: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 30px;
+}
+
+.rectangle-section {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.section-text {
+    color: #252525;
+    font-size: 20px;
+    margin-right: 40px;
+    letter-spacing: -3%;
+}
+
+.add-to-collection-btn {
+    background-color: #3279E6;
+    color: #FFFFFF;
+    font-size: 16px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.add-to-collection-btn:hover {
+    background-color: #2868C7;
+}
+
+/* Divider Styles */
+.section-divider {
+    border: none;
+    height: 1px;
+    background-color: #A1A1A1;
+    width: 587px;
+    margin: 10px 0 20px 0;
+}
+
+/* Content Sections */
+.content-sections {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 100px;
+    flex-wrap: wrap;
+}
+
+.overview-section, .souvenir-section {
+    width: 48%;
+    box-sizing: border-box;
+}
+
+.section-title {
+    color: #6B6B6B;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.overview-content {
+    color: #252525;
+    font-size: 16px;
+    line-height: 160%;
+    text-align: justify;
+}
+
+/* Latest Review Section */
+.latest-review-section {
+    margin-top: 40px;
+}
+
+/* Scrollable container for user reviews */
+.user-reviews {
+    max-height: 300px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.review-item {
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.review-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.profile-pic {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.review-user-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.username {
+    color: #252525;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.review-date {
+    color: gray;
+    font-size: 12px;
+}
+
+.review-stars {
+    display: flex;
+    margin-left: auto;
+}
+
+.star-icon {
+    width: 20px;
+    height: 20px;
+    margin-left: 2px;
+}
+
+.review-content {
+    color: #252525;
+    font-size: 14px;
+    line-height: 160%;
+}
+
+/* Write Your Review container styling */
+.write-review-container {
+    margin-top: 30px;
+    width: 100%;
+    background-color: #252525;
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    align-items: flex-start;
+    position: relative;
+}
+
+/* Textarea */
+.write-review-container textarea {
+    width: 100%;
+    max-width: 500px;
+    min-height: 44px;
+    border: none;
+    background: transparent;
+    color: #F7F7F7;
+    font-size: 14px;
+    font-family: 'Geist', sans-serif;
+    resize: none;
+    outline: none;
+    overflow: hidden;
+}
+
+.write-review-container textarea::placeholder {
+    color: #F7F7F7;
+}
+
+/* Fixed position for Send button */
+.send-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.send-btn img {
+    width: 30px;
+    height: 30px;
+}
+
+/* Bottom-left alignment for stars */
+.review-actions {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.star-rating {
+    display: flex;
+    margin-right: 10px;
+}
+
+.star-rating img {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+/* Login Prompt */
+.login-prompt {
+    color: #F7F7F7;
+    font-size: 14px;
+}
+
+.login-prompt a {
+    color: #3279E6;
+    text-decoration: none;
+}
+
+.login-prompt a:hover {
+    text-decoration: underline;
+}
+
+/* Souvenir List Styles */
+.souvenir-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.souvenir-item {
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    width: 140px;
+    height: 200px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.souvenir-image {
+    width: 140px;
+    height: 140px;
+    object-fit: cover;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.souvenir-description {
+    background-color: #F7F7F7;
+    padding: 10px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.souvenir-name {
+    color: #252525;
+    font-size: 12px;
+    text-align: left;
+}
+
+.souvenir-price {
+    color: #252525;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: left;
+}
+
+.souvenir-stock {
+    color: #F7F7F7;
+    font-size: 10px;
+    text-align: left;
+}
+
+/* Scrollbar Styling */
+.user-reviews::-webkit-scrollbar {
+    width: 8px;
+}
+
+.user-reviews::-webkit-scrollbar-track {
+    background: #F3F4F8;
+}
+
+.user-reviews::-webkit-scrollbar-thumb {
+    background-color: #A1A1A1;
+    border-radius: 4px;
+}
+
+/* Responsive Design */
+@media (max-width: 1440px) {
+    .container {
+        padding: 10px;
+    }
+
+    .banner {
+        width: 100%;
+    }
+
+    .rounded-rectangle {
+        width: 100%;
+    }
+
+    .content-sections {
+        flex-direction: column;
+        margin-top: 70px;
+    }
+
+    .overview-section, .souvenir-section {
+        width: 100%;
+    }
+
+    .souvenir-list {
+        justify-content: center;
+    }
+
+    .write-review-container {
+        width: 100%;
+    }
+}
