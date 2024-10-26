@@ -7,10 +7,10 @@ from django.db.models import Avg
 from django.contrib import messages
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
-from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
-from .models import Place, Souvenir, Comment
 
+# Import your models here
+from .models import Place, Souvenir, Comment
 
 def place_detail(request, place_id):
     place = get_object_or_404(Place, pk=place_id)
@@ -45,7 +45,7 @@ class CustomLoginView(LoginView):
 @login_required
 @csrf_exempt
 def add_comment_ajax(request, place_id):
-    if request.method == 'POST' and request.is_ajax():
+    if request.method == 'POST' and request.headers.get('x-requested-with') == 'XMLHttpRequest':
         place = get_object_or_404(Place, pk=place_id)
         content = request.POST.get('comment')
         rating = request.POST.get('rating')
@@ -80,7 +80,7 @@ def add_comment_ajax(request, place_id):
 @login_required
 @csrf_exempt
 def edit_comment_ajax(request, comment_id):
-    if request.method == 'POST' and request.is_ajax():
+    if request.method == 'POST' and request.headers.get('x-requested-with') == 'XMLHttpRequest':
         comment = get_object_or_404(Comment, pk=comment_id, user=request.user)
         content = request.POST.get('content')
         rating = request.POST.get('rating')
@@ -107,7 +107,7 @@ def edit_comment_ajax(request, comment_id):
 @login_required
 @csrf_exempt
 def delete_comment_ajax(request, comment_id):
-    if request.method == 'POST' and request.is_ajax():
+    if request.method == 'POST' and request.headers.get('x-requested-with') == 'XMLHttpRequest':
         comment = get_object_or_404(Comment, pk=comment_id, user=request.user)
         place = comment.place
         comment.delete()

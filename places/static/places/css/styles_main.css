@@ -560,7 +560,6 @@ body {
     transition: opacity 0.2s;
 }
 
-/* Comment Actions */
 .comment-actions {
     display: flex;
     gap: 10px;
@@ -578,8 +577,14 @@ body {
 .edit-btn img, .delete-btn img {
     width: 24px;
     height: 24px;
+    transition: opacity 0.2s;
 }
 
+/* Hover Effect for Edit and Delete Buttons */
+.edit-btn img:hover, .delete-btn img:hover {
+    opacity: 0.8;
+    transition: opacity 0.2s;
+}
 .edit-comment-form {
     margin-top: 10px;
 }
@@ -597,6 +602,7 @@ body {
     box-sizing: border-box;
 }
 
+/* Edit Actions */
 .edit-actions {
     display: flex;
     justify-content: space-between;
@@ -604,9 +610,42 @@ body {
     margin-top: 5px;
 }
 
+/* Star Rating in Edit Form */
 .edit-star {
     width: 20px;
     height: 20px;
     cursor: pointer;
     margin-right: 5px;
+}
+
+/* Edit Buttons Container */
+.edit-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+/* Send and Cancel Edit Buttons */
+.send-edit-btn, .cancel-edit-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.send-edit-btn img, .cancel-edit-btn img {
+    width: 30px;
+    height: 30px;
+    transition: opacity 0.2s;
+}
+
+/* Hover Effects */
+.send-edit-btn img:hover, .cancel-edit-btn img:hover {
+    opacity: 0.8;
+    transition: opacity 0.2s;
+}
+
+/* Hover Effect for Edit and Delete Buttons */
+.edit-btn img:hover, .delete-btn img:hover {
+    opacity: 0.8;
+    transition: opacity 0.2s;
 }

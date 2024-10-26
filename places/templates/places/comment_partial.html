@@ -30,18 +30,24 @@
                         {% endfor %}
                         <input type="hidden" name="rating" class="edit-rating-value" value="{{ comment.rating }}">
                     </div>
-                    <button type="button" class="send-btn update-comment-btn" data-comment-id="{{ comment.id }}">
-                        <img src="{% static 'places/images/icon_send.png' %}" alt="Send">
-                    </button>
+                    <!-- New Buttons -->
+                    <div class="edit-buttons">
+                        <button type="button" class="send-edit-btn update-comment-btn" data-comment-id="{{ comment.id }}" aria-label="Send Edited Comment">
+                            <img src="{% static 'places/images/sendedit.svg' %}" alt="Send">
+                        </button>
+                        <button type="button" class="cancel-edit-btn" data-comment-id="{{ comment.id }}" aria-label="Cancel Editing Comment">
+                            <img src="{% static 'places/images/canceledit.svg' %}" alt="Cancel">
+                        </button>
+                    </div>
                 </div>
             </form>
         </div>
         <!-- Edit and Delete Buttons -->
         <div class="comment-actions">
-            <button class="edit-btn" data-comment-id="{{ comment.id }}">
+            <button class="edit-btn" data-comment-id="{{ comment.id }}" aria-label="Edit Comment">
                 <img src="{% static 'places/images/comment_edit.svg' %}" alt="Edit">
             </button>
-            <button class="delete-btn" data-comment-id="{{ comment.id }}">
+            <button class="delete-btn" data-comment-id="{{ comment.id }}" aria-label="Delete Comment">
                 <img src="{% static 'places/images/comment_delete.svg' %}" alt="Delete">
             </button>
         </div>

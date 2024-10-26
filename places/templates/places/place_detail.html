@@ -244,10 +244,13 @@
                 const reviewItem = document.querySelector(`.review-item[data-comment-id="${commentId}"]`);
                 const reviewContent = reviewItem.querySelector('.review-content');
                 const editForm = reviewItem.querySelector('.edit-comment-form');
+                const commentActions = reviewItem.querySelector('.comment-actions');
 
-                if (reviewContent && editForm) {
-                    // Toggle visibility
+                if (reviewContent && editForm && commentActions) {
+                    // Hide comment content and comment actions
                     reviewContent.style.display = 'none';
+                    commentActions.style.display = 'none';
+                    // Show edit form
                     editForm.style.display = 'block';
                 }
             }
@@ -287,6 +290,24 @@
                     }
                 })
                 .catch(error => console.error('Error:', error));
+            }
+
+            // Cancel Edit
+            if (e.target.closest('.cancel-edit-btn')) {
+                const button = e.target.closest('.cancel-edit-btn');
+                const commentId = button.getAttribute('data-comment-id');
+                const reviewItem = document.querySelector(`.review-item[data-comment-id="${commentId}"]`);
+                const reviewContent = reviewItem.querySelector('.review-content');
+                const editForm = reviewItem.querySelector('.edit-comment-form');
+                const commentActions = reviewItem.querySelector('.comment-actions');
+
+                if (reviewContent && editForm && commentActions) {
+                    // Hide edit form
+                    editForm.style.display = 'none';
+                    // Show original content and comment actions
+                    reviewContent.style.display = 'block';
+                    commentActions.style.display = 'flex';
+                }
             }
 
             // Delete Comment
