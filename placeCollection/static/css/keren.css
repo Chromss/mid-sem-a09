@@ -182,3 +182,46 @@ aside ul li:hover {
     color: #333333;
     margin: 8px 0;
 }
+
+/* Sort Button Styling */
+button {
+    background-color: #32ba7c; /* Blue color to match header links */
+    color: #ffffff;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 16px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 10px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    width: 100%;
+}
+
+button:hover {
+    background-color: #309667; /* Darker shade on hover */
+    transform: scale(1.02);
+}
+
+button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.5); /* Focus ring */
+}
+
+/* Dropdown Styling */
+select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 10px;
+    border-radius: 16px;
+    border: 1px solid #cbd5e0; /* Light border to match theme */
+    background-color: #edf2f7; /* Light gray background */
+    color: #333333;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+}
+
+select:focus {
+    outline: none;
+    border-color: #3182ce; /* Blue border on focus */
+    box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.5); /* Focus ring */
+}
