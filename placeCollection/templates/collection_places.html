@@ -31,7 +31,7 @@
         <section class="places-container">
             <div id="placesGrid" class="places-grid">
                 {% for place in places %}
-                <a href="{% url 'place_detail' place.id %}" class="place-card" data-name="{{ place.name }}">
+                <a href="{% url 'places:place_detail' place.id %}" class="place-card" data-name="{{ place.name }}">
                     <div class="place-image-container">
                         <img src="{{ place.image.url }}" alt="{{ place.name }}" class="place-image">
                     </div>

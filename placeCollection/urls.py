@@ -10,4 +10,5 @@ urlpatterns = [
     path('<int:collection_id>/places/', views.show_collection_places, name='show_collection_places'),
     path('delete/<int:collection_id>/', views.delete_collection, name='delete_collection'),
     
+    
 ]
