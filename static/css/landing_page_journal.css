@@ -1,0 +1,464 @@
+/* Base styles */
+body {
+  font-family: 'Geist', 'Geist';
+  margin: 0;
+  padding: 0;
+  background-image: url('{% static "images/background.jpg" %}');
+  background-size: cover;
+  background-position: center;
+}
+
+.container {
+  background-image: url('{% static "images/background.jpg" %}');
+  background-size: cover;
+  background-position: center;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.journal .div {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Header styles */
+.journal .overlap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #ffffff;
+  box-shadow: 0px 4px 4px #00000040;
+}
+
+.journal .text-wrapper-3,
+.journal .text-wrapper-4,
+.journal .text-wrapper-5,
+.journal .text-wrapper-6 {
+  font-size: 1rem;
+  margin: 0 10px;
+}
+
+/* Button styles */
+.journal .overlap-group,
+.journal .overlap-2 {
+  padding: 10px 20px;
+  background-color: #d9d9d9;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+/* Journal container */
+.journal-container {
+  display: flex;
+  flex-wrap: wrap; /* Menggunakan flexbox untuk layout */
+}
+
+
+.left-column {
+  flex: 3;
+  padding: 20px;
+}
+
+.right-column {
+  flex: 1;
+  padding: 20px;
+  background-color: #f8f8f8;
+  border-left: 1px solid #ccc;
+}
+
+/* Navigation */
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.nav-link {
+  padding: 5px 10px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  text-decoration: none;
+  color: inherit;
+  margin: 5px;
+}
+
+/* Post card */
+.post-card {
+  background-color: white;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 5px gray;
+}
+
+.post-card .header {
+  display: flex;
+  align-items: center;
+}
+
+.post-card .profile {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+
+.post-card .journal-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+/* Media Queries */
+@media screen and (max-width: 768px) {
+  .journal-container {
+      flex-direction: column;
+  }
+
+  .left-column,
+  .right-column {
+      width: 100%;
+  }
+
+  .journal .overlap {
+      flex-wrap: wrap;
+  }
+
+  .journal .text-wrapper-3,
+  .journal .text-wrapper-4,
+  .journal .text-wrapper-5,
+  .journal .text-wrapper-6 {
+      margin: 5px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .journal .overlap-group,
+  .journal .overlap-2 {
+      padding: 5px 10px;
+  }
+
+  .post-card {
+      padding: 10px;
+  }
+}
+
+/* Footer styles */
+.footer {
+  background-color: #252525;
+  color: #FFFFFF;
+  padding: 20px 0;
+  width: 100%;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.footer-link {
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+.footer-link:hover {
+  text-decoration: underline;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+  .footer-content {
+      flex-direction: column;
+      text-align: center;
+  }
+
+  .footer-left, .footer-center, .footer-right {
+      margin: 5px 0;
+  }
+}
+
+.header {
+  background-color: #282A3A;
+  padding: 10px 20px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header h2 {
+  color: #FFFFFF;
+  margin: 0;
+}
+
+.header-links {
+  display: flex;
+  gap: 10px;
+}
+
+.publish-button, .my-journals-button {
+  background-color: #007BFF;
+  color: #FFFFFF;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+
+.publish-button:hover, .my-journals-button:hover {
+  background-color: #0056b3;
+}
+
+.journal-content {
+  background-color: #2D3748;
+  border-radius: 20px;
+  padding: 20px;
+  color: #FFFFFF;
+}
+
+.journal-card {
+  margin-bottom: 15px;
+  padding: 15px;
+  background-color: #282A3A;
+  border-radius: 10px;
+}
+
+.profile-icon {
+  display: inline-block;
+  margin-right: 10px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #000;
+  padding: 5px;
+}
+
+.journal-card h2,
+.journal-card .date {
+  color: #FFFFFF;
+}
+
+.like-button {
+  background-color: #007BFF;
+  color: #FFFFFF;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.like-button:hover {
+  background-color: #32BA7C;
+}
+
+@media (max-width: 768px) {
+  .header {
+      flex-direction: column;
+      align-items: flex-start;
+  }
+
+  .header-item {
+      margin: 5px 0;
+  }
+
+  .post-card {
+      padding: 10px;
+  }
+}
+
+.post-card .header {
+  display: flex;
+  align-items: center;
+}
+
+.profile {
+  margin-right: 15px;
+}
+
+.user-info {
+  color: #FFFFFF;
+  flex-grow: 1; 
+  
+}
+
+.username {
+  margin: 0;
+  font-weight: bold;
+}
+
+.date {
+  margin: 0;
+  font-size: 0.9em;
+}
+
+/* Journal container */
+.journal-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 20px auto;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding-top: 10px;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #1b1b32;
+}
+
+.nav-link {
+    color: white;
+    text-decoration: none;
+    margin-right: 1rem;
+    padding: 10px 15px;
+    background-color: #0056b3;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.nav-link:hover {
+    background-color: #004494;
+}
+
+.nav-logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+}
+
+#edit-modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1000; /* Sit on top */
+  left: 50%; /* Center horizontally */
+  top: 50%; /* Center vertically */
+  transform: translate(-50%, -50%); /* Adjust for the width and height */
+  background-color: white; /* Background color */
+  padding: 20px; /* Padding */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Shadow for depth */
+  border-radius: 5px; /* Rounded corners */
+}
+
+.edit-button, .delete-button {
+    padding: 5px 10px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.edit-button {
+    background-color: #0056b3;
+    color: white;
+}
+
+.delete-button {
+    background-color: #d9534f;
+    color: white;
+}
+
+.edit-button:hover, .delete-button:hover {
+    opacity: 0.8;
+}
+
+
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #282A3A; /* Dark background */
+  color: white;
+}
+
+.nav-logo {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center; /* Center the logo */
+  flex: 1; /* Allow the logo to take available space */
+}
+
+.nav-links {
+  display: flex;
+  align-items: center; /* Align items vertically */
+}
+
+.nav-link {
+  margin: 0 10px;
+  color: white; /* White text */
+  text-decoration: none; /* Remove underline */
+  font-size: 16px; /* Adjust font size */
+}
+
+/* Hamburger Menu */
+.hamburger {
+  display: none; /* Hidden by default */
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* Mobile Menu */
+.mobile-menu {
+  display: none; /* Hidden by default */
+  flex-direction: column;
+  background-color: #282A3A; /* Same background as navbar */
+  position: absolute;
+  top: 50px; /* Adjust based on navbar height */
+  width: 100%;
+  z-index: 1000; /* Ensure it appears above other content */
+}
+
+.mobile-menu .nav-link {
+  padding: 10px;
+  border-bottom: 1px solid #ccc; /* Optional: add a separator */
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .nav-links {
+      display: none; /* Hide links on mobile */
+  }
+
+  .hamburger {
+      display: block; /* Show hamburger icon */
+  }
+
+  .mobile-menu {
+      display: flex; /* Show mobile menu when toggled */
+  }
+}
+
+@media (min-width: 769px) {
+  .mobile-menu {
+      display: none; /* Hide mobile menu on larger screens */
+  }
+}
+
+/* Modal Styles */
+.modal-content {
+  padding: 20px;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.close-button {
+  cursor: pointer;
+  float: right;
+  font-size: 20px;
+}
+
+

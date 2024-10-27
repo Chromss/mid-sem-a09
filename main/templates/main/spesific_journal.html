@@ -1,0 +1,206 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ journal.title }}</title>
+    <style>
+        /* CSS tambahan untuk memperbaiki tata letak */
+        body {
+            font-family: 'Geist', 'Geist';
+            margin: 0;
+            padding: 0;
+            background-image: url('{% static "images/spec.png" %}');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            align-items: center;
+           
+        }
+
+        
+
+        .nav-link {
+            color: #333;
+            text-decoration: none;
+            margin-right: 1rem;
+        }
+
+        .nav-menu a {
+            margin: 0 1rem;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 2rem;
+        }
+
+        .journal-details {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .journal-title {
+            font-size: 28px;
+            margin-bottom: 1rem;
+            font-weight: bold;
+            text-align: center;
+            color: #333;
+        }
+
+        .journal-meta {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 1rem;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+        }
+
+        .profile-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+        }
+
+        .journal-image {
+            width: 100%;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .journal-content {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #333;
+            margin-bottom: 2rem;
+        }
+
+        .related-link {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            font-size: 14px;
+            color: #666;
+            margin-top: 2rem;
+        }
+
+        .footer-link {
+            color: #007bff;
+            text-decoration: none;
+            margin-left: 1rem;
+        }
+
+        .back-button {
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .back-link {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        /* Responsivitas untuk navbar */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none; /* Sembunyikan menu pada layar kecil */
+            }
+            .hamburger {
+                display: block; /* Tampilkan ikon hamburger */
+                cursor: pointer;
+                color: #333; /* Warna ikon hamburger */
+            }
+        }
+
+        @media (min-width: 769px) {
+            .hamburger {
+                display: none; /* Sembunyikan ikon hamburger pada layar besar */
+            }
+        }
+    </style>
+</head>
+<body class="spesific-journal">
+    <div class="navbar">
+        <div>
+            <a href="{% url 'main:register' %}" class="nav-link">Sign Up</a>
+            <a href="{% url 'main:login' %}" class="nav-link">Log In</a>
+        </div>
+        <div class="nav-logo">MlakuMlaku</div>
+        <div class="hamburger" onclick="toggleMenu()">&#9776;</div> <!-- Ikon Hamburger -->
+        <nav class="nav-menu">
+            <a href="{% url 'main:itinerary_list' %}"class="nav-link">Itinerary</a>
+            <a href="{% url 'main:journal_home' %}">Journal</a>
+            <a href="#">Collection</a>
+        </nav>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            const navMenu = document.querySelector('.nav-menu');
+            navMenu.style.display = navMenu.style.display === 'block' ? 'none' : 'block';
+        }
+    </script>
+
+    <div class="container">
+        <!-- Journal Details -->
+        <div class="journal-details">
+            <h1 class="journal-title">{{ journal.title }}</h1>
+            <div class="journal-meta">
+                <div class="profile">
+                    <img class="profile-img" src="{% static 'images/profile.png' %}" alt="Profile">
+                    <span class="author">{{ journal.author.username }} - {{ journal.created_at|date:"F d, Y H:i" }}</span>
+                </div>
+            </div>
+            {% if journal.image %}
+                <img class="journal-image" src="{{ journal.image.url }}" alt="{{ journal.title }}">
+            {% endif %}
+            <p class="journal-content">{{ journal.content }}</p>
+            <!-- Back Button -->
+            <div class="back-button">
+                <a href="{% url 'main:journal_home' %}" class="back-link">Back to Journal Home</a>
+            </div>
+        </div>
+        <!-- Footer -->
+        <footer class="footer">
+            <span>UI Design by Chroms</span>
+            <span>&copy; 2024 MlakuMlaku. All rights reserved.</span>
+            <a href="#" class="footer-link">About</a>
+        </footer>
+    </div>
+</body>
+</html>

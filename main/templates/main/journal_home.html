@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{% static 'css/landing_page_journal.css' %}">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Beranda Jurnal</title>
+    <script type="text/javascript">
+        const csrfToken = '{{ csrf_token }}'; // Add CSRF token
+    </script>
+    <style>
+        /* Base Navbar Styles */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background-color: #282A3A; /* Dark background */
+            color: white;
+        }
+
+        .nav-logo {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center; /* Center the logo */
+            flex: 1; /* Allow the logo to take available space */
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center; /* Align items vertically */
+        }
+
+        .nav-link {
+            margin: 0 10px;
+            color: white; /* White text */
+            text-decoration: none; /* Remove underline */
+            font-size: 16px; /* Adjust font size */
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: none; /* Hidden by default */
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            display: none; /* Hidden by default */
+            flex-direction: column;
+            background-color: #282A3A; /* Same background as navbar */
+            position: absolute;
+            top: 50px; /* Adjust based on navbar height */
+            width: 100%;
+            z-index: 1000; /* Ensure it appears above other content */
+        }
+
+        .mobile-menu .nav-link {
+            padding: 10px;
+            border-bottom: 1px solid #ccc; /* Optional: add a separator */
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none; /* Hide links on mobile */
+            }
+
+            .hamburger {
+                display: block; /* Show hamburger icon */
+            }
+
+            .mobile-menu {
+                display: flex; /* Show mobile menu when toggled */
+            }
+        }
+
+        @media (min-width: 769px) {
+            .mobile-menu {
+                display: none; /* Hide mobile menu on larger screens */
+            }
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1000; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0, 0, 0, 0.5); /* Black w/ opacity */
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto; /* 10% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Could be more or less, depending on screen size */
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect */
+        }
+
+        .options-button {
+            background-color: transparent; /* Set background color */
+            border: none; /* Remove border */
+            color: white; /* Change text color */
+            font-size: 24px; /* Adjust font size */
+            cursor: pointer; /* Change cursor to pointer */
+        }
+
+        .options-button:hover {
+            color: greenyellow; /* Change color on hover */
+        }
+
+        .options-menu a {
+            color: white; /* Change text color to purple */
+            text-decoration: none; /* Remove underline */
+        }
+
+        .options-menu a:hover {
+            text-decoration: underline; /* Underline on hover */
+            color: red; /* Darker purple on hover */
+        }
+
+        h2 {
+            font-family: 'Geist', 'Geist';
+            color: #333;
+        }
+
+        label {
+            font-weight: bold;
+            margin-top: 10px;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        textarea,
+        input[type="file"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px; /* Rounded corners */
+            box-sizing: border-box;
+        }
+
+        textarea {
+            height: 100px; /* Set height for textarea */
+        }
+
+        .btn {
+            background-color: #007bff; /* Blue background */
+            color: white; /* White text */
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer;
+            margin-top: 10px;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 10px;
+            text-align: center;
+            color: #007bff; /* Blue text */
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            text-decoration: underline; /* Underline on hover */
+        }
+
+        .close-button {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close-button:hover,
+        .close-button:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body class="journal">
+    <div class="navbar">
+        <div class="nav-links">
+            <a href="{% url 'main:register' %}" class="nav-link">Sign Up</a>
+            <a href="{% url 'main:login' %}" class="nav-link">Log In</a>
+        </div>
+        <div class="nav-logo">MlakuMlaku</div>
+        <div class="nav-links">
+            <a href="{% url 'main:itinerary_list' %}"class="nav-link">Itinerary</a>
+            <a href="{% url 'main:journal_home' %}" class="nav-link">Journal</a>
+            <a href="#" class="nav-link">Collection</a>
+        </div>
+        <div class="hamburger" id="hamburger">
+            &#9776; <!-- Hamburger icon -->
+        </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobile-menu">
+        <a href="{% url 'main:register' %}" class="nav-link">Sign Up</a>
+        <a href="{% url 'main:login' %}" class="nav-link">Log In</a>
+        <a href="#" class="nav-link">Itinerary</a>
+        <a href="{% url 'main:journal_home' %}" class="nav-link">Journal</a>
+        <a href="#" class="nav-link">Collection</a>
+    </div>
+
+    <div class="div">
+        <div class="journal-container">
+            <div class="left-column">
+                <div class="header">
+                    <h2>For You</h2>
+                    <div class="header-links">
+                        <button class="publish-button" id="open-modal">Publish</button>
+                        <a href="{% url 'main:journal_history' %}" class="my-journals-button">My Journals</a>
+                    </div>
+                </div>
+
+                {% for journal in journals %}
+                    <div class="post-card" data-journal-id="{{ journal.id }}">
+                        <div class="header">
+                            <svg class="profile-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="11" fill="white" stroke="black" stroke-width="2"/>
+                                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-3.31 0-6 1.69-6 4v1h12v-1c0-2.31-2.69-4-6-4z" fill="black"/>
+                            </svg>
+                            <div class="user-info">
+                                <p class="username">{{ journal.author.username }}</p>
+                                <p class="date">{{ journal.created_at|date:"F d, Y H:i" }}</p>
+                            </div>
+                            {% if journal.author == request.user %}
+                                <div class="options">
+                                    <button class="options-button" onclick="toggleOptions(this)">...</button>
+                                    <div class="options-menu" style="display: none;">
+                                        <a href="#" class="edit-journal" data-id="{{ journal.id }}">Edit</a>
+                                        <a href="#" class="delete-journal" data-id="{{ journal.id }}">Delete</a>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <h2 class="title">{{ journal.title }}</h2>
+                        {% if journal.image %}
+                            <img class="journal-image" src="{{ journal.image.url }}" alt="{{ journal.title }}">
+                        {% endif %}
+                        <p class="content">{{ journal.content|truncatewords:30 }}</p>
+                        <div class="card-footer">
+                            <form class="like-form" data-journal-id="{{ journal.id }}">
+                                {% csrf_token %}
+                                <button type="button" class="like-button">
+                                    <img src="{% static 'images/like_icon.png' %}" alt="Like" class="like-icon">
+                                    <span class="likes-count">{{ journal.likes.count }}</span>
+                                </button>
+                            </form>
+                            <a href="{% url 'main:journal_detail' journal.id %}" class="show-detail-link">Show Detail</a>
+                        </div>
+                    </div>
+                {% empty %}
+                    <p>No journals available.</p>
+                {% endfor %}
+            </div>
+
+            <div class="right-column">
+                <h2>Looking for Souvenir? We got you!</h2>
+                <img src="{% static 'images/logo2.jpg' %}" alt="logo" />
+                <div class="filter-container">
+                    <form method="GET" action="{% url 'main:journal_home' %}">
+                        <label for="price">Filter by Price:</label>
+                        <select name="price" id="price">
+                            <option value="">Select</option>
+                            <option value="low_to_high">Lowest to Highest</option>
+                            <option value="high_to_low">Highest to Lowest</option>
+                        </select>
+
+                        <label for="place_name">Filter by Place Name:</label>
+                        <select name="place_name" id="place_name">
+                            <option value="">Select Place</option>
+                            {% for place in places %}
+                                <option value="{{ place }}">{{ place }}</option>
+                            {% endfor %}
+                        </select>
+
+                        <button type="submit">Filter</button>
+                    </form>
+                </div>
+
+                <h2>Available Souvenirs</h2>
+                <div class="souvenir-list">
+                    {% if souvenirs %}
+                        <ul>
+                            {% for souvenir in souvenirs %}
+                                <li>
+                                    <strong>{{ souvenir.name }}</strong> -  <strong>IDR {{ souvenir.price }} </strong> 
+                                    {{ souvenir.description }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>No souvenirs available.</p>
+                    {% endif %}
+                </div>
+
+                <h2>Mlaku-Mlaku's Handpicked Souvenir</h2>
+                <p>Batik Wall Art</p>
+                <img src="{% static 'images/wall.webp' %}" alt="Recent Journals" />
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Create Journal -->
+    <div id="create-journal-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="close-create-modal">&times;</span>
+            <h2>Create a New Journal</h2>
+            <form id="create-journal-form">
+                <label for="modal-title">Title:</label>
+                <input type="text" id="modal-title" name="title" required>
+                
+                <label for="modal-content">Content:</label>
+                <textarea id="modal-content" name="content" required></textarea>
+                
+                <label for="modal-image">Image:</label>
+                <input type="file" id="modal-image" name="image">
+                
+                <button type="submit" class="btn">Create Journal</button>
+            </form>
+            <a href="{% url 'main:journal_home' %}" class="back-link">Back to Journal Home</a>
+        </div>
+    </div>
+
+    <!-- Modal for Edit Journal -->
+    <div id="edit-modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Edit Journal</h2>
+            <form id="edit-form">
+                <input type="hidden" id="edit-form-id" name="journal_id">
+                
+                <label for="edit-form-title">Title:</label>
+                <input type="text" id="edit-form-title" name="title" required>
+                
+                <label for="edit-form-content">Content:</label>
+                <textarea id="edit-form-content" name="content" required></textarea>
+                
+                <label for="edit-form-image">Image:</label>
+                <input type="file" id="edit-form-image" name="image">
+                <p id="current-image-message">No image currently uploaded.</p>
+                <img id="current-image" src="" alt="Current Image" style="display: none; max-width: 100%; margin-top: 10px;">
+                
+                
+                <button type="submit">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // Toggle mobile menu
+        document.getElementById('hamburger').addEventListener('click', function() {
+            var mobileMenu = document.getElementById('mobile-menu');
+            if (mobileMenu.style.display === 'flex') {
+                mobileMenu.style.display = 'none'; // Hide menu
+            } else {
+                mobileMenu.style.display = 'flex'; // Show menu
+            }
+        });
+
+        // Function to toggle options menu
+        function toggleOptions(button) {
+            const optionsMenu = button.nextElementSibling; // Get the next sibling (options menu)
+            if (optionsMenu.style.display === 'none' || optionsMenu.style.display === '') {
+                optionsMenu.style.display = 'block'; // Show options menu
+            } else {
+                optionsMenu.style.display = 'none'; // Hide options menu
+            }
+        }
+
+        // Open create journal modal
+        $('#open-modal').on('click', function() {
+            $('#create-journal-modal').show(); // Show the create modal
+        });
+
+        // Close create journal modal when the close button is clicked
+        $('#close-create-modal').on('click', function() {
+            $('#create-journal-modal').hide(); // Hide the create modal
+        });
+
+        // Close edit journal modal when the close button is clicked
+        $('.close-button').on('click', function() {
+            $('#edit-modal').hide(); // Hide the edit modal
+        });
+
+        // Close modal when clicking outside of the modal
+        $(window).on('click', function(event) {
+            if (event.target.id === 'create-journal-modal') {
+                $('#create-journal-modal').hide();
+            }
+            if (event.target.id === 'edit-modal') {
+                $('#edit-modal').hide(); // Hide the edit modal
+            }
+        });
+
+        // Create journal via AJAX
+        $('#create-journal-form').on('submit', function(e) {
+            e.preventDefault(); // Prevent default form submission
+            var formData = new FormData(this);
+            $.ajax({
+                type: 'POST',
+                url: '{% url "main:create_journal" %}', // URL untuk create journal
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    // Handle success (e.g., redirect or show a success message)
+                    window.location.reload(); // Reload page to see new journal
+                },
+                error: function(xhr) {
+                    // Handle error
+                    alert('Error creating journal.');
+                }
+            });
+        });
+
+        // Edit journal
+        $('.edit-journal').on('click', function(e) {
+            e.preventDefault();
+            var journalId = $(this).data('id');
+            $.ajax({
+                type: 'GET',
+                url: '/edit/' + journalId + '/',
+                success: function(data) {
+                    $('#edit-form-title').val(data.title);
+                    $('#edit-form-content').val(data.content);
+                    $('#edit-form-id').val(journalId);
+                    
+                    // Display current image if it exists
+                    if (data.image_url) {
+                        $('#current-image').attr('src', data.image_url).show();
+                        $('#current-image-message').text('Current image:').show();
+                    } else {
+                        $('#current-image').hide();
+                        $('#current-image-message').text('No image currently uploaded.').show();
+                    }
+                    
+                    $('#edit-modal').show(); // Show the edit modal
+                },
+                error: function(xhr) {
+                    console.error('Error fetching journal data:', xhr);
+                }
+            });
+        });
+
+        // Save changes
+        $('#edit-form').on('submit', function(e) {
+            e.preventDefault();
+            var journalId = $('#edit-form-id').val();
+            var formData = new FormData(this);
+            formData.append('delete_image', $('#delete-image').is(':checked')); // Add delete image flag
+
+            $.ajax({
+                type: 'POST',
+                url: '/edit/' + journalId + '/',
+                data: formData,
+                processData: false, // Important for file upload
+                contentType: false, // Important for file upload
+                headers: {
+                    'X-CSRFToken': csrfToken // Include CSRF token
+                },
+                success: function(response) {
+                    // Update the journal card with new data
+                    $('div[data-journal-id="' + journalId + '"] .title').text(response.title);
+                    $('div[data-journal-id="' + journalId + '"] .content').text(response.content);
+                    if (response.image_url) {
+                        $('div[data-journal-id="' + journalId + '"] .journal-image').attr('src', response.image_url);
+                    } else {
+                        $('div[data-journal-id="' + journalId + '"] .journal-image').attr('src', ''); // Clear image if deleted
+                    }
+                    $('#edit-modal').hide();
+                },
+                error: function(xhr) {
+                    console.error('Error saving changes:', xhr);
+                }
+            });
+        });
+
+        // Delete journal
+        $('.delete-journal').on('click', function(e) {
+            e.preventDefault();
+            var journalId = $(this).data('id');
+            if (confirm('Are you sure you want to delete this journal?')) {
+                $.ajax({
+                    type: 'DELETE',
+                    url: '/delete/' + journalId + '/',
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    },
+                    success: function(response) {
+                        $('div[data-journal-id="' + journalId + '"]').remove();
+                    },
+                    error: function(xhr) {
+                        alert('Error deleting journal.');
+                    }
+                });
+            }
+        });
+
+        // Like journal
+        $(document).ready(function() {
+            $('.like-button').on('click', function() {
+                var form = $(this).closest('.like-form');
+                var journalId = form.data('journal-id');
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/like/' + journalId + '/',
+                    data: {
+                        'csrfmiddlewaretoken': '{{ csrf_token }}'
+                    },
+                    success: function(response) {
+                        if (response.liked) {
+                            var likesCount = form.find('.likes-count');
+                            likesCount.text(parseInt(likesCount.text()) + 1);
+                        } else {
+                            var likesCount = form.find('.likes-count');
+                            likesCount.text(parseInt(likesCount.text()) - 1);
+                        }
+                    },
+                    error: function(xhr) {
+                        if (xhr.status === 401) {
+                            alert('You need to be logged in to like a journal.');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-left">
+                <p>UI Design by Chroms</p>
+            </div>
+            <div class="footer-center">
+                <p>&copy; 2024 MlakuMlaku. All rights reserved.</p>
+            </div>
+            <div class="footer-right">
+                <p>About</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

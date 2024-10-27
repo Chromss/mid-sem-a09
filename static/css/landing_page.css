@@ -1,0 +1,1704 @@
+/* .landing-page,
+.landing-page * {
+  box-sizing: border-box;
+}
+.landing-page {
+  background: var(--primary-light, #f3f4f8);
+  height: 2340px;
+  position: relative;
+  overflow: hidden;
+}
+.header {
+  height: auto;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  overflow: visible;
+}
+.touring-across-yogyakarta {
+  color: var(--white-accent, #f7f7f7);
+  text-align: left;
+  font-family: "Geist-Bold", sans-serif;
+  font-size: 48px;
+  line-height: 105%;
+  letter-spacing: -0.0225em;
+  font-weight: 700;
+  position: absolute;
+  left: 146px;
+  top: 181px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+}
+.start-your-next-unforgettable-trip-with-mlaku-mlaku {
+  text-align: left;
+  font-family: "-", sans-serif;
+  font-size: 24px;
+  line-height: 120%;
+  letter-spacing: -0.0225em;
+  font-weight: 400;
+  position: absolute;
+  left: 146px;
+  top: 235px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+}
+.start-your-next-unforgettable-trip-with-mlaku-mlaku-span {
+  color: #ffffff;
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 24px;
+  line-height: 120%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+}
+.start-your-next-unforgettable-trip-with-mlaku-mlaku-span2 {
+  color: var(--red-accent, #fc3644);
+  font-family: "Geist-SemiBold", sans-serif;
+  font-size: 24px;
+  line-height: 120%;
+  letter-spacing: -0.0225em;
+  font-weight: 600;
+}
+.start-your-next-unforgettable-trip-with-mlaku-mlaku-span3 {
+  color: #ffffff;
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 24px;
+  line-height: 120%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+}
+.button {
+  position: absolute;
+  inset: 0;
+}
+.rectangle-25 {
+  background: var(--blue-accent, #3279e6);
+  border-radius: 999px;
+  width: 170px;
+  height: 42px;
+  position: absolute;
+  left: 146px;
+  top: 291px;
+}
+.get-started {
+  color: var(--white-accent, #f7f7f7);
+  text-align: center;
+  font-family: "Geist-SemiBold", sans-serif;
+  font-size: 16px;
+  line-height: 105%;
+  letter-spacing: -0.03em;
+  font-weight: 600;
+  position: absolute;
+  left: 188px;
+  top: 303px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+.a-hub-for-local-excellence {
+  color: var(--black-accent, #252525);
+  text-align: left;
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 36px;
+  line-height: 105%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+  position: absolute;
+  left: 80px;
+  top: 492px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+}
+.yogyakarta-where-ancient-heritage-and-vibrant-culture-intertwine-offers-a-captivating-journey-through-indonesia-s-heart-explore-the-majestic-borobudur-and-prambanan-temples-both-unesco-world-heritage-sites-that-stand-as-timeless-symbols-of-history-from-traditional-javanese-art-to-modern-creativity-yogyakarta-is-a-melting-pot-of-inspiration-and-innovation-experience-the-warmth-of-its-people-and-the-rich-flavors-of-its-cuisine-making-every-visit-unforgettable {
+  color: var(--black-accent, #252525);
+  text-align: left;
+  font-family: "Geist-Regular", sans-serif;
+  font-size: 16px;
+  line-height: 130%;
+  letter-spacing: -0.0225em;
+  font-weight: 400;
+  position: absolute;
+  left: 70px;
+  top: 553px;
+  width: 525px;
+}
+.explore-our-top-destinations {
+  color: var(--black-accent, #252525);
+  text-align: center;
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 36px;
+  line-height: 105%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+  position: absolute;
+  left: calc(50% - 237px);
+  top: 757px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+.what-people-say-about-our-destinations {
+  color: #000000;
+  text-align: center;
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 36px;
+  line-height: 105%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+  position: absolute;
+  left: calc(50% - 332px);
+  top: 1547px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+.navbar {
+  position: absolute;
+  inset: 0;
+}
+.itinerary {
+  color: var(--white-accent, #f7f7f7);
+  text-align: left;
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 16px;
+  line-height: 120%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+  position: absolute;
+  left: 1005px;
+  top: 39px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+}
+.journal {
+  color: var(--white-accent, #f7f7f7);
+  text-align: left;
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 16px;
+  line-height: 120%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+  position: absolute;
+  left: 1144px;
+  top: 39px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+}
+.collection {
+  color: var(--white-accent, #f7f7f7);
+  text-align: left;
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 16px;
+  line-height: 120%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+  position: absolute;
+  left: 1278px;
+  top: 39px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+}
+.mlaku-mlaku {
+  color: var(--white-accent, #f7f7f7);
+  text-align: center;
+  font-family: "Geist-Bold", sans-serif;
+  font-size: 16px;
+  line-height: 120%;
+  letter-spacing: -0.0225em;
+  font-weight: 700;
+  position: absolute;
+  left: calc(50% - 48px);
+  top: 39px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+.label {
+  width: 140px;
+  height: 36px;
+  position: static;
+}
+.rectangle-252 {
+  background: var(--white-accent, #f7f7f7);
+  border-radius: 999px;
+  width: 140px;
+  height: 36px;
+  position: absolute;
+  left: 136px;
+  top: 30px;
+}
+.kinardes {
+  color: var(--black-accent, #252525);
+  text-align: center;
+  font-family: "Geist-SemiBold", sans-serif;
+  font-size: 16px;
+  line-height: 105%;
+  letter-spacing: -0.03em;
+  font-weight: 600;
+  position: absolute;
+  left: 162px;
+  top: 40px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+.vector {
+  width: 0.62%;
+  height: 0.68%;
+  position: absolute;
+  right: 83.13%;
+  left: 16.25%;
+  bottom: 97.05%;
+  top: 2.26%;
+  overflow: visible;
+}
+.profile {
+  width: 2.22%;
+  height: 32px;
+  position: absolute;
+  right: 91.74%;
+  left: 6.04%;
+  top: 32px;
+  overflow: visible;
+}
+.card-1 {
+  position: absolute;
+  inset: 0;
+}
+.rectangle-28 {
+  background: var(--peach-accent, #ffd8be);
+  width: 220px;
+  height: 269px;
+  position: absolute;
+  left: 625px;
+  top: 421.17px;
+  transform-origin: 0 0;
+  transform: rotate(-5deg) scale(1, 1);
+}
+.rectangle-29 {
+  width: 200px;
+  height: 165px;
+  position: absolute;
+  left: 635.83px;
+  top: 430.26px;
+  transform-origin: 0 0;
+  transform: rotate(-5deg) scale(1, 1);
+  object-fit: cover;
+}
+.parangritis-beach {
+  color: var(--black-accent, #252525);
+  text-align: left;
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 16px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+  position: absolute;
+  left: 650.74px;
+  top: 600.61px;
+  transform-origin: 0 0;
+  transform: rotate(-5deg) scale(1, 1);
+}
+.located-just-27-kilometers-from-the-city-center-this-beach-is-accessible-for-a-quick-getaway {
+  color: var(--black-accent, #252525);
+  text-align: left;
+  font-family: "Geist-Regular", sans-serif;
+  font-size: 14px;
+  line-height: 115%;
+  letter-spacing: -0.0225em;
+  font-weight: 400;
+  position: absolute;
+  left: 653.35px;
+  top: 630.5px;
+  width: 203px;
+  transform-origin: 0 0;
+  transform: rotate(-5deg) scale(1, 1);
+}
+.card-2 {
+  position: absolute;
+  inset: 0;
+}
+.rectangle-282 {
+  background: var(--peach-accent, #ffd8be);
+  width: 220px;
+  height: 269px;
+  position: absolute;
+  left: 891px;
+  top: 401px;
+  transform-origin: 0 0;
+  transform: rotate(0deg) scale(1, 1);
+}
+.rectangle-292 {
+  width: 200px;
+  height: 165px;
+  position: absolute;
+  left: 901px;
+  top: 411px;
+  transform-origin: 0 0;
+  transform: rotate(0deg) scale(1, 1);
+  object-fit: cover;
+}
+.prambanan-temple {
+  color: var(--black-accent, #252525);
+  text-align: left;
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 16px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+  position: absolute;
+  left: 901px;
+  top: 582px;
+}
+.home-to-over-2-million-visitors-annually-this-site-showcases-indonesia-s-rich-cultural-heritage {
+  color: var(--black-accent, #252525);
+  text-align: left;
+  font-family: "Geist-Regular", sans-serif;
+  font-size: 14px;
+  line-height: 115%;
+  letter-spacing: -0.0225em;
+  font-weight: 400;
+  position: absolute;
+  left: 901px;
+  top: 612px;
+  width: 203px;
+}
+.card-3 {
+  position: absolute;
+  inset: 0;
+}
+.rectangle-283 {
+  background: var(--peach-accent, #ffd8be);
+  width: 220px;
+  height: 269px;
+  position: absolute;
+  left: 1157.44px;
+  top: 402px;
+  transform-origin: 0 0;
+  transform: rotate(5deg) scale(1, 1);
+}
+.rectangle-293 {
+  width: 200px;
+  height: 165px;
+  position: absolute;
+  left: 1166.54px;
+  top: 412.83px;
+  transform-origin: 0 0;
+  transform: rotate(5deg) scale(1, 1);
+  object-fit: cover;
+}
+.malioboro-street {
+  color: var(--black-accent, #252525);
+  text-align: left;
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 16px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+  position: absolute;
+  left: 1151.63px;
+  top: 583.18px;
+  transform-origin: 0 0;
+  transform: rotate(5deg) scale(1, 1);
+}
+.daily-locals-and-tourists-alike-enjoy-a-lively-atmosphere-rich-in-shopping-and-authentic-cuisine {
+  color: var(--black-accent, #252525);
+  text-align: left;
+  font-family: "Geist-Regular", sans-serif;
+  font-size: 14px;
+  line-height: 115%;
+  letter-spacing: -0.0225em;
+  font-weight: 400;
+  position: absolute;
+  left: 1149.02px;
+  top: 613.07px;
+  width: 203px;
+  transform-origin: 0 0;
+  transform: rotate(5deg) scale(1, 1);
+}
+.product-card-1 {
+  position: absolute;
+  inset: 0;
+}
+.mm-dummy-1 {
+  border-radius: 16px;
+  width: 220px;
+  height: 250px;
+  position: absolute;
+  left: 98px;
+  top: 833px;
+  object-fit: cover;
+}
+.place-1 {
+  color: var(--black-accent, #252525);
+  text-align: left;
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 14px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+  position: absolute;
+  left: 103px;
+  top: 1090px;
+}
+._348 {
+  color: var(--black-accent, #252525);
+  text-align: left;
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 14px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+  position: absolute;
+  left: 240px;
+  top: 1090px;
+}
+._65 {
+  color: var(--black-accent, #252525);
+  text-align: left;
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 14px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+  position: absolute;
+  left: 294px;
+  top: 1090px;
+}
+.vector2 {
+  width: 1.13%;
+  height: 14px;
+  position: absolute;
+  right: 83.8%;
+  left: 15.07%;
+  top: 1092px;
+  overflow: visible;
+}
+.vector3 {
+  width: 0.76%;
+  height: 14px;
+  position: absolute;
+  right: 80.01%;
+  left: 19.24%;
+  top: 1092px;
+  overflow: visible;
+}
+.product-card-2 {
+  position: absolute;
+  inset: 0;
+}
+.mm-dummy-12 {
+  border-radius: 16px;
+  width: 220px;
+  height: 250px;
+  position: absolute;
+  left: 354px;
+  top: 833px;
+  object-fit: cover;
+}
+.place-2 {
+  color: var(--black-accent, #252525);
+  text-align: left;
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 14px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+  position: absolute;
+  left: 359px;
+  top: 1090px;
+}
+._3482 {
+  color: var(--black-accent, #252525);
+  text-align: left;
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 14px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+  position: absolute;
+  left: 496px;
+  top: 1090px;
+}
+._652 {
+  color: var(--black-accent, #252525);
+  text-align: left;
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 14px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+  position: absolute;
+  left: 550px;
+  top: 1090px;
+}
+.vector4 {
+  width: 1.13%;
+  height: 14px;
+  position: absolute;
+  right: 66.02%;
+  left: 32.85%;
+  top: 1092px;
+  overflow: visible;
+}
+.vector5 {
+  width: 0.76%;
+  height: 14px;
+  position: absolute;
+  right: 62.23%;
+  left: 37.01%;
+  top: 1092px;
+  overflow: visible;
+}
+.product-card-3 {
+  position: absolute;
+  inset: 0;
+}
+.mm-dummy-13 {
+  border-radius: 16px;
+  width: 220px;
+  height: 250px;
+  position: absolute;
+  left: 610px;
+  top: 833px;
+  object-fit: cover;
+}
+.place-3 {
+  color: var(--black-accent, #252525);
+  text-align: left;
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 14px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+  position: absolute;
+  left: 615px;
+  top: 1090px;
+}
+._3483 {
+  color: var(--black-accent, #252525);
+  text-align: left;
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 14px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+  position: absolute;
+  left: 752px;
+  top: 1090px;
+}
+._653 {
+  color: var(--black-accent, #252525);
+  text-align: left;
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 14px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+  position: absolute;
+  left: 806px;
+  top: 1090px;
+}
+.vector6 {
+  width: 1.13%;
+  height: 14px;
+  position: absolute;
+  right: 48.25%;
+  left: 50.62%;
+  top: 1092px;
+  overflow: visible;
+}
+.vector7 {
+  width: 0.76%;
+  height: 14px;
+  position: absolute;
+  right: 44.45%;
+  left: 54.79%;
+  top: 1092px;
+  overflow: visible;
+}
+.product-card-4 {
+  position: absolute;
+  inset: 0;
+}
+.mm-dummy-14 {
+  border-radius: 16px;
+  width: 220px;
+  height: 250px;
+  position: absolute;
+  left: 866px;
+  top: 833px;
+  object-fit: cover;
+}
+.place-4 {
+  color: var(--black-accent, #252525);
+  text-align: left;
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 14px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+  position: absolute;
+  left: 871px;
+  top: 1090px;
+}
+._3484 {
+  color: var(--black-accent, #252525);
+  text-align: left;
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 14px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+  position: absolute;
+  left: 1008px;
+  top: 1090px;
+}
+._654 {
+  color: var(--black-accent, #252525);
+  text-align: left;
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 14px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+  position: absolute;
+  left: 1062px;
+  top: 1090px;
+}
+.vector8 {
+  width: 1.13%;
+  height: 14px;
+  position: absolute;
+  right: 30.47%;
+  left: 68.4%;
+  top: 1092px;
+  overflow: visible;
+}
+.vector9 {
+  width: 0.76%;
+  height: 14px;
+  position: absolute;
+  right: 26.67%;
+  left: 72.57%;
+  top: 1092px;
+  overflow: visible;
+}
+.product-card-5 {
+  position: absolute;
+  inset: 0;
+}
+.mm-dummy-15 {
+  border-radius: 16px;
+  width: 220px;
+  height: 250px;
+  position: absolute;
+  left: 1122px;
+  top: 833px;
+  object-fit: cover;
+}
+.place-5 {
+  color: var(--black-accent, #252525);
+  text-align: left;
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 14px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+  position: absolute;
+  left: 1127px;
+  top: 1090px;
+}
+._3485 {
+  color: var(--black-accent, #252525);
+  text-align: left;
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 14px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+  position: absolute;
+  left: 1264px;
+  top: 1090px;
+}
+._655 {
+  color: var(--black-accent, #252525);
+  text-align: left;
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 14px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+  position: absolute;
+  left: 1318px;
+  top: 1090px;
+}
+.vector10 {
+  width: 1.13%;
+  height: 14px;
+  position: absolute;
+  right: 12.69%;
+  left: 86.18%;
+  top: 1092px;
+  overflow: visible;
+}
+.vector11 {
+  width: 0.76%;
+  height: 14px;
+  position: absolute;
+  right: 8.9%;
+  left: 90.35%;
+  top: 1092px;
+  overflow: visible;
+}
+.product-card-6 {
+  position: absolute;
+  inset: 0;
+}
+.mm-dummy-16 {
+  border-radius: 16px;
+  width: 220px;
+  height: 250px;
+  position: absolute;
+  left: 98px;
+  top: 1146px;
+  object-fit: cover;
+}
+.place-6 {
+  color: var(--black-accent, #252525);
+  text-align: left;
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 14px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+  position: absolute;
+  left: 103px;
+  top: 1403px;
+}
+._3486 {
+  color: var(--black-accent, #252525);
+  text-align: left;
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 14px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+  position: absolute;
+  left: 240px;
+  top: 1403px;
+}
+._656 {
+  color: var(--black-accent, #252525);
+  text-align: left;
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 14px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+  position: absolute;
+  left: 294px;
+  top: 1403px;
+}
+.vector12 {
+  width: 1.13%;
+  height: 14px;
+  position: absolute;
+  right: 83.8%;
+  left: 15.07%;
+  top: 1405px;
+  overflow: visible;
+}
+.vector13 {
+  width: 0.76%;
+  height: 14px;
+  position: absolute;
+  right: 80.01%;
+  left: 19.24%;
+  top: 1405px;
+  overflow: visible;
+}
+.product-card-7 {
+  position: absolute;
+  inset: 0;
+}
+.mm-dummy-17 {
+  border-radius: 16px;
+  width: 220px;
+  height: 250px;
+  position: absolute;
+  left: 354px;
+  top: 1146px;
+  object-fit: cover;
+}
+.place-7 {
+  color: var(--black-accent, #252525);
+  text-align: left;
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 14px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+  position: absolute;
+  left: 359px;
+  top: 1403px;
+}
+._3487 {
+  color: var(--black-accent, #252525);
+  text-align: left;
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 14px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+  position: absolute;
+  left: 496px;
+  top: 1403px;
+}
+._657 {
+  color: var(--black-accent, #252525);
+  text-align: left;
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 14px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+  position: absolute;
+  left: 550px;
+  top: 1403px;
+}
+.vector14 {
+  width: 1.13%;
+  height: 14px;
+  position: absolute;
+  right: 66.02%;
+  left: 32.85%;
+  top: 1405px;
+  overflow: visible;
+}
+.vector15 {
+  width: 0.76%;
+  height: 14px;
+  position: absolute;
+  right: 62.23%;
+  left: 37.01%;
+  top: 1405px;
+  overflow: visible;
+}
+.product-card-8 {
+  position: absolute;
+  inset: 0;
+}
+.mm-dummy-18 {
+  border-radius: 16px;
+  width: 220px;
+  height: 250px;
+  position: absolute;
+  left: 866px;
+  top: 1146px;
+  object-fit: cover;
+}
+.place-9 {
+  color: var(--black-accent, #252525);
+  text-align: left;
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 14px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+  position: absolute;
+  left: 871px;
+  top: 1403px;
+}
+._3488 {
+  color: var(--black-accent, #252525);
+  text-align: left;
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 14px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+  position: absolute;
+  left: 1008px;
+  top: 1403px;
+}
+._658 {
+  color: var(--black-accent, #252525);
+  text-align: left;
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 14px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+  position: absolute;
+  left: 1062px;
+  top: 1403px;
+}
+.vector16 {
+  width: 1.13%;
+  height: 14px;
+  position: absolute;
+  right: 30.47%;
+  left: 68.4%;
+  top: 1405px;
+  overflow: visible;
+}
+.vector17 {
+  width: 0.76%;
+  height: 14px;
+  position: absolute;
+  right: 26.67%;
+  left: 72.57%;
+  top: 1405px;
+  overflow: visible;
+}
+.product-card-9 {
+  position: absolute;
+  inset: 0;
+}
+.mm-dummy-19 {
+  border-radius: 16px;
+  width: 220px;
+  height: 250px;
+  position: absolute;
+  left: 610px;
+  top: 1146px;
+  object-fit: cover;
+}
+.place-8 {
+  color: var(--black-accent, #252525);
+  text-align: left;
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 14px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+  position: absolute;
+  left: 615px;
+  top: 1403px;
+}
+._3489 {
+  color: var(--black-accent, #252525);
+  text-align: left;
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 14px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+  position: absolute;
+  left: 752px;
+  top: 1403px;
+}
+._659 {
+  color: var(--black-accent, #252525);
+  text-align: left;
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 14px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+  position: absolute;
+  left: 806px;
+  top: 1403px;
+}
+.vector18 {
+  width: 1.13%;
+  height: 14px;
+  position: absolute;
+  right: 48.25%;
+  left: 50.62%;
+  top: 1405px;
+  overflow: visible;
+}
+.vector19 {
+  width: 0.76%;
+  height: 14px;
+  position: absolute;
+  right: 44.45%;
+  left: 54.79%;
+  top: 1405px;
+  overflow: visible;
+}
+.product-card-10 {
+  position: absolute;
+  inset: 0;
+}
+.mm-dummy-110 {
+  border-radius: 16px;
+  width: 220px;
+  height: 250px;
+  position: absolute;
+  left: 1122px;
+  top: 1146px;
+  object-fit: cover;
+}
+.place-10 {
+  color: var(--black-accent, #252525);
+  text-align: left;
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 14px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+  position: absolute;
+  left: 1127px;
+  top: 1403px;
+}
+._34810 {
+  color: var(--black-accent, #252525);
+  text-align: left;
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 14px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+  position: absolute;
+  left: 1264px;
+  top: 1403px;
+}
+._6510 {
+  color: var(--black-accent, #252525);
+  text-align: left;
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 14px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+  position: absolute;
+  left: 1318px;
+  top: 1403px;
+}
+.vector20 {
+  width: 1.13%;
+  height: 14px;
+  position: absolute;
+  right: 12.69%;
+  left: 86.18%;
+  top: 1405px;
+  overflow: visible;
+}
+.vector21 {
+  width: 0.76%;
+  height: 14px;
+  position: absolute;
+  right: 8.9%;
+  left: 90.35%;
+  top: 1405px;
+  overflow: visible;
+}
+.rectangle-253 {
+  background: var(--blue-accent, #3279e6);
+  border-radius: 999px;
+  width: 190px;
+  height: 42px;
+  position: absolute;
+  left: 625px;
+  top: 1452px;
+}
+.show-all-places {
+  color: var(--white-accent, #f7f7f7);
+  text-align: center;
+  font-family: "Geist-SemiBold", sans-serif;
+  font-size: 16px;
+  line-height: 105%;
+  letter-spacing: -0.03em;
+  font-weight: 600;
+  position: absolute;
+  left: 655.18px;
+  top: 1464px;
+  width: 128.53px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+.line {
+  width: 1000px;
+  height: 0px;
+  position: absolute;
+  left: calc(50% - 500px);
+  top: 1623px;
+  transform: translate(-0.5px, -0.5px);
+  overflow: visible;
+}
+.line2 {
+  width: 1000px;
+  height: 0px;
+  position: absolute;
+  left: calc(50% - 500px);
+  top: 1737px;
+  transform: translate(-0.5px, -0.5px);
+  overflow: visible;
+}
+.line3 {
+  width: 1000px;
+  height: 0px;
+  position: absolute;
+  left: calc(50% - 500px);
+  top: 1851px;
+  transform: translate(-0.5px, -0.5px);
+  overflow: visible;
+}
+.line4 {
+  width: 1000px;
+  height: 0px;
+  position: absolute;
+  left: calc(50% - 500px);
+  top: 1965px;
+  transform: translate(-0.5px, -0.5px);
+  overflow: visible;
+}
+.line5 {
+  width: 1000px;
+  height: 0px;
+  position: absolute;
+  left: calc(50% - 500px);
+  top: 2079px;
+  transform: translate(-0.5px, -0.5px);
+  overflow: visible;
+}
+.line6 {
+  width: 1000px;
+  height: 0px;
+  position: absolute;
+  left: calc(50% - 500px);
+  top: 2193px;
+  transform: translate(-0.5px, -0.5px);
+  overflow: visible;
+}
+.comment-1 {
+  position: absolute;
+  inset: 0;
+}
+.alica-kinar-kinardes {
+  text-align: left;
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 16px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+  position: absolute;
+  left: 338px;
+  top: 1648px;
+}
+.alica-kinar-kinardes-span {
+  color: var(--black-accent, #252525);
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 16px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+}
+.alica-kinar-kinardes-span2 {
+  color: var(--dark-gray-accent, #6b6b6b);
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 16px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+}
+.i-was-completely-mesmerized-by-borobudur-at-sunrise-watching-the-mist-rise-over-the-temple-was-magical {
+  color: #000000;
+  text-align: left;
+  font-family: "Geist-Light", sans-serif;
+  font-size: 16px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 300;
+  position: absolute;
+  left: 338px;
+  top: 1667px;
+  width: 863px;
+}
+._1-3-k {
+  color: var(--black-accent, #252525);
+  text-align: left;
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 14px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+  position: absolute;
+  left: 361px;
+  top: 1694px;
+}
+.oct-16-2024 {
+  color: var(--black-accent, #252525);
+  text-align: left;
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 14px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+  position: absolute;
+  left: 421px;
+  top: 1694px;
+}
+.vector22 {
+  width: 1.13%;
+  height: 14px;
+  position: absolute;
+  right: 75.4%;
+  left: 23.47%;
+  top: 1696px;
+  overflow: visible;
+}
+.profile-1 {
+  width: 4.44%;
+  height: 64px;
+  position: absolute;
+  right: 78.89%;
+  left: 16.67%;
+  top: 1648px;
+  overflow: visible;
+}
+.group {
+  width: 1.02%;
+  height: 14px;
+  position: absolute;
+  right: 71.2%;
+  left: 27.78%;
+  top: 1696px;
+  overflow: visible;
+}
+.comment-2 {
+  position: absolute;
+  inset: 0;
+}
+.patricia-gloria-patriciaa-gloria {
+  text-align: left;
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 16px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+  position: absolute;
+  left: 335px;
+  top: 1762px;
+}
+.patricia-gloria-patriciaa-gloria-span {
+  color: var(--black-accent, #252525);
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 16px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+}
+.patricia-gloria-patriciaa-gloria-span2 {
+  color: var(--dark-gray-accent, #6b6b6b);
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 16px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+}
+.malioboro-street-stole-my-heart-the-food-stalls-and-local-crafts-were-incredible-i-could-spend-hours-there {
+  color: #000000;
+  text-align: left;
+  font-family: "Geist-Light", sans-serif;
+  font-size: 16px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 300;
+  position: absolute;
+  left: 335px;
+  top: 1781px;
+  width: 863px;
+}
+._1-3-k2 {
+  color: var(--black-accent, #252525);
+  text-align: left;
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 14px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+  position: absolute;
+  left: 358px;
+  top: 1808px;
+}
+.oct-16-20242 {
+  color: var(--black-accent, #252525);
+  text-align: left;
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 14px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+  position: absolute;
+  left: 418px;
+  top: 1808px;
+}
+.vector23 {
+  width: 1.13%;
+  height: 14px;
+  position: absolute;
+  right: 75.61%;
+  left: 23.26%;
+  top: 1810px;
+  overflow: visible;
+}
+.profile-12 {
+  width: 4.44%;
+  height: 64px;
+  position: absolute;
+  right: 79.1%;
+  left: 16.46%;
+  top: 1762px;
+  overflow: visible;
+}
+.group2 {
+  width: 1.02%;
+  height: 14px;
+  position: absolute;
+  right: 71.41%;
+  left: 27.57%;
+  top: 1810px;
+  overflow: visible;
+}
+.comment-3 {
+  position: absolute;
+  inset: 0;
+}
+.nur-khoirunnisa-nurkhoirunnisa-16 {
+  text-align: left;
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 16px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+  position: absolute;
+  left: 332px;
+  top: 1876px;
+}
+.nur-khoirunnisa-nurkhoirunnisa-16-span {
+  color: var(--black-accent, #252525);
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 16px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+}
+.nur-khoirunnisa-nurkhoirunnisa-16-span2 {
+  color: var(--dark-gray-accent, #6b6b6b);
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 16px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+}
+.i-loved-my-time-at-parangtritis-beach-the-sunset-views-were-breathtaking-and-riding-camels-was-such-a-fun-experience {
+  color: #000000;
+  text-align: left;
+  font-family: "Geist-Light", sans-serif;
+  font-size: 16px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 300;
+  position: absolute;
+  left: 332px;
+  top: 1895px;
+  width: 863px;
+}
+._1-3-k3 {
+  color: var(--black-accent, #252525);
+  text-align: left;
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 14px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+  position: absolute;
+  left: 355px;
+  top: 1922px;
+}
+.oct-16-20243 {
+  color: var(--black-accent, #252525);
+  text-align: left;
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 14px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+  position: absolute;
+  left: 415px;
+  top: 1922px;
+}
+.vector24 {
+  width: 1.13%;
+  height: 14px;
+  position: absolute;
+  right: 75.81%;
+  left: 23.06%;
+  top: 1924px;
+  overflow: visible;
+}
+.profile-13 {
+  width: 4.44%;
+  height: 64px;
+  position: absolute;
+  right: 79.31%;
+  left: 16.25%;
+  top: 1876px;
+  overflow: visible;
+}
+.group3 {
+  width: 1.02%;
+  height: 14px;
+  position: absolute;
+  right: 71.62%;
+  left: 27.36%;
+  top: 1924px;
+  overflow: visible;
+}
+.comment-4 {
+  position: absolute;
+  inset: 0;
+}
+.malika-atha-malikaatha {
+  text-align: left;
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 16px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+  position: absolute;
+  left: 329px;
+  top: 1990px;
+}
+.malika-atha-malikaatha-span {
+  color: var(--black-accent, #252525);
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 16px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+}
+.malika-atha-malikaatha-span2 {
+  color: var(--dark-gray-accent, #6b6b6b);
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 16px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+}
+.visiting-the-sultan-s-palace-was-a-highlight-of-my-trip-the-rich-history-and-beautiful-architecture-really-impressed-me {
+  color: #000000;
+  text-align: left;
+  font-family: "Geist-Light", sans-serif;
+  font-size: 16px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 300;
+  position: absolute;
+  left: 329px;
+  top: 2009px;
+  width: 863px;
+}
+._1-3-k4 {
+  color: var(--black-accent, #252525);
+  text-align: left;
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 14px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+  position: absolute;
+  left: 352px;
+  top: 2036px;
+}
+.oct-16-20244 {
+  color: var(--black-accent, #252525);
+  text-align: left;
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 14px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+  position: absolute;
+  left: 412px;
+  top: 2036px;
+}
+.vector25 {
+  width: 1.13%;
+  height: 14px;
+  position: absolute;
+  right: 76.02%;
+  left: 22.85%;
+  top: 2038px;
+  overflow: visible;
+}
+.profile-14 {
+  width: 4.44%;
+  height: 64px;
+  position: absolute;
+  right: 79.51%;
+  left: 16.04%;
+  top: 1990px;
+  overflow: visible;
+}
+.group4 {
+  width: 1.02%;
+  height: 14px;
+  position: absolute;
+  right: 71.82%;
+  left: 27.15%;
+  top: 2038px;
+  overflow: visible;
+}
+.comment-5 {
+  position: absolute;
+  inset: 0;
+}
+.nabil-zahid-nabiilzrahmaan {
+  text-align: left;
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 16px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+  position: absolute;
+  left: 326px;
+  top: 2104px;
+}
+.nabil-zahid-nabiilzrahmaan-span {
+  color: var(--black-accent, #252525);
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 16px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+}
+.nabil-zahid-nabiilzrahmaan-span2 {
+  color: var(--dark-gray-accent, #6b6b6b);
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 16px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+}
+.i-can-t-stop-raving-about-prambanan-temple-the-intricate-carvings-were-stunning-and-the-ramayana-ballet-performance {
+  color: #000000;
+  text-align: left;
+  font-family: "Geist-Light", sans-serif;
+  font-size: 16px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 300;
+  position: absolute;
+  left: 326px;
+  top: 2123px;
+  width: 863px;
+}
+._1-3-k5 {
+  color: var(--black-accent, #252525);
+  text-align: left;
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 14px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+  position: absolute;
+  left: 349px;
+  top: 2150px;
+}
+.oct-16-20245 {
+  color: var(--black-accent, #252525);
+  text-align: left;
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 14px;
+  line-height: 125%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+  position: absolute;
+  left: 409px;
+  top: 2150px;
+}
+.vector26 {
+  width: 1.13%;
+  height: 14px;
+  position: absolute;
+  right: 76.23%;
+  left: 22.64%;
+  top: 2152px;
+  overflow: visible;
+}
+.profile-15 {
+  width: 4.44%;
+  height: 64px;
+  position: absolute;
+  right: 79.72%;
+  left: 15.83%;
+  top: 2104px;
+  overflow: visible;
+}
+.group5 {
+  width: 1.02%;
+  height: 14px;
+  position: absolute;
+  right: 72.03%;
+  left: 26.94%;
+  top: 2152px;
+  overflow: visible;
+}
+.footer {
+  position: absolute;
+  inset: 0;
+}
+.rectangle-30 {
+  background: var(--primary-dark, #282a3a);
+  width: 1440px;
+  height: 80px;
+  position: absolute;
+  left: 0px;
+  top: 2260px;
+}
+._2024-mlaku-mlaku-all-rights-reserved {
+  color: var(--white-accent, #f7f7f7);
+  text-align: center;
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 16px;
+  line-height: 120%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+  position: absolute;
+  left: calc(50% - 146px);
+  top: 2290px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+.ui-design-by-chroms {
+  color: var(--white-accent, #f7f7f7);
+  text-align: left;
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 16px;
+  line-height: 120%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+  position: absolute;
+  left: calc(50% - 662px);
+  top: 2290px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+}
+.about {
+  color: var(--white-accent, #f7f7f7);
+  text-align: right;
+  font-family: "Geist-Medium", sans-serif;
+  font-size: 16px;
+  line-height: 120%;
+  letter-spacing: -0.0225em;
+  font-weight: 500;
+  position: absolute;
+  left: calc(50% - -617px);
+  top: 2290px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+} */

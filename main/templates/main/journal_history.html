@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'css/landing_page_journal.css' %}">
+    <title>Your Journals</title>
+    
+</head>
+<body class="journal responsive">  <!-- Menambahkan kelas 'responsive' -->
+    <div class="navbar">
+        <div class="nav-links">
+            <a href="{% url 'main:register' %}" class="nav-link">Sign Up</a>
+            <a href="{% url 'main:login' %}" class="nav-link">Log In</a>
+        </div>
+        <div class="nav-logo">MlakuMlaku</div>
+        <div class="nav-links">
+            <a href="{% url 'main:itinerary_list' %}"class="nav-link">Itinerary</a>
+            <a href="{% url 'main:journal_home' %}" class="nav-link">Journal</a>
+            <a href="#" class="nav-link">Collection</a>
+        </div>
+        <div class="hamburger" id="hamburger">
+            &#9776; <!-- Hamburger icon -->
+        </div>
+    </div>
+
+    <div class="container responsive-container">  <!-- Menambahkan kelas 'responsive-container' -->
+        <h1>Your Journals</h1>
+        <h3>Logged in as: {{ user.username }}</h3>  <!-- Menampilkan username yang sedang login -->
+        <div class="post-cards-container"> <!-- Kontainer untuk card -->
+            {% for journal in journals %}
+                <div class="post-card responsive-card">  <!-- Menambahkan kelas 'responsive-card' -->
+                    <h2 class="title">{{ journal.title }}</h2>
+                    <p class="date">{{ journal.created_at|date:"F d, Y, H:i" }}</p>
+                    <p class="content">{{ journal.content }}</p>
+                    <div class="card-footer">
+                        <p class="likes-count likes-highlight">{{ journal.likes.count }} Likes</p> <!-- Menampilkan jumlah like -->
+                        <form action="{% url 'main:delete_journal' journal.id %}" method="POST" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="delete-button">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            {% empty %}
+                <p>No journals available.</p>
+            {% endfor %}
+        </div>
+        <a href="{% url 'main:journal_home' %}" class="back-button">Back to Journal Home</a>
+    </div>
+</body>
+</html>
