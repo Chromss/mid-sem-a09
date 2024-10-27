@@ -15,5 +15,5 @@ urlpatterns = [
     path('accounts/login/', CustomLoginView.as_view(), name='login'),
     path('accounts/logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('admin/', admin.site.urls),  # Remove admin namespace from here
-    path('placecollections/', include('placeCollection.urls')),  # namespace will be defined in placeCollection/urls.py
+    # path('placecollections/', include('placeCollection.urls')),  # namespace will be defined in placeCollection/urls.py
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

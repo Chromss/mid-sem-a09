@@ -143,21 +143,32 @@ def delete_comment_ajax(request, comment_id):
 @login_required
 def add_to_collection_ajax(request, place_id):
     if request.method == 'POST' and request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        # Correctly fetch the Place instance using place_id
         place = get_object_or_404(Place, pk=place_id)
+        
+        # Get list of collection IDs from POST data
         collection_ids = request.POST.getlist('collections')
+        
         if collection_ids:
             for collection_id in collection_ids:
+                # Fetch the Collection instance ensuring it belongs to the current user
                 collection = get_object_or_404(Collection, pk=collection_id, user=request.user)
-                # Check if the place is already in the collection
+                
+                # Check if the CollectionItem already exists
                 existing_item = CollectionItem.objects.filter(collection=collection, place=place).first()
+                
                 if not existing_item:
+                    # Create the CollectionItem if it doesn't exist
                     CollectionItem.objects.create(collection=collection, place=place)
+            
+            # Return a success response
             return JsonResponse({'success': True})
         else:
+            # Return an error if no collections are selected
             return JsonResponse({'error': 'No collections selected.'}, status=400)
     else:
+        # Return an error for invalid requests
         return JsonResponse({'error': 'Invalid request.'}, status=400)
-
 # New view for buying a souvenir
 @login_required
 @csrf_exempt

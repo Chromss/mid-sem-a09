@@ -5,13 +5,13 @@ import uuid
 from places.models import Place
 
 
-# Model untuk Place
-class Place(models.Model):
-    title = models.CharField(max_length=200)
-    content = models.TextField()
-
-    def __str__(self):
-        return self.title
+# Remove the duplicate Place model
+# class Place(models.Model):
+#     title = models.CharField(max_length=200)
+#     content = models.TextField()
+#
+#     def __str__(self):
+#         return self.title
 
 # Model untuk Collection dengan UUID sebagai primary key
 class Collection(models.Model):
