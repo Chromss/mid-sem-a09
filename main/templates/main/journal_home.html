@@ -16,7 +16,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 10px;
-            background-color: #003366; /* Dark background */
+            background-color: #282A3A; /* Dark background */
             color: white;
         }
 
@@ -50,7 +50,7 @@
         .mobile-menu {
             display: none; /* Hidden by default */
             flex-direction: column;
-            background-color: #003366; /* Same background as navbar */
+            background-color: #282A3A; /* Same background as navbar */
             position: absolute;
             top: 50px; /* Adjust based on navbar height */
             width: 100%;
@@ -84,17 +84,116 @@
         }
 
         /* Modal Styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1000; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0, 0, 0, 0.5); /* Black w/ opacity */
+        }
+
         .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto; /* 10% from the top and centered */
             padding: 20px;
-            background-color: white;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border: 1px solid #888;
+            width: 80%; /* Could be more or less, depending on screen size */
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect */
+        }
+
+        .options-button {
+            background-color: transparent; /* Set background color */
+            border: none; /* Remove border */
+            color: white; /* Change text color */
+            font-size: 24px; /* Adjust font size */
+            cursor: pointer; /* Change cursor to pointer */
+        }
+
+        .options-button:hover {
+            color: greenyellow; /* Change color on hover */
+        }
+
+        .options-menu a {
+            color: white; /* Change text color to purple */
+            text-decoration: none; /* Remove underline */
+        }
+
+        .options-menu a:hover {
+            text-decoration: underline; /* Underline on hover */
+            color: red; /* Darker purple on hover */
+        }
+
+        h2 {
+            font-family: 'Geist', 'Geist';
+            color: #333;
+        }
+
+        label {
+            font-weight: bold;
+            margin-top: 10px;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        textarea,
+        input[type="file"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px; /* Rounded corners */
+            box-sizing: border-box;
+        }
+
+        textarea {
+            height: 100px; /* Set height for textarea */
+        }
+
+        .btn {
+            background-color: #007bff; /* Blue background */
+            color: white; /* White text */
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer;
+            margin-top: 10px;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 10px;
+            text-align: center;
+            color: #007bff; /* Blue text */
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            text-decoration: underline; /* Underline on hover */
         }
 
         .close-button {
-            cursor: pointer;
+            color: #aaa;
             float: right;
-            font-size: 20px;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close-button:hover,
+        .close-button:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -224,10 +323,10 @@
     </div>
 
     <!-- Modal for Create Journal -->
-    <div id="create-journal-modal" style="display: none;">
+    <div id="create-journal-modal" class="modal">
         <div class="modal-content">
-            <span class="close-button" id="close-modal">&times;</span>
-            <h2>Create Journal</h2>
+            <span class="close-button" id="close-create-modal">&times;</span>
+            <h2>Create a New Journal</h2>
             <form id="create-journal-form">
                 <label for="modal-title">Title:</label>
                 <input type="text" id="modal-title" name="title" required>
@@ -238,8 +337,9 @@
                 <label for="modal-image">Image:</label>
                 <input type="file" id="modal-image" name="image">
                 
-                <button type="submit">Create Journal</button>
+                <button type="submit" class="btn">Create Journal</button>
             </form>
+            <a href="{% url 'main:journal_home' %}" class="back-link">Back to Journal Home</a>
         </div>
     </div>
 
@@ -261,8 +361,7 @@
                 <input type="file" id="edit-form-image" name="image">
                 <p id="current-image-message">No image currently uploaded.</p>
                 <img id="current-image" src="" alt="Current Image" style="display: none; max-width: 100%; margin-top: 10px;">
-                <input type="checkbox" id="delete-image" name="delete_image">
-                <label for="delete-image">Clear existing image</label>
+                
                 
                 <button type="submit">Save Changes</button>
             </form>
@@ -281,21 +380,39 @@
             }
         });
 
-        // Toggle options menu
+        // Function to toggle options menu
         function toggleOptions(button) {
-            const optionsMenu = button.nextElementSibling;
-            optionsMenu.style.display = optionsMenu.style.display === 'none' ? 'block' : 'none';
+            const optionsMenu = button.nextElementSibling; // Get the next sibling (options menu)
+            if (optionsMenu.style.display === 'none' || optionsMenu.style.display === '') {
+                optionsMenu.style.display = 'block'; // Show options menu
+            } else {
+                optionsMenu.style.display = 'none'; // Hide options menu
+            }
         }
-
-        // Close modal when the close button is clicked
-        $('.close-button').on('click', function() {
-            $('#edit-modal').hide(); // Hide the edit modal
-            $('#create-journal-modal').hide(); // Hide the create modal
-        });
 
         // Open create journal modal
         $('#open-modal').on('click', function() {
             $('#create-journal-modal').show(); // Show the create modal
+        });
+
+        // Close create journal modal when the close button is clicked
+        $('#close-create-modal').on('click', function() {
+            $('#create-journal-modal').hide(); // Hide the create modal
+        });
+
+        // Close edit journal modal when the close button is clicked
+        $('.close-button').on('click', function() {
+            $('#edit-modal').hide(); // Hide the edit modal
+        });
+
+        // Close modal when clicking outside of the modal
+        $(window).on('click', function(event) {
+            if (event.target.id === 'create-journal-modal') {
+                $('#create-journal-modal').hide();
+            }
+            if (event.target.id === 'edit-modal') {
+                $('#edit-modal').hide(); // Hide the edit modal
+            }
         });
 
         // Create journal via AJAX

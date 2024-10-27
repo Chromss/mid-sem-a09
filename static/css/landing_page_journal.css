@@ -185,7 +185,7 @@ body {
 }
 
 .header {
-  background-color: #1a201a;
+  background-color: #282A3A;
   padding: 10px 20px;
   border-radius: 8px;
   display: flex;
@@ -227,7 +227,7 @@ body {
 .journal-card {
   margin-bottom: 15px;
   padding: 15px;
-  background-color: #1A202C;
+  background-color: #282A3A;
   border-radius: 10px;
 }
 
@@ -247,7 +247,7 @@ body {
 }
 
 .like-button {
-  background-color: #3279E6;
+  background-color: #007BFF;
   color: #FFFFFF;
   border: none;
   cursor: pointer;
@@ -285,6 +285,7 @@ body {
 
 .user-info {
   color: #FFFFFF;
+  flex-grow: 1; 
   
 }
 
@@ -379,7 +380,7 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 10px;
-  background-color: #003366; /* Dark background */
+  background-color: #282A3A; /* Dark background */
   color: white;
 }
 
@@ -413,7 +414,7 @@ body {
 .mobile-menu {
   display: none; /* Hidden by default */
   flex-direction: column;
-  background-color: #003366; /* Same background as navbar */
+  background-color: #282A3A; /* Same background as navbar */
   position: absolute;
   top: 50px; /* Adjust based on navbar height */
   width: 100%;
