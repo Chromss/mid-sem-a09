@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 import uuid
+from places.models import Place
+
 
 # Model untuk Place
 class Place(models.Model):
@@ -13,7 +15,7 @@ class Place(models.Model):
 
 # Model untuk Collection dengan UUID sebagai primary key
 class Collection(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.AutoField(primary_key=True)  # Explicitly define AutoField
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='collections')
     name = models.CharField(max_length=255)  # Menggunakan max_length 255 seperti di PlaceCollection
     created_at = models.DateTimeField(auto_now_add=True)
