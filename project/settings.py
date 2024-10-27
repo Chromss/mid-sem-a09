@@ -9,7 +9,7 @@ PRODUCTION = os.getenv("PRODUCTION", False)
 
 DEBUG = not PRODUCTION
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "nur-khoirunnisa-mlakumlaku.pbp.cs.ui.ac.id"]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
