@@ -163,7 +163,7 @@
         <div class="nav-logo">MlakuMlaku</div>
         <div class="hamburger" onclick="toggleMenu()">&#9776;</div> <!-- Ikon Hamburger -->
         <nav class="nav-menu">
-            <a href="#">Itinerary</a>
+            <a href="{% url 'main:itinerary_list' %}"class="nav-link">Itinerary</a>
             <a href="{% url 'main:journal_home' %}">Journal</a>
             <a href="#">Collection</a>
         </nav>

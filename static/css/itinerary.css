@@ -1,0 +1,31 @@
+body {
+    background-color: #1a202c; /* Dark background */
+}
+
+.hero {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+.quote {
+    max-width: 600px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.modal-content {
+    max-height: 80vh; /* Set max height for modal content */
+    overflow-y: auto; /* Enable vertical scroll */
+}
+
+.itinerary-card {
+    transition: transform 0.2s;
+}
+
+.itinerary-card:hover {
+    transform: scale(1.05);
+}

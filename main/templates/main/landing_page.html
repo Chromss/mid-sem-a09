@@ -1,4 +1,4 @@
-{% load static %}
+{% load static %} 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,155 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MlakuMlaku - Touring Across Yogyakarta</title>
   <link rel="stylesheet" href="static/css/geist.css">
-  <style>
-    body {
-      font-family: 'Geist', 'Geist';
-      margin: 0;
-      padding: 0;
-      background-color: #1b1b32;
-      color: white;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      height: 100%;
-      overflow-x: hidden;
-    }
-    /* Header */
-    header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 20px 40px;
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      box-sizing: border-box;
-    }
-    /* Logo */
-    #logo {
-      font-size: 24px;
-      font-weight: bold;
-      color: white;
-      margin-left: 200px;
-    }
-    /* Menu di kanan */
-    nav {
-      display: flex;
-      gap: 30px;
-    }
-    nav a {
-      color: white;
-      text-decoration: none;
-      font-weight: 500;
-      transition: color 0.3s;
-    }
-    nav a:hover {
-      color: #ff4646;
-    }
-    /* Main Section */
-    .main-content {
-      text-align: center;
-      padding-left: 0px;
-      max-width: 800px;
-      margin-top: 100px;
-      margin-bottom: 100px;
-    }
-    .main-content h1 {
-      font-size: 48px;
-      margin: 0;
-      color: white;
-    }
-    .main-content p {
-      font-size: 18px;
-      margin: 10px 0 30px;
-      color: #c0c0c0;
-    }
-    .highlight {
-      color: #ff4646;
-    }
-    /* Button */
-    .btn-primary {
-      padding: 12px 24px;
-      background-color: #007bff;
-      color: white;
-      border-radius: 6px;
-      font-size: 16px;
-      text-decoration: none;
-      transition: background-color 0.3s;
-    }
-    .btn-primary:hover {
-      background-color: #0056b3;
-    }
-
-    /* White Section */
-    .white-section {
-      background-color: white; /* Mengubah latar belakang menjadi warna krem */
-      width: 100%;
-      padding: 80px 0;
-      color: #333;
-    }
-    .white-section-content {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 20px;
-    }
-    .white-section h2 {
-      font-size: 36px;
-      margin-bottom: 30px;
-    }
-    .white-section p {
-      font-size: 16px;
-      line-height: 1.6;
-      margin-bottom: 40px;
-      color: #666;
-    }
-    
-    /* Destination Cards */
-    .destination-cards {
-      display: flex;
-      gap: 30px;
-      margin-top: 40px;
-      justify-content: flex-end; /* Menempatkan kartu di sebelah kanan */
-    }
-    .card {
-      background: #FFD8BE; /* Warna krem */
-      border-radius: 10px;
-      padding: 20px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s; /* Animasi saat hover */
-    }
-    
-    .card:hover {
-      transform: scale(1.05); /* Efek zoom saat hover */
-    }
-    .card img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      border-radius: 8px;
-      margin-bottom: 15px;
-    }
-    .card h3 {
-      font-size: 20px;
-      margin-bottom: 10px;
-    }
-    .card p {
-      font-size: 14px;
-      margin-bottom: 0;
-    }
-
-    /* Miring Kartu */
-    .card.parangtritis {
-      transform: rotate(-5deg); /* Miring ke kiri */
-    }
-    .card.prambanan {
-      transform: rotate(0deg); /* Miring ke tengah */
-    }
-    .card.malioboro {
-      transform: rotate(5deg); /* Miring ke kanan */
-    }
-  </style>
+  <link rel="stylesheet" href="static/css/style.css">
 </head>
 <body>
   <!-- Header -->
@@ -165,7 +17,7 @@
     </div>
     <div id="logo" style="flex-grow: 1; text-align: center;">MlakuMlaku</div>
     <nav style="margin-left: auto;">
-      <a href="#">Itinerary</a>
+      <a href="{% url 'main:itinerary_list' %}">Itinerary</a> 
       <a href="{% url 'main:journal_home' %}">Journal</a> 
       <a href="#">Collection</a>
     </nav>
@@ -184,24 +36,151 @@
       <h2>A Hub for Local Excellence</h2>
       <p>Yogyakarta, where ancient heritage and vibrant culture intertwine, offers a captivating journey through Indonesia's heart. Explore the majestic Borobudur and Prambanan temples, both UNESCO World Heritage Sites, that stand as timeless symbols of history. From traditional Javanese art to modern creativity, Yogyakarta is a melting pot of inspiration and innovation. Experience the warmth of its people and the rich flavors of its cuisine, making every visit unforgettable.</p>
       
+      
       <div class="destination-cards">
-        <div class="card parangtritis">
-          <img src="{% static 'images/parangtritis-beach.jpeg' %}" alt="Parangtritis Beach">
-          <h3>Parangtritis Beach</h3>
-          <p>Located just 27 kilometers from the city center, this beach is accessible for a quick getaway.</p>
+        <div class="card bukit-lintang-sewu">
+            <img src="{% static 'images/bukit-lintang-sewu.jpg' %}" alt="Bukit Lintang Sewu">
+            <h3>Bukit Lintang Sewu</h3>
+            <p>Bukit Lintang Sewu ini berasal ketika pada saat malam hari di bukit ini terlihat ribuan bintang – bintang yang membentang luas di angkasa. Pemandangan alam yang tidak kalah mempesona membuat Bukit Langit Sewu ini menjadi tempat favorit bagi pecinta alam.</p>
         </div>
         
-        <div class="card prambanan">
-          <img src="{% static 'images/prambanan-temple.jpeg' %}" alt="Prambanan Temple">
-          <h3>Prambanan Temple</h3>
-          <p>Home to over 2 million visitors annually, this site showcases Indonesia's rich cultural heritage.</p>
+        <div class="card bunker-kaliadem-merapi">
+            <img src="{% static 'images/bunker-kaliadem-merapi.jpg' %}" alt="Bunker Kaliadem Merapi">
+            <h3>Bunker Kaliadem Merapi</h3>
+            <p>Bunker Kaliadem merupakan objek wisata yang terletak di lereng selatan Gunung Merapi. Destinasi wisata ini banyak menyimpan jejak erupsi gunung tersebut, terutama tahun 2006 dan 2010.</p>
         </div>
         
-        <div class="card malioboro">
-          <img src="{% static 'images/malioboro-street.jpeg' %}" alt="Malioboro Street">
-          <h3>Malioboro Street</h3>
-          <p>Daily, locals and tourists alike enjoy a lively atmosphere rich in shopping and authentic cuisine.</p>
+        <div class="card de-mata-museum-jogja">
+            <img src="{% static 'images/de-mata-museum-jogja.jpg' %}" alt="De Mata Museum Jogja">
+            <h3>De Mata Museum Jogja</h3>
+            <p>Museum De Mata merupakan salah satu museum yang berisi lukisan 3D terbanyak di dunia, dengan sekitar 120 lukisan yang memiliki konsep dengan latar belakang yang terlihat seperti nyata.</p>
         </div>
+        
+        <div class="card goa-pindul">
+            <img src="{% static 'images/goa-pindul.jpg' %}" alt="Goa Pindul">
+            <h3>Goa Pindul</h3>
+            <p>Gua Pindul adalah objek wisata berupa gua yang terletak di Desa Bejiharjo, Kecamatan Karangmojo, Kabupaten Gunungkidul. Dikenal karena cara menyusuri gua dengan menaiki ban pelampung di atas aliran sungai bawah tanah.</p>
+        </div>
+        
+        <div class="card gumuk-pasir-parangkusumo">
+            <img src="{% static 'images/gumuk-pasir-parangkusumo.jpg' %}" alt="Gumuk Pasir Parangkusumo">
+            <h3>Gumuk Pasir Parangkusumo</h3>
+            <p>Gumuk Pasir Parangkusumo adalah objek wisata di Kabupaten Bantul, Yogyakarta, yang memiliki keistimewaan terkait dengan jumlahnya yang terbatas di dunia.</p>
+        </div>
+        
+        <div class="card studio-alam-gamplong">
+            <img src="{% static 'images/studio-alam-gamplong.jpg' %}" alt="Studio Alam Gamplong">
+            <h3>Studio Alam Gamplong</h3>
+            <p>Studio Gamplong terletak di Desa Gamplong, Kecamatan Moyudan, Kabupaten Sleman. Tempat ini awalnya adalah lokasi pengambilan gambar film yang kini menjadi objek wisata.</p>
+        </div>
+        
+        <div class="card candi-prambanan">
+            <img src="{% static 'images/candi-prambanan.jpg' %}" alt="Candi Prambanan">
+            <h3>Candi Prambanan</h3>
+            <p>Candi Prambanan adalah kompleks candi Hindu terbesar di Indonesia yang dibangun pada abad ke-9 masehi. Candi ini termasuk Situs Warisan Dunia UNESCO dan terkenal dengan arsitekturnya yang megah.</p>
+        </div>
+        
+        <div class="card kampung-wisata-sosro-menduran">
+            <img src="{% static 'images/kampung-wisata-sosro-menduran.jpg' %}" alt="Kampung Wisata Sosro Menduran">
+            <h3>Kampung Wisata Sosro Menduran</h3>
+            <p>Kampung wisata Sosromenduran merupakan kampung wisata unik yang berbasis multi-culture, berfungsi sebagai penyangga kawasan Objek Wisata Malioboro.</p>
+        </div>
+        
+        <div class="card pantai-ngobaran">
+            <img src="{% static 'images/pantai-ngobaran.png' %}" alt="Pantai Ngobaran">
+            <h3>Pantai Ngobaran</h3>
+            <p>Pantai Ngobaran terletak di Desa Kanigoro, Kecamatan Saptosari, dan dikenal dengan keindahan kolam-kolam kecil yang terbentuk dari karang yang tertutupi alga saat air surut.</p>
+        </div>
+
+        <div class="card bukit-wisata-pulepayung">
+            <img src="{% static 'images/bukit-wisata-pulepayung.jpg' %}" alt="Bukit Wisata Pulepayung">
+            <h3>Bukit Wisata Pulepayung</h3>
+            <p>Pule Payung Yogyakarta. Sebuah objek wisata populer yang menyajikan keindahan alam dari ketinggian 500 mdpl. Bukit Wisata Pule Payung Yogyakarta merupakan kawasan wisata yang dipenuhi dengan kreativitas yang tinggi, merubah zona biasa menjadi luar biasa. Daya tarik yang pertama dari Pule Payung Yogyakarta adalah objek wisata yang menyajikan pesona alam pegunungan. Sehingga, orang-orang menyebutnya dengan Bukit Wisata. Ketinggian Pule Payung Yogyakarta sekitar 500 mdpl, serta jalan menuju Pule Payung Yogyakarta dapat ditempuh dengan kendaraan roda dua, maupun roda empat. Pesona keindahan Waduk Sermo dapat terlihat jelas saat berada di Pule Payung. Waduk eksotis yang dikelilingi pegunungan yang masih asri. Dan Pule Payung Yogyakarta adalah bukit yang notabene sebagai destinasi wisata alam, diberikan sentuhan kreativitas, serta memprioritaskan aspek keamanan di setiap spotnya, akhirnya menjadi wisata favorit di Jogja.</p>
+        </div>
+        
+        <div class="card desa-wisata-pulesari">
+            <img src="{% static 'images/desa-wisata-pulesari.jpeg' %}" alt="Desa Wisata Pulesari">
+            <h3>Desa Wisata Pulesari</h3>
+            <p>Desa Wisata Pulesari semakin menambah deretan profil desa wisata di Jogja yang lahir dari kesadaran masyarakat, atas potensi lokal yang dimiliki. Baik itu dari sisi ragam budaya, pesona alam sekitar, kazanah kuliner, maupun nilai sejarah, dan budaya yang ada. Semuanya dikemas dalam sebuah keseruan wisata. Lokasi Desa Wisata Pulesari berada di Kabupaten Sleman, Daerah Istimewa Yogyakarta (DIY), yang notabene sebagai kabupaten yang dianugerahi banyak sekali tempat wisata. Kehadiran Desa Wisata Pulesari seakan menjadi penambal dari puzle wisata yang belum lengkap. Dan inilah review Desa Wisata Pulosari sebagai referensi awal untuk menentukan lokasi liburan nanti.</p>
+        </div>
+        
+        <div class="card galaxy-waterpark-jogja">
+            <img src="{% static 'images/galaxy-waterpark-jogja.jpg' %}" alt="Galaxy Waterpark Jogja">
+            <h3>Galaxy Waterpark Jogja</h3>
+            <p>Galaxy Waterpark adalah taman rekreasi air yang berdiri di atas lahan seluas 2,5 hektar ini sangat cukup untuk menampung pengunjung di waktu liburan. Dengan lokasi yang sangat luas banyak wahana dan fasilitas yang bisa kamu nikmati. Di tempat ini juga tersedia beberapa kolam, dari kolam anak sampai kolam dewasa. Selain itu fasilitas yang disediakan pengelolapun juga terbilang lengkap untuk mendukung kenyamananmu saat berlibur.</p>
+        </div>
+        
+        <div class="card kampung-wisata-dipowinatan">
+            <img src="{% static 'images/kampung-wisata-dipowinatan.jpg' %}" alt="Kampung Wisata Dipowinatan">
+            <h3>Kampung Wisata Dipowinatan</h3>
+            <p>Kampung Wisata Dipowinatan adalah sebuah kampung yang dikembangkan oleh Dinas Pariwisata Yogyakarta untuk tujuan pariwisata. Kampung tersebut merupakan salah satu dari 17 yang saat ini sedang dikembangkan oleh Pemerintah Kota Yogyakarta. Pepatnya, Kampung Dipowinatan terdapat di Kelurahan Keparakan, Kecamatan Mergangsan, Kota Yogyakarta. Keunggulan utama yang ditonjolkan oleh kampung itu adalah adanya konsep live in atau rekreasi yang berpadu dengan masyarakat sekitar sekaligus membaur dengan unsur budaya dan lokalitas masyarakat yang ada. Di dalam kampung tersebut, pengunjung akan disuguhi beberapa fasilitas unik seperti berkunjung ke rumah-rumah keluarga Jawa dengan mengenakan pakaian adat Jawa dan ditambah dengan adanya hiburan kesenian sekaligus sajian kuliner khas Jawa.</p>
+        </div>
+        
+        <div class="card museum-gunung-merapi">
+            <img src="{% static 'images/museum-gunung-merapi.jpg' %}" alt="Museum Gunung Merapi">
+            <h3>Museum Gunung Merapi</h3>
+            <p>Museum Gunung Merapi merupakan museum bersejarah yang terdapat di Yogyakarta tepatnya di Jln. Boyong, Dusun Banteng, Desa Hargobinangun, Kecamatan Pakem, Kabupaten Sleman, Daerah Istimewa Yogyakarta sekitar lima kilometer dari kawasan objek wisata Kaliurang. Museum Gunung Merapi telah diresmikan pada tanggal 1 Oktober 2009 oleh Menteri Energi dan Sumber Daya Mineral (ESDM), Purnomo Yusgiantoro. Dengan luas bangunan sekitar 4,470 yang berdiri di atas tanah seluas 3,5 hektare, museum yang ke depan juga akan dilengkapi dengan taman, area parkir, dan plasa ini ingin dikenal masyarakat sebagai Museum Gunungapi Merapi dengan semboyan Merapi Jendela Bumi. Museum Gunung Merapi ini dapat dijadikan sebagai sarana pendidikan, penyebarluasan informasi aspek kegunungapian khususnya dan kebencanaan geologi lainnya yang bersifat rekreatif-edukatif untuk masyarakat luas dengan tujuan untuk memberikan wawasan dan pemahaman tentang aspek ilmiah, maupun sosial-budaya dan lain-lain yang berkaitan dengan gunungapi dan sumber kebencanaan geologi lainnya. Museum Gunungapi ini diharapkan dapat menjadi solusi alternatif sebagai sarana yang sangat penting dan potensial sebagai pusat layanan informasi kegunungapian dalam upaya mencerdaskan kehidupan masyarakat, serta sebagai media dalam meningkatkan kesadaran dan kewaspadaan masyarakat tentang manfaat dan ancaman bahaya letusan gunungapi serta bencana geologi lainnya.</p>
+        </div>
+        
+        <div class="card pantai-sanglen">
+            <img src="{% static 'images/pantai-sanglen.jpg' %}" alt="Pantai Sanglen">
+            <h3>Pantai Sanglen</h3>
+            <p>Pantai Sanglen. Lokasinya berada di Desa Kemadang, Gunung Kidul. Pantai indah yang satu ini memang terdengar asing di telinga, namun ternyata pantai ini menyimpan keindahan yang sangat menenangkan. Keadaan ombaknya diam-diam menghanyutkan membuat kita harus berhati-hati jika ingin bermain air ketika sedang pasang, namun ketika surut kamu dapat bermain ombak di sekitar pantainya. Tak jauh dari area pantai terdapat sebuah bukit dengan hiasan pepohonan yang masih rindang serta berwarna hijau alam, kamu dapat naik ke atas bukit melalui tangga yang sudah disediakan.</p>
+        </div>
+        
+        <div class="card watu-goyang">
+            <img src="{% static 'images/watu-goyang.jpeg' %}" alt="Watu Goyang">
+            <h3>Watu Goyang</h3>
+            <p>Watu Goyang ini berasal dari Bahasa Jawa yang berarti Batu yang bergoyang. Dulunya di tempat ini terdapat batu yang berada di puncak yang bias bergoyang ketika disentuh maupun didorong. Batu tersebut sudah ada sejak ratuhan tahun yang lalu. Para pengelola menjelaskan bahwa Watu Goyang ini tidak pernah roboh walaupun disentuh bahkan di panjat, tetapi pihak pengelola melarang kesar untuk pengunjung yang mencoba menaiki Watu Goyang tersebut karena akan sangat berbahaya bagi keselamatan. Keunikan dari batu raksasa itu adalah stuktur yang memuat tonjolan-tonjolan yang unik. Pemandangan alam yang masih hijau dan gunung merapi terlihat sangat alami, sangat cocok bagi para pengunjung untuk menghilangkan rasa bosan dengan aktivitas sehari-hari di perkotaan. Berada di puncak ini pengunjung akan merasakan sejuknya suhu udara, terutama pada pagi hari. Dan ketika di siang hari, meskipun cuaca sedang panas, maka hembusan angin yang menyapa terasa segar dan nyaman.</p>
+        </div>
+        
+        <div class="card bukit-bintang-yogyakarta">
+            <img src="{% static 'images/bukit-bintang-yogyakarta.jpg' %}" alt="Bukit Bintang Yogyakarta">
+            <h3>Bukit Bintang Yogyakarta</h3>
+            <p>Bukit Bintang merupakan salah satu lokasi nongkrong favorit di Yogyakarta. Saat malam tiba, pemandangan Yogyakarta sangatlah indah! Terletak di perbatasan Bantul dan Gunungkidul, siapa pun yang berkunjung ke kawasan ini dapat menikmati taburan gemintang di langit malam serta kerlip benderang lampu kota dari ketinggian. Kota ini memiliki Bukit Bintang yang selalu ramai dipadati kawula muda untuk menikmati keindahan malam. Bukit Bintang menjadi tempat yang sempurna untuk menikmati senja hingga malam tiba.</p>
+        </div>
+        
+        <div class="card desa-wisata-gamplong">
+            <img src="{% static 'images/desa-wisata-gamplong.jpg' %}" alt="Desa Wisata Gamplong">
+            <h3>Desa Wisata Gamplong</h3>
+            <p>Desa Wisata Gamplong adalah desa wisata kerajinan tenun yang berada di Padukuhan Gamplong Desa Sumber Rahayu Kecamatan Moyudan Kabupaten Sleman, Yogyakarta. Desa wisata yang terletak di sebelah barat Kota Yogyakarta ini cukup menarik untuk disinggahi wisatawan terlebih karena masih adanya industri kerajinan tenun tradisional dengan menggunakan Alat Tenun Bukan Mesin (ATBM). Dengan ATBM, masyarakat perajin Gamplong mampu menghasilkan kain tenun sebagai bahan stagen (kain panjang untuk melilit bagian perut wanita). Selain kerajinan tenun, perajin juga mampu memproduksi kerajinan anyaman untuk suvenir.</p>
+        </div>
+        
+        <div class="card desa-wisata-rumah-domes">
+            <img src="{% static 'images/desa-wisata-rumah-domes.jpg' %}" alt="Desa Wisata Rumah Domes/Teletubbies">
+            <h3>Desa Wisata Rumah Domes/Teletubbies</h3>
+            <p>Kawasan desa teletubbies menjadi perhatian menarik berbagai media, sehingga menjadikan para wisatawan mulai berbondong-bondong datang kesana. Hingga sekarang kawasan ini menjadi objek wisata unik jogja yang menarik dikunjungi. Bagi kawan-kawan datawisata yang sedang berlibur atau berdomisili di Yogyakarta dan sekitar, coba deh mampir ke kawasan desa wisata rumah domes atau teletubbies. Setiap rumah dibangun dengan arsitektur dome atau kubah bulat. Bahkan dari jauh, kita dapat melihat warna-warni rumah dome yang bagaikan perkampungan teletubbies. Begitu asyik berkunjung kesini, bukan hanya untuk berfoto-foto, tetapi bisa juga menikmati suasana desa dan berinteraksi dengan penduduk lokal.</p>
+        </div>
+
+        <div class="card desa-wisata-tembi">
+            <img src="{% static 'images/desa-wisata-tembi.jpeg' %}" alt="Desa Wisata Tembi">
+            <h3>Desa Wisata Tembi</h3>
+            <p>Desa Wisata Tembi, merupakan satu dari sekian desa wisata yang sukses menata kawasannya, sehingga menjadi sebuah kawasan yang layak untuk dikunjungi. Potensi alam, sejarah, serta potensi budaya yang dimiliki Desa Wisata Tembi memang sangat pas untuk dijadikan sebuah desa wisata. Apalagi jarak Desa Wisata Tembi tidak jauh dari pusat kota Jogja. Ternyata, pesona keindahan Desa Wisata Tembi tidak hanya terbatas pada dua hal tersebut saja. Dan inilah info lengkap Desa Wisata Tembi, sebagai referensi awal menentukan lokasi wisata saat liburan nanti. Lokasi Desa Wisata Tembi terletak satu arah menuju Parangtritis. Alamat Desa Wisata Tembi berada di Desa Tembi, Kecamatan Sewon, Kabupaten Bantul, Daerah Istimewa Yogyakarta.</p>
+        </div>
+        
+        <div class="card heha-sky-view">
+            <img src="{% static 'images/heha-sky-view.jpg' %}" alt="Heha Sky View">
+            <h3>Heha Sky View</h3>
+            <p>HeHa Sky View adalah salah satu tempat wisata terbaru di Yogyakarta dan paling hits saat ini. Mau foto estetik ala selebgram atau berfoto di atas rooftop berlantai kaca? Bisa! Terletak di Yogyakarta yang romantis, Heha Sky View adalah tempat wisata yang punya tiga ciri khas. Berdasarkan akun Instagram milik mereka, tiga hal yang menjadi ciri utama Heha Sky View adalah selfie, resto, dan food stalls. Ada banyak penjual makanan kekinian berkonsep kontainer untuk kamu yang suka memanjakan lidah. Dan kalau ingin menambah stok swafoto ada banyak spot Instagrammable yang patut dicoba.</p>
+        </div>
+        
+        <div class="card pantai-timang">
+            <img src="{% static 'images/pantai-timang.jpg' %}" alt="Pantai Timang">
+            <h3>Pantai Timang</h3>
+            <p>Pantai Timang adalah objek wisata berupa pantai yaitu wilayah yang menjadi batas antara lautan dan daratan yang terletak di Kabupaten Gunungkidul, Daerah Istimewa Yogyakarta. Pantai Timang merupakan salah satu pantai di Yogyakarta yang pasirnya berwarna putih. Pantai Timang terletak di antara Pantai Siung dan Pantai Sundak Gunungkidul. Akses menuju pantai ini cukup sulit, jalan ke arah pantai ini masih banyak yang belum diaspal karena lokasi pantai ini cukup terpencil. Keunikan pantai ini ialah terdapat sebuah pulau yang menjadi habitat lobster laut di seberang pantai.</p>
+        </div>
+        
+        <div class="card pantai-siung">
+            <img src="{% static 'images/pantai-siung.jpg' %}" alt="Pantai Siung">
+            <h3>Pantai Siung</h3>
+            <p>Pantai Siung adalah suatu objek wisata pantai yang terletak di Kec. Tepus, tepatnya berada di Dusun Duwet, Kelurahan Purwodadi, Kecamatan Tepus, Kabupaten Gunungkidul, provinsi Daerah Istimewa Yogyakarta. Lokasinya berjarak kurang lebih 75 km dari kota Yogya dan memiliki jalur panjat tebing dengan 250 jalur berstandar internasional. Di sepanjang perjalanan menuju lokasi pantai, Anda akan disuguhi pemandangan bukit kapur yang ditumbuhi pohon-pohon jati. Jalan yang berkelok-kelok dan menaik, merupakan tantangan yang harus Anda lewati sebelum mencapai Pantai Siung. Akan tetapi, perjalanan yang melelahkan akan terbayar ketika Anda sudah berada di kawasan Pantai Siung. Pantai dengan hamparan pasir putih dan suara deburan ombak, akan membuat suasana hati dan pikiran Anda tenang dan damai. Karena pantai ini sangat terpencil, fasilitas yang tersedia masih minim. Untuk akomodasi penginapan belum tersedia di sini, tetapi jika Anda ingin bermalam di Pantai Siung, Anda bisa menggunakan pondok pemanjat yang bentuknya mirip rumah panggung dengan kapasitas kurang lebih sekitar 20 orang. Jika Anda ingin bermalam dengan suasana alam, Anda bisa membawa tenda sendiri yang bisa Anda gunakan di area camping ground. Jika Anda dari Kota Yogyakarta, Anda bisa menggunakan jalur Yogyakarta-Wonosari-Tepus-Purwodadi-Pantai Siung. Jika Anda menggunakan transportasi umum, Anda dapat menggunakan bus dari Terminal Giwangan Yogyakarta dengan menggunakan bus jurusan Jogja-Wonosari. Sampai di terminal Wonosari, Anda dapat menggunakan angkutan umum jurusan Wonosari-Jepitu. Sesampai di Pertigaan Balai Desa Purwodadi, Anda bisa menggunakan jasa ojek, karena hanya itu transportasi umum yang bisa digunakan sampai ke Pantai Siung.</p>
+        </div>
+        
+        <div class="card puncak-segoro">
+            <img src="{% static 'images/puncak-segoro.jpg' %}" alt="Puncak Segoro">
+            <h3>Puncak Segoro</h3>
+            <p>Puncak Segoro menjadi destinasi wisata terbaru di Yogyakarta yang menawarkan sajian pesona sunset yang mempesona. Puncak Segoro Jogja sendiri berlokasi di pinggir pantai selatan Yogyakarta. Kenapa diberi nama Puncak Segoro? Karena lokasinya berada di atas lautan dengan lanscape pemandangan alam yang luar biasa. Berupa tebing tinggi yang menghadap ke laut kidul, membuat keindahan panorama yang disajikan begitu istimewa.</p>
+        </div>        
       </div>
     </div>
   </section>

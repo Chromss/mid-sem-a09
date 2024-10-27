@@ -7,7 +7,7 @@ from django.http import HttpResponse,HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.utils import timezone
-from .models import Journal, Souvenir
+from .models import Journal, Souvenir, Itinerary
 from .jurnalform import JournalForm
 from django.http import JsonResponse
 import json
@@ -223,3 +223,21 @@ def show_json_by_id(request, id):
     # Get a specific journal by ID
     data = Journal.objects.filter(pk=id)
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+
+def show_itineraries(request):
+    itineraries = Itinerary.objects.all()  # Mendapatkan semua itinerary
+    return render(request, 'itinerary_list.html', {'itineraries': itineraries})
+
+# View untuk menampilkan daftar itinerary
+def itinerary_list(request):
+    itineraries = Itinerary.objects.all()
+    return render(request, 'itinerary_list.html', {'itineraries': itineraries})
+
+# View untuk menampilkan detail itinerary
+def itinerary_detail(request, pk):
+    itinerary = get_object_or_404(Itinerary, pk=pk)
+    return render(request, 'itinerary_detail.html', {'itinerary': itinerary})
+
+
+
+

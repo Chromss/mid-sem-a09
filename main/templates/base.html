@@ -1,0 +1,386 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}MlakuMlaku{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+    <link rel="stylesheet" href="{% static 'css/geist.css' %}">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="bg-gray-800 p-4">
+        <div class="container mx-auto flex justify-between">
+            <a href="#" class="text-white font-bold text-xl">MlakuMlaku</a>
+            <div>
+                <a href="#itinerary" class="text-white px-4">Itinerary</a>
+                <a href="#" class="text-white px-4">Journal</a>
+                <a href="#" class="text-white px-4">Collection</a>
+                <button class="ml-4 bg-gray-600 text-white px-4 py-2 rounded">Sign up</button>
+                <button class="ml-2 bg-gray-600 text-white px-4 py-2 rounded">Log in</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero text-center">
+        <h1 class="text-5xl font-bold mb-4">{% block hero_title %}Itinerary{% endblock %}</h1>
+        <blockquote class="quote italic text-lg">
+            {% block hero_quote %}
+            "Where exploring shared travel plans sparks <span class="text-red-500">inspiration</span>, and setting your dream journey becomes <span class="text-red-500">effortless</span>."
+            {% endblock %}
+        </blockquote>
+        <button id="plan-tour" class="bg-blue-600 text-white px-6 py-3 rounded-full">Plan your tour</button>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container mx-auto py-8">
+        {% block content %} 
+        <!-- Content goes here -->
+        {% endblock %}
+    </div>
+
+    <!-- Modal for Planning Tour -->
+    <div id="tour-modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
+        <div class="bg-white p-6 rounded shadow-lg w-96 relative">
+            <button id="close-modal" class="absolute top-2 right-2 text-gray-600 hover:text-gray-800 text-3xl">&times;</button>
+            <h2 class="text-xl font-semibold mb-4">Create Your Itinerary</h2>
+            <div class="modal-content">
+                <form id="itinerary-form">
+                    <label class="block mb-2">Itinerary Name:</label>
+                    <input type="text" id="itinerary-name" class="border p-2 w-full mb-4" required>
+                
+                    <label class="block mb-2">Cover Image:</label>
+                    <input type="file" id="itinerary-cover" class="border p-2 w-full mb-4" accept="image/*">
+                
+                    <div id="days-container"></div>
+                
+                    <button type="button" id="add-day" class="bg-blue-600 text-white px-4 py-2 rounded-full mb-4 style="border-radius: 20px;">Add Day</button>
+                    <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded-full style="border-radius: 20px;">Create Itinerary</button>
+                    <!-- Tambahkan tombol Confirm Editing di sini -->
+                    <button type="button" id="confirm-editing" class="bg-yellow-500 text-white px-4 py-2 rounded-full ml-2 hidden style="border-radius: 20px;">Confirm Editing</button>
+                </form>                
+            </div>
+        </div>
+    </div>
+
+    <div class="container mx-auto py-8">
+        <!-- This is where we will append the created itinerary cards -->
+        <div id="itinerary-cards" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+    </div>
+
+    <script>
+        const planTourButton = document.getElementById('plan-tour');
+        const tourModal = document.getElementById('tour-modal');
+        const closeModalButton = document.getElementById('close-modal');
+        const addDayButton = document.getElementById('add-day');
+        const daysContainer = document.getElementById('days-container');
+        let dayCount = 1;
+        let editingCard = null;
+    
+        // Show modal when "Plan Tour" button is clicked
+        planTourButton.onclick = function () {
+            tourModal.classList.toggle('hidden');
+            clearForm();
+        };
+    
+        // Close modal when "X" button is clicked
+        closeModalButton.onclick = function () {
+            tourModal.classList.add('hidden');
+            clearForm();
+        };
+    
+        function clearForm() {
+            document.getElementById('itinerary-name').value = '';
+            document.getElementById('itinerary-cover').value = '';
+            daysContainer.innerHTML = '';
+            dayCount = 1;
+            editingCard = null;
+        }
+
+        // Function to fetch and populate destinations from JSON file
+        function populateDestinations() {
+            fetch("{% static 'json/DATASET_MLAKUMLAKU_FIX_FILLED_FORMATTED.json' %}")
+                .then(response => response.json())
+                .then(data => {
+                    const uniquePlaces = [...new Set(data.map(item => item['Place Name']))]; // Remove duplicates
+                    const destinationDropdowns = document.querySelectorAll('.destination-dropdown');
+
+                    destinationDropdowns.forEach(dropdown => {
+                        uniquePlaces.forEach(place => {
+                            const option = document.createElement('option');
+                            option.value = place;
+                            option.textContent = place;
+                            dropdown.appendChild(option);
+                        });
+                    });
+                })
+                .catch(error => console.error('Error loading destinations:', error));
+        }
+
+        // Call populateDestinations when the page loads
+        window.onload = populateDestinations;
+    
+        // Add day input fields
+        addDayButton.onclick = function () {
+            const dayDiv = document.createElement('div');
+            dayDiv.classList.add('mb-4');
+            dayDiv.innerHTML = `
+                <h3 class="font-semibold mb-2">Day ${dayCount}</h3>
+                <div class="destinations-container mb-2">
+                    <label class="block mb-1">Destination:</label>
+                </div>
+                <label class="block mb-1">Date:</label>
+                <input type="date" class="border p-2 w-full mb-1" required>
+                <label class="block mb-1">Time:</label>
+                <input type="time" class="border p-2 w-full mb-2" required>
+            `;
+            
+            // Tambahkan dropdown yang berisi destination
+            const destinationsContainer = dayDiv.querySelector('.destinations-container');
+            destinationsContainer.appendChild(createDestinationDropdown());
+
+            // Add destination event listener
+            const addDestinationButton = document.createElement('button');
+            addDestinationButton.classList.add('bg-custom', 'text-black', 'px-2', 'py-1', 'rounded-full', 'add-destination');
+            addDestinationButton.textContent = "Add Destination at the Same Day";
+            addDestinationButton.onclick = function () {
+                const destinationDiv = document.createElement('div');
+                destinationDiv.classList.add('destinations-container', 'mb-2');
+                destinationDiv.innerHTML = `<label class="block mb-1">Destination:</label>`;
+                
+                // Append new dropdown to destinationDiv
+                destinationDiv.appendChild(createDestinationDropdown());
+                
+                // Tambahkan input time di destinationDiv
+                const timeInput = document.createElement('input');
+                timeInput.type = 'time';
+                timeInput.classList.add('border', 'p-2', 'w-full', 'mb-2');
+                timeInput.required = true;
+                destinationDiv.appendChild(timeInput);
+
+                dayDiv.appendChild(destinationDiv);
+                dayDiv.appendChild(this); // Place button after new destinationDiv
+            };
+
+            dayDiv.appendChild(addDestinationButton);
+            daysContainer.appendChild(dayDiv);
+            dayCount++;
+        };
+
+    
+        // Form submission handler
+        document.getElementById('itinerary-form').onsubmit = function (e) {
+            e.preventDefault();
+            
+            const itineraryName = document.getElementById('itinerary-name').value;
+            const itineraryCover = document.getElementById('itinerary-cover').files[0];
+            const reader = new FileReader();
+            
+            // Ambil detail data setiap hari
+            const daysData = [];
+            const dayContainers = document.querySelectorAll('#days-container > div');
+            
+            dayContainers.forEach((dayDiv, index) => {
+                const dayData = {
+                    day: index + 1,
+                    date: dayDiv.querySelector('input[type="date"]').value,
+                    destinations: []
+                };
+
+                const destinationSelects = dayDiv.querySelectorAll('select.destination-dropdown');
+                const timeInputs = dayDiv.querySelectorAll('input[type="time"]');
+
+                destinationSelects.forEach((select, idx) => {
+                    if (select.value) {
+                        dayData.destinations.push({
+                            destination: select.value, // Ambil value dari dropdown
+                            time: timeInputs[idx] ? timeInputs[idx].value : ''
+                        });
+                    }
+                });
+
+                daysData.push(dayData);
+            });
+
+            reader.onload = function (e) {
+                const coverImageUrl = e.target.result;
+                
+                if (editingCard) {
+                    updateCard(editingCard, itineraryName, coverImageUrl, daysData);
+                    editingCard = null;
+                } else {
+                    createCard(itineraryName, coverImageUrl, daysData);
+                }
+                clearForm();
+            };
+            
+            if (itineraryCover) {
+                reader.readAsDataURL(itineraryCover);
+            } else if (editingCard) {
+                const existingCoverImage = editingCard.querySelector('img').src;
+                updateCard(editingCard, itineraryName, existingCoverImage, daysData);
+                editingCard = null;
+            }
+        };
+        
+        // Function to create and return a dropdown filled with destinations
+        function createDestinationDropdown() {
+            const dropdown = document.createElement('select');
+            dropdown.classList.add('border', 'p-2', 'w-full', 'mb-1', 'destination-dropdown');
+            dropdown.required = true;
+            
+            const defaultOption = document.createElement('option');
+            defaultOption.value = "";
+            defaultOption.textContent = "Choose your Destination";
+            defaultOption.disabled = true;
+            defaultOption.selected = true;
+            dropdown.appendChild(defaultOption);
+
+            // Populate dropdown with unique destinations
+            fetch("{% static 'json/DATASET_MLAKUMLAKU_FIX_FILLED_FORMATTED.json' %}")
+                .then(response => response.json())
+                .then(data => {
+                    const uniquePlaces = [...new Set(data.map(item => item['Place Name']))];
+                    uniquePlaces.forEach(place => {
+                        const option = document.createElement('option');
+                        option.value = place;
+                        option.textContent = place;
+                        dropdown.appendChild(option);
+                    });
+                })
+                .catch(error => console.error('Error loading destinations:', error));
+
+            return dropdown;
+        }
+
+        function updateCard(card, itineraryName, coverImageUrl, daysData) {
+            // Update judul itinerary dan gambar cover pada card
+            card.querySelector('h3').innerText = itineraryName;
+            card.querySelector('img').src = coverImageUrl;
+
+            // Kosongkan kontainer hari yang sudah ada dan isi dengan data yang baru
+            const existingDaysContainer = card.querySelector('div:nth-child(2)');
+            existingDaysContainer.innerHTML = '';
+
+            // Tambahkan data baru untuk setiap hari ke dalam card
+            daysData.forEach(dayData => {
+                const dayItem = document.createElement('div');
+                dayItem.classList.add('mb-4', 'p-4', 'border', 'border-gray-300', 'rounded-lg');
+                dayItem.innerHTML = `<h4 class="text-lg font-semibold mb-2">Day ${dayData.day} - ${dayData.date}</h4>`;
+
+                // Tambahkan data destinasi dan waktu yang dipilih user
+                dayData.destinations.forEach(dest => {
+                    const destItem = document.createElement('p');
+                    destItem.innerHTML = `<strong>Destination:</strong> ${dest.destination} <strong>Time:</strong> ${dest.time}`;
+                    dayItem.appendChild(destItem);
+                });
+
+                existingDaysContainer.appendChild(dayItem);
+            });
+        }
+
+        function createCard(itineraryName, coverImageUrl, daysData) {
+            const itineraryCard = document.createElement('div');
+            itineraryCard.classList.add('bg-white', 'rounded-lg', 'shadow-lg', 'p-6');
+
+            itineraryCard.innerHTML = `
+                <img src="${coverImageUrl}" alt="Cover Image" class="w-full h-48 object-cover rounded-lg mb-4">
+                <h3 class="text-xl font-semibold mb-2">${itineraryName}</h3>
+                <div class="flex justify-between mb-4">
+                    <button class="bg-yellow-500 text-white px-4 py-2 rounded-full hover:bg-yellow-700 edit-button style="border-radius: 20px;">Edit</button>
+                    <button class="bg-red-500 text-white px-4 py-2 rounded-full hover:bg-red-700 delete-button style="border-radius: 20px;">Delete</button>
+                </div>
+            `;
+
+            const daysContainer = document.createElement('div');
+
+            // Tambahkan data hari dan destinasi ke dalam card
+            daysData.forEach(dayData => {
+                const dayItem = document.createElement('div');
+                dayItem.classList.add('mb-4', 'p-4', 'border', 'border-gray-300', 'rounded-lg');
+                dayItem.innerHTML = `<h4 class="text-lg font-semibold mb-2">Day ${dayData.day} - ${dayData.date}</h4>`;
+
+                // Tambahkan destinasi dan waktu yang dipilih user
+                dayData.destinations.forEach(dest => {
+                    const destItem = document.createElement('p');
+                    destItem.innerHTML = `<strong>Destination:</strong> ${dest.destination} <strong>Time:</strong> ${dest.time}`;
+                    dayItem.appendChild(destItem);
+                });
+
+                daysContainer.appendChild(dayItem);
+            });
+
+            itineraryCard.appendChild(daysContainer);
+
+            // Add share button
+            const shareButton = document.createElement('div');
+            shareButton.classList.add('text-center', 'mt-4');
+            shareButton.innerHTML = `
+                <button class="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-700 transition-colors share-button style="border-radius: 20px;">
+                    Share
+                </button>
+
+            `;
+            itineraryCard.appendChild(shareButton);
+
+            document.getElementById('itinerary-cards').appendChild(itineraryCard);
+
+            // Set up Edit and Delete button functionality
+            setupEditAndDeleteButtons(itineraryCard, itineraryName, coverImageUrl, daysData);
+
+            // Add share button functionality
+            itineraryCard.querySelector('.share-button').onclick = function() {
+                alert("Shared! Ready to MlakuMlaku? :)");
+            };
+        }
+        
+        function setupEditAndDeleteButtons(itineraryCard, itineraryName, coverImageUrl, daysData) {
+            itineraryCard.querySelector('.edit-button').onclick = function () {
+                // Isi form dengan data dari card untuk editing
+                document.getElementById('itinerary-name').value = itineraryName;
+                clearDaysContainer();
+
+                daysData.forEach(dayData => {
+                    const dayDiv = document.createElement('div');
+                    dayDiv.classList.add('mb-4');
+                    dayDiv.innerHTML = `
+                        <h3 class="font-semibold mb-2">Day ${dayData.day}</h3>
+                        <div class="destinations-container mb-2">
+                            <label class="block mb-1">Destination:</label>
+                            <input type="text" class="border p-2 w-full mb-1" value="${dayData.destinations[0]?.destination || ''}" required>
+                            <label class="block mb-1">Date:</label>
+                            <input type="date" class="border p-2 w-full mb-1" value="${dayData.date}" required>
+                            <label class="block mb-1">Time:</label>
+                            <input type="time" class="border p-2 w-full mb-2" value="${dayData.destinations[0]?.time || ''}" required>
+                        </div>
+                    `;
+                    daysContainer.appendChild(dayDiv);
+                });
+
+                // Tampilkan modal untuk editing
+                editingCard = itineraryCard;
+                document.getElementById('confirm-editing').classList.remove('hidden');
+                document.getElementById('confirm-editing').onclick = function () {
+                    document.getElementById('itinerary-form').dispatchEvent(new Event('submit'));
+                    document.getElementById('confirm-editing').classList.add('hidden');
+                };
+                tourModal.classList.toggle('hidden');
+            };
+
+            itineraryCard.querySelector('.delete-button').onclick = function () {
+                itineraryCard.remove();
+            };
+        }
+
+        function clearDaysContainer() {
+            daysContainer.innerHTML = '';
+            dayCount = 1;
+        }
+    </script>
+         
+</body>
+</html>

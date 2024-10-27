@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="path/to/tailwind.css"> <!-- Update the path -->
+    <title>Itinerary Details</title>
+</head>
+<body>
+    <div class="container mx-auto my-4">
+        <h1 class="text-2xl font-bold" id="itinerary-title"></h1>
+        <img id="itinerary-cover" src="" alt="Cover Image" class="w-full h-48 object-cover mb-4 rounded">
+        
+        <h2 class="text-xl font-semibold">Details</h2>
+        <ul id="itinerary-details" class="list-disc pl-5">
+            <!-- Details will be inserted here -->
+        </ul>
+
+        <button onclick="goBack()" class="bg-blue-600 text-white px-4 py-2 rounded mt-4">Back</button>
+    </div>
+    
+    <script>
+        // Assuming itinerary data is passed via query parameters or session storage
+        const urlParams = new URLSearchParams(window.location.search);
+        const title = urlParams.get('title');
+        const cover = urlParams.get('cover');
+        const details = JSON.parse(decodeURIComponent(urlParams.get('details')));
+
+        document.getElementById('itinerary-title').textContent = title;
+        document.getElementById('itinerary-cover').src = cover;
+
+        const detailsList = document.getElementById('itinerary-details');
+        details.forEach(day => {
+            const listItem = document.createElement('li');
+            listItem.textContent = `Day: ${day.day}, Destination: ${day.destination}, Date: ${day.date}, Time: ${day.time}`;
+            detailsList.appendChild(listItem);
+        });
+
+        function goBack() {
+            window.history.back(); // Go back to the previous page
+        }
+    </script>
+</body>
+</html>
