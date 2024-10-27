@@ -5,6 +5,7 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
+from django.contrib.auth.decorators import login_required
 
 @require_http_methods(["DELETE"])
 def delete_collection(request, collection_id):
@@ -17,13 +18,16 @@ def delete_collection(request, collection_id):
     except Exception as e:
         return JsonResponse({'success': False, 'error': str(e)}, status=500)
 
+# views.py
+from django.contrib.auth.decorators import login_required
 
+@login_required
 def create_collection(request):
     if request.method == 'POST':
         name = request.POST.get('name')
         if name:
             try:
-                collection = Collection.objects.create(name=name)
+                collection = Collection.objects.create(name=name, user=request.user)  # Menambahkan user
                 created_at = collection.created_at.strftime('%b %d, %Y')
                 return JsonResponse({
                     'success': True,
@@ -34,8 +38,26 @@ def create_collection(request):
             except Exception as e:
                 return JsonResponse({'success': False, 'error': str(e)})
         return JsonResponse({'success': False, 'error': 'Name is required'})
-    return render(request, 'placeCollection/create_collection.html')
-    # return JsonResponse({'success': False, 'error': 'Invalid request method'})
+    return render(request, 'create_collection.html')
+# @login_required(login_url='login')
+# def create_collection(request):
+#     if request.method == 'POST':
+#         name = request.POST.get('name')
+#         if name:
+#             try:
+#                 collection = Collection.objects.create(name=name)
+#                 created_at = collection.created_at.strftime('%b %d, %Y')
+#                 return JsonResponse({
+#                     'success': True,
+#                     'name': collection.name,
+#                     'created_at': created_at,
+#                     'id': collection.id
+#                 })
+#             except Exception as e:
+#                 return JsonResponse({'success': False, 'error': str(e)})
+#         return JsonResponse({'success': False, 'error': 'Name is required'})
+#     return render(request, 'placeCollection/create_collection.html')
+#     # return JsonResponse({'success': False, 'error': 'Invalid request method'})
 
 def show_collections(request):
     collections = Collection.objects.all()
