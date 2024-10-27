@@ -7,6 +7,175 @@ body {
     background-color: #ffffff; /* Dark background for the page */
 }
 
+.collections-page {
+    padding: 1rem;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.page-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.page-description {
+    color: #6b7280;
+}
+
+.create-collection-button {
+    background-color: #4caf50;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.create-collection-button:hover {
+    background-color: #45a049;
+}
+
+.collections-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.collection-card-container {
+    position: relative;
+}
+
+.collection-card {
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.2s;
+}
+
+.collection-card:hover {
+    transform: translateY(-5px);
+}
+
+.card-image {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+
+.card-content {
+    padding: 1rem;
+    position: relative;
+}
+
+.delete-button {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background-color: white;
+    border-radius: 50%;
+    padding: 0.25rem;
+    color: gray;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.delete-button:hover {
+    background-color: #f5f5f5;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.card-meta {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin-top: 0.5rem;
+}
+
+.dot-divider {
+    margin: 0 0.5rem;
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.tag {
+    background-color: #e0f7df;
+    color: #1b5e20;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+}
+
+.empty-state {
+    text-align: center;
+    color: #9ca3af;
+}
+
+.create-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    z-index: 10;
+}
+
+.hidden {
+    display: none;
+}
+
+.create-collection-confirm-button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.create-collection-confirm-button:hover {
+    background-color: #45a049;
+}
+
+
+.delete-button {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background-color: #f44336; /* Red background */
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
 /* Hilangkan underline pada link */
 a.no-underline {
     text-decoration: none;
@@ -188,3 +357,157 @@ a.no-underline .collection-card:hover {
         grid-template-columns: repeat(1, 1fr); /* Display 1 card per row for mobile */
     }
 }
+
+/* Container and layout */
+.collections-page {
+    padding: 1rem;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.page-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.page-description {
+    color: #6b7280;
+}
+
+.create-collection-button {
+    background-color: #4caf50;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.create-collection-button:hover {
+    background-color: #45a049;
+}
+
+.collections-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.collection-card-container {
+    position: relative;
+}
+
+.collection-card {
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.2s;
+}
+
+.collection-card-link {
+    display: block;
+    text-decoration: none;
+}
+
+.collection-card:hover {
+    transform: translateY(-5px);
+}
+
+.card-image {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+
+.card-content {
+    padding: 1rem;
+    position: relative;
+}
+
+.delete-button {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background-color: white;
+    border-radius: 50%;
+    padding: 0.25rem;
+    color: gray;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.delete-button:hover {
+    background-color: #f5f5f5;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.card-meta {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin-top: 0.5rem;
+}
+
+.dot-divider {
+    margin: 0 0.5rem;
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    margin-top: 0.5rem;
+}
+
+.tag {
+    background-color: #e0f7fa;
+    color: #00796b;
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+}
+
+/* Create collection modal */
+.create-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem;
+    background: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    z-index: 10;
+}
+
+.hidden {
+    display: none;
+}
+
+.create-collection-confirm-button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+}
+
+.create-collection-confirm-button:hover {
+    background-color: #45a049;
+}
+
+

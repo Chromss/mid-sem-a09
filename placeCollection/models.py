@@ -1,53 +1,23 @@
-# from django.db import models
-
-# # Create your models here.
-# from django.db import models
-# import uuid
-
-# class Place(models.Model):
-#     title = models.CharField(max_length=200)
-#     content = models.TextField()
-
-#     def __str__(self):
-#         return self.title
-
-
-# class PlaceCollection(models.Model):
-#     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-#     name = models.CharField(max_length=255)
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     places = models.ManyToManyField(Place)
-#     progress = models.IntegerField(default=0)
-
-#     def __str__(self):
-#         return self.name
-
-#BEFORE
-# from django.db import models
-# from django.utils import timezone
-
-
-# class Collection(models.Model):
-#     name = models.CharField(max_length=20)
-#     created_at = models.DateTimeField(default=timezone.now)
-
-#     class Meta:
-#         ordering = ['-created_at']
-
-#     def __str__(self):
-#         return self.name
-    
-#AFTER
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
-from places.models import Place
+import uuid
 
+# Model untuk Place
+class Place(models.Model):
+    title = models.CharField(max_length=200)
+    content = models.TextField()
+
+    def __str__(self):
+        return self.title
+
+# Model untuk Collection dengan UUID sebagai primary key
 class Collection(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='collections')
-    name = models.CharField(max_length=20)
-    created_at = models.DateTimeField(default=timezone.now)
-    places = models.ManyToManyField('places.Place', through='CollectionItem', related_name='collections')
+    name = models.CharField(max_length=255)  # Menggunakan max_length 255 seperti di PlaceCollection
+    created_at = models.DateTimeField(auto_now_add=True)
+    places = models.ManyToManyField(Place, through='CollectionItem', related_name='collections')
 
     class Meta:
         ordering = ['-created_at']
@@ -55,7 +25,7 @@ class Collection(models.Model):
     def __str__(self):
         return self.name
 
-
+# Intermediate model untuk relasi many-to-many Collection dan Place
 class CollectionItem(models.Model):
     collection = models.ForeignKey(Collection, on_delete=models.CASCADE, related_name='items')
     place = models.ForeignKey(Place, on_delete=models.CASCADE, related_name='collection_items')
@@ -64,5 +34,4 @@ class CollectionItem(models.Model):
         unique_together = ('collection', 'place')
 
     def __str__(self):
-        return f"{self.place.name} in {self.collection.name}"
-
+        return f"{self.place.title} in {self.collection.name}"

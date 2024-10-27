@@ -8,10 +8,12 @@ from django.contrib.auth import views as auth_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('main.urls')),
-    path('', include('placeCollection.urls', namespace='placeCollection')),
+    # path('', include('placeCollection.urls', namespace='placeCollection')),
     path('places/', include('places.urls')),  # Include places URLs
     path('accounts/login/', CustomLoginView.as_view(), name='login'),  # Use custom login view
     path('accounts/logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path('placecollections/', include('placeCollection.urls')),
+
 ]
 
 if settings.DEBUG:

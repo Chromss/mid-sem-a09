@@ -1,58 +1,71 @@
-{% load static %}
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/specific_collection.css' %}">
-    <title>{% block title %}MlakuMlaku{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/keren.css' %}">
+    <title>{{ collection.name }}</title>
 </head>
 <body>
+    <div class="collection-places-page">
+        <!-- Sidebar -->
+        <aside>
+            <h2>{{ collection.name }}</h2>
+            <p>{{ places.count }} items</p>
+            <hr>
+            <h3>Sort by</h3>
+            <select id="sortOptions">
+                <option value="latest">Latest added</option>
+                <option value="ascending">Ascending (A - Z)</option>
+                <option value="descending">Descending (Z - A)</option>
+            </select>
+            <button onclick="sortPlaces()">OK</button>
 
-{% block content %}
-<div class="collection-places-page flex">
-    <!-- Sidebar Section -->
-    <aside class="w-1/4 bg-white p-6 border-r">
-        <h2 class="text-2xl font-bold mb-2">{{ collection.name }}</h2>
-        <ul class="text-gray-700 mb-6">
-            <li><span class="font-semibold">25</span> items</li>
-            <li><span class="font-semibold">14</span> itineraries</li>
-            <li><span class="font-semibold">4.6</span> ★ (average)</li>
-        </ul>
-
-        <!-- Filter Section -->
-        <p class="font-semibold text-gray-600 mb-2">Filter by</p>
-        <ul class="text-blue-600 mb-6">
-            <li>Latest added</li>
-            <li>Ascending (A - Z)</li>
-            <li>Descending (Z - A)</li>
-        </ul>
-
-        <!-- Action Buttons -->
-        <div class="back-button-container mt-8">
-            <a href="{% url 'placeCollection:show_collections' %}" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg transition-colors">
-                Back to my collections
-            </a>
-        </div>
-    </aside>
-
-    <!-- Main Content Section -->
-    <div class="w-3/4 p-6">
-        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-            {% for place in places %}
-            <div class="place-card bg-white rounded-lg shadow-md overflow-hidden">
-                <img src="{{ place.image.url }}" alt="{{ place.name }}" class="w-full h-32 object-cover rounded-lg">
-                <div class="p-2 text-center">
-                    <h3 class="text-sm font-semibold">{{ place.name }}</h3>
-                </div>
+            <div class="back-button-container">
+                <a href="{% url 'placeCollection:show_collections' %}" class="back-button">Back to my collections</a>
             </div>
-            {% empty %}
-            <p>No places found in this collection.</p>
-            {% endfor %}
-        </div>
-    </div>
-</div>
-{% endblock %}
+        </aside>
 
+        <!-- Places Grid -->
+        <section class="places-container">
+            <div id="placesGrid" class="places-grid">
+                {% for place in places %}
+                <a href="{% url 'place_detail' place.id %}" class="place-card" data-name="{{ place.name }}">
+                    <div class="place-image-container">
+                        <img src="{{ place.image.url }}" alt="{{ place.name }}" class="place-image">
+                    </div>
+                    <h3 class="place-name">{{ place.name }}</h3>
+                </a>
+                {% empty %}
+                <p>No places in this collection.</p>
+                {% endfor %}
+            </div>
+        </section>
+    </div>
+
+    <script>
+        function sortPlaces() {
+            const sortOption = document.getElementById('sortOptions').value;
+            const placesGrid = document.getElementById('placesGrid');
+            const places = Array.from(placesGrid.getElementsByClassName('place-card'));
+
+            places.sort((a, b) => {
+                const nameA = a.getAttribute('data-name').toLowerCase();
+                const nameB = b.getAttribute('data-name').toLowerCase();
+
+                if (sortOption === 'ascending') {
+                    return nameA.localeCompare(nameB);
+                } else if (sortOption === 'descending') {
+                    return nameB.localeCompare(nameA);
+                }
+                return 0; // No sorting for 'latest'
+            });
+
+            // Clear current places and append sorted places
+            placesGrid.innerHTML = '';
+            places.forEach(place => placesGrid.appendChild(place));
+        }
+    </script>
 </body>
 </html>
