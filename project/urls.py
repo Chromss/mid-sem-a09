@@ -5,6 +5,7 @@ from django.urls import path, include
 
 from places.views import CustomLoginView
 from django.contrib.auth import views as auth_views
+from main.views import landing_page
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
@@ -18,4 +19,5 @@ urlpatterns = [
     path('show-collections/', include(('placeCollection.urls', 'placeCollection'), namespace='placeCollection')),
     # path('placeCollection/', include('placeCollection.urls')), 
     path('placeCollection/', include('placeCollection.urls', namespace='placeCollection')),
+    path('', landing_page, name='landing_page'),  # Ini akan mengarahkan root URL ke landing page
 ]
