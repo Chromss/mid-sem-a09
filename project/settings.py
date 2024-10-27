@@ -102,5 +102,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # # Login settings
 # LOGIN_URL = 'login'
-# LOGIN_REDIRECT_URL = 'home'  # Ensure 'home' is correctly defined in your URLs
-# LOGOUT_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'landing_page'  # Ensure 'home' is correctly defined in your URLs
+LOGOUT_REDIRECT_URL = 'login'

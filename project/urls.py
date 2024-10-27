@@ -20,4 +20,6 @@ urlpatterns = [
     # path('placeCollection/', include('placeCollection.urls')), 
     path('placeCollection/', include('placeCollection.urls', namespace='placeCollection')),
     path('', landing_page, name='landing_page'),  # Ini akan mengarahkan root URL ke landing page
+    path('accounts/logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
+    path('accounts/login/', auth_views.LoginView.as_view(), name='login'),
 ]

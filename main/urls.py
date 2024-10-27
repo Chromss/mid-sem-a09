@@ -9,7 +9,7 @@ from django.contrib.auth import views as auth_views
 
 from main.views import (
     landing_page, journal_home, create_journal, edit_journal, delete_journal, journal_history,
-    like_journal, journal_detail, register, login_user, logout_user, specific_journal, save_journal, logout, souvenir_list, itinerary_list, itinerary_detail
+    like_journal, journal_detail, register, login_user, logout_user, specific_journal, save_journal, logout, souvenir_list, itinerary_list, itinerary_detail, login, logout
 )
 
 
@@ -40,6 +40,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),  # Remove admin namespace from here
     # path('placecollections/', include('placeCollection.urls')),  # namespace will be defined in placeCollection/urls.py
 # ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    path('accounts/logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
+    path('accounts/login/', auth_views.LoginView.as_view(), name='login')
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
