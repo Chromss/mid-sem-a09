@@ -39,9 +39,11 @@
       
       <div class="destination-cards">
         <div class="card bukit-lintang-sewu">
-            <img src="{% static 'images/bukit-lintang-sewu.jpg' %}" alt="Bukit Lintang Sewu">
-            <h3>Bukit Lintang Sewu</h3>
-            <p>Bukit Lintang Sewu ini berasal ketika pada saat malam hari di bukit ini terlihat ribuan bintang – bintang yang membentang luas di angkasa. Pemandangan alam yang tidak kalah mempesona membuat Bukit Langit Sewu ini menjadi tempat favorit bagi pecinta alam.</p>
+            <a href="{% url 'places:place_detail' place_id=1 %}">
+                <img src="{% static 'images/bukit-lintang-sewu.jpg' %}" alt="Bukit Lintang Sewu">
+                <h3>Bukit Lintang Sewu</h3>
+                <p>Bukit Lintang Sewu ini berasal ketika pada saat malam hari di bukit ini terlihat ribuan bintang – bintang yang membentang luas di angkasa. Pemandangan alam yang tidak kalah mempesona membuat Bukit Langit Sewu ini menjadi tempat favorit bagi pecinta alam.</p>
+        </a>
         </div>
         
         <div class="card bunker-kaliadem-merapi">

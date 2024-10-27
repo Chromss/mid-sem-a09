@@ -34,7 +34,8 @@ def create_collection(request):
             except Exception as e:
                 return JsonResponse({'success': False, 'error': str(e)})
         return JsonResponse({'success': False, 'error': 'Name is required'})
-    return JsonResponse({'success': False, 'error': 'Invalid request method'})
+    return render(request, 'placeCollection/create_collection.html')
+    # return JsonResponse({'success': False, 'error': 'Invalid request method'})
 
 def show_collections(request):
     collections = Collection.objects.all()
