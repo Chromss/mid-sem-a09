@@ -75,27 +75,7 @@ def create_journal(request):
         else:
             return JsonResponse({'success': False, 'errors': form.errors}, status=400)
     return JsonResponse({'success': False}, status=400)
-# def create_journal(request):
-#     # Ambil souvenir_id dari query parameter jika ada
-#     souvenir_id = request.GET.get('souvenir_id')
 
-#     if request.method == 'POST':
-#         form = JournalForm(request.POST, request.FILES)
-#         if form.is_valid():
-#             journal = form.save(commit=False)
-#             journal.author = request.user
-            
-#             # Jika souvenir_id ada, kaitkan dengan jurnal
-#             if souvenir_id:
-#                 souvenir = get_object_or_404(Souvenir, id=souvenir_id)
-#                 journal.souvenir = souvenir  # Asumsikan ada field 'souvenir' di model Journal
-            
-#             journal.save()
-#             return redirect('main:journal_home')
-#     else:
-#         form = JournalForm()
-    
-#     return render(request, 'main/create_journal.html', {'form': form, 'souvenir_id': souvenir_id})
 
 @login_required(login_url='/login')
 def like_journal(request, journal_id):
@@ -168,77 +148,6 @@ def edit_journal(request, journal_id):
         return JsonResponse(data)
 
     return JsonResponse({'error': 'Invalid request'}, status=400)
-# def edit_journal(request, journal_id):
-#     journal = get_object_or_404(Journal, id=journal_id)
-
-#     if request.method == 'POST':
-#         form = JournalForm(request.POST, request.FILES, instance=journal)
-#         if form.is_valid():
-#             # Check if the "Clear Image" checkbox is checked
-#             if 'delete_image' in request.POST:
-#                 journal.image.delete(save=False)  # Delete image from filesystem
-#                 journal.image = None  # Set image to None
-
-#             form.save()  # Save changes
-#             return JsonResponse({
-#                 'title': journal.title,
-#                 'content': journal.content,
-#                 'image_url': journal.image.url if journal.image else None,
-#             })  # Return updated journal data as JSON
-#     elif request.method == 'GET':
-#         # Return journal data for editing
-#         data = {
-#             'title': journal.title,
-#             'content': journal.content,
-#             'image_url': journal.image.url if journal.image else None,
-#         }
-#         return JsonResponse(data)
-
-#     return JsonResponse({'error': 'Invalid request'}, status=400)
-    # journal = get_object_or_404(Journal, id=journal_id)
-
-    # if request.method == 'POST':
-    #     form = JournalForm(request.POST, request.FILES, instance=journal)
-    #     if form.is_valid():
-    #         # Check if the "Clear Image" checkbox is checked
-    #         if 'delete_image' in request.POST:
-    #             journal.image.delete(save=False)  # Delete image from filesystem
-    #             journal.image = None  # Set image to None
-
-    #         form.save()  # Save changes
-    #         return JsonResponse({
-    #             'title': journal.title,
-    #             'content': journal.content,
-    #             'image_url': journal.image.url if journal.image else None,
-    #         })  # Return updated journal data as JSON
-    # elif request.method == 'GET':
-    #     # Return journal data for editing
-    #     data = {
-    #         'title': journal.title,
-    #         'content': journal.content,
-    #         'image_url': journal.image.url if journal.image else None,
-    #     }
-    #     return JsonResponse(data)
-
-    # return JsonResponse({'error': 'Invalid request'}, status=400)
-# def edit_journal(request, journal_id):
-#     journal = get_object_or_404(Journal, id=journal_id)
-
-#     if request.method == 'POST':
-#         form = JournalForm(request.POST, request.FILES, instance=journal)
-#         if form.is_valid():
-#             # Cek apakah checkbox "Clear Image" dicentang
-#             if 'clear_image' in request.POST:
-#                 journal.image.delete(save=False)  # Hapus gambar dari filesystem
-#                 journal.image = None  # Set gambar ke None
-
-#             form.save()  # Simpan perubahan
-#             return redirect('main:journal_history')  # Redirect setelah menyimpan
-#     else:
-#         form = JournalForm(instance=journal)
-
-#     return render(request, 'main/edit_journal.html', {'form': form})
-
 
 @login_required(login_url='/login')
 def delete_journal(request, journal_id):
@@ -270,18 +179,7 @@ def register(request):
     context = {'form': form, 'last_login': last_login}
     return render(request, 'register.html', context)
 
-# def login_user(request):
-#     if request.method == 'POST':
-#         username = request.POST['username']
-#         password = request.POST['password']
-#         user = authenticate(request, username=username, password=password)
-#         if user is not None:
-#             login(request, user)
-#             return redirect('main:journal_home')  # Ganti 'home' dengan nama URL halaman utama Anda
-#         else:
-#             # Tambahkan pesan error jika login gagal
-#             return render(request, 'login.html', {'error': 'Invalid username or password'})
-#     return render(request, 'login.html')
+
 def login_user(request):
     if request.method == 'POST':
         form = AuthenticationForm(data=request.POST)
