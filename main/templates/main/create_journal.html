@@ -26,13 +26,13 @@
         }
 
         .nav-link {
-        color: white;
-        text-decoration: none;
-        margin-right: 1rem;
-        padding: 10px 15px; /* Tambahkan padding untuk tombol */
-        background-color: #0056b3; /* Ubah warna latar belakang tombol */
-        border-radius: 5px; /* Sudut melengkung */
-        transition: background-color 0.3s; /* Transisi untuk efek hover */
+            color: white;
+            text-decoration: none;
+            margin-right: 1rem;
+            padding: 10px 15px; /* Tambahkan padding untuk tombol */
+            background-color: #0056b3; /* Ubah warna latar belakang tombol */
+            border-radius: 5px; /* Sudut melengkung */
+            transition: background-color 0.3s; /* Transisi untuk efek hover */
         }
 
         .nav-link:hover {
@@ -148,5 +148,29 @@
         </form>
         <a href="{% url 'main:journal_home' %}" class="back-button">Back to Journal Home</a>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('form').on('submit', function(e) {
+                e.preventDefault(); // Prevent default form submission
+                var formData = new FormData(this);
+                $.ajax({
+                    type: 'POST',
+                    url: $(this).attr('action'),
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        // Handle success (e.g., redirect or show a success message)
+                        window.location.href = "{% url 'main:journal_home' %}"; // Redirect to journal home
+                    },
+                    error: function(xhr) {
+                        // Handle error
+                        alert('Error creating journal.');
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>

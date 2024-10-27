@@ -6,39 +6,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{% static 'css/landing_page_journal.css' %}">
     <title>Your Journals</title>
+    
 </head>
-<body class="journal">
+<body class="journal responsive">  <!-- Menambahkan kelas 'responsive' -->
     <div class="navbar">
-        <div>
+        <div class="nav-links">
             <a href="{% url 'main:register' %}" class="nav-link">Sign Up</a>
             <a href="{% url 'main:login' %}" class="nav-link">Log In</a>
         </div>
         <div class="nav-logo">MlakuMlaku</div>
-        <nav class="nav-menu">
+        <div class="nav-links">
             <a href="#" class="nav-link">Itinerary</a>
             <a href="{% url 'main:journal_home' %}" class="nav-link">Journal</a>
             <a href="#" class="nav-link">Collection</a>
-        </nav>
+        </div>
+        <div class="hamburger" id="hamburger">
+            &#9776; <!-- Hamburger icon -->
+        </div>
     </div>
 
-    <div class="container">
+    <div class="container responsive-container">  <!-- Menambahkan kelas 'responsive-container' -->
         <h1>Your Journals</h1>
-        {% for journal in journals %}
-            <div class="post-card">
-                <h2 class="title">{{ journal.title }}</h2>
-                <p class="date">{{ journal.created_at|date:"F d, Y, H:i" }}</p>
-                <p class="content">{{ journal.content }}</p>
-                <div class="card-footer">
-                    <a href="{% url 'main:edit_journal' journal.id %}" class="edit-button">Edit</a>
-                    <form action="{% url 'main:delete_journal' journal.id %}" method="POST" style="display:inline;">
-                        {% csrf_token %}
-                        <button type="submit" class="delete-button">Delete</button>
-                    </form>
+        <div class="post-cards-container"> <!-- Kontainer untuk card -->
+            {% for journal in journals %}
+                <div class="post-card responsive-card">  <!-- Menambahkan kelas 'responsive-card' -->
+                    <h2 class="title">{{ journal.title }}</h2>
+                    <p class="date">{{ journal.created_at|date:"F d, Y, H:i" }}</p>
+                    <p class="content">{{ journal.content }}</p>
+                    <div class="card-footer">
+                        <p class="likes-count likes-highlight">{{ journal.likes.count }} Likes</p> <!-- Menampilkan jumlah like -->
+                        <form action="{% url 'main:delete_journal' journal.id %}" method="POST" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="delete-button">Delete</button>
+                        </form>
+                    </div>
                 </div>
-            </div>
-        {% empty %}
-            <p>No journals available.</p>
-        {% endfor %}
+            {% empty %}
+                <p>No journals available.</p>
+            {% endfor %}
+        </div>
         <a href="{% url 'main:journal_home' %}" class="back-button">Back to Journal Home</a>
     </div>
 </body>

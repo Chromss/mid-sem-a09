@@ -4,18 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/spesific_journal.css' %}">
     <title>{{ journal.title }}</title>
     <style>
         /* CSS tambahan untuk memperbaiki tata letak */
         body {
-        font-family: 'Geist', 'Geist';
-        margin: 0;
-        padding: 0;
-        background-image: url('{% static "images/spec.png" %}'); /* Ganti dengan path gambar Anda */
-        background-size: cover; /* Mengatur ukuran gambar agar menutupi seluruh halaman */
-        background-position: center; /* Memposisikan gambar di tengah */
-        background-repeat: no-repeat; /* Menghindari pengulangan gambar */
+            font-family: 'Geist', 'Geist';
+            margin: 0;
+            padding: 0;
+            background-image: url('{% static "images/spec.png" %}');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
         }
 
         .navbar {
@@ -100,9 +99,6 @@
             margin-bottom: 2rem;
         }
 
-        
-        
-
         .related-link {
             color: #007bff;
             text-decoration: none;
@@ -115,6 +111,7 @@
             background-color: #f8f9fa;
             font-size: 14px;
             color: #666;
+            margin-top: 2rem;
         }
 
         .footer-link {
@@ -133,6 +130,24 @@
             text-decoration: none;
             font-size: 16px;
         }
+
+        /* Responsivitas untuk navbar */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none; /* Sembunyikan menu pada layar kecil */
+            }
+            .hamburger {
+                display: block; /* Tampilkan ikon hamburger */
+                cursor: pointer;
+                color: #333; /* Warna ikon hamburger */
+            }
+        }
+
+        @media (min-width: 769px) {
+            .hamburger {
+                display: none; /* Sembunyikan ikon hamburger pada layar besar */
+            }
+        }
     </style>
 </head>
 <body class="spesific-journal">
@@ -142,12 +157,20 @@
             <a href="{% url 'main:login' %}" class="nav-link">Log In</a>
         </div>
         <div class="nav-logo">MlakuMlaku</div>
+        <div class="hamburger" onclick="toggleMenu()">&#9776;</div> <!-- Ikon Hamburger -->
         <nav class="nav-menu">
             <a href="#">Itinerary</a>
             <a href="{% url 'main:journal_home' %}">Journal</a>
             <a href="#">Collection</a>
         </nav>
     </div>
+
+    <script>
+        function toggleMenu() {
+            const navMenu = document.querySelector('.nav-menu');
+            navMenu.style.display = navMenu.style.display === 'block' ? 'none' : 'block';
+        }
+    </script>
 
     <div class="container">
         <!-- Journal Details -->
@@ -163,20 +186,17 @@
                 <img class="journal-image" src="{{ journal.image.url }}" alt="{{ journal.title }}">
             {% endif %}
             <p class="journal-content">{{ journal.content }}</p>
-            
-
-       
-
-        <!-- Back Button -->
-        <div class="back-button">
-            <a href="{% url 'main:journal_home' %}" class="back-link">Back to Journal Home</a>
+            <!-- Back Button -->
+            <div class="back-button">
+                <a href="{% url 'main:journal_home' %}" class="back-link">Back to Journal Home</a>
+            </div>
         </div>
+        <!-- Footer -->
+        <footer class="footer">
+            <span>UI Design by Chroms</span>
+            <span>&copy; 2024 MlakuMlaku. All rights reserved.</span>
+            <a href="#" class="footer-link">About</a>
+        </footer>
     </div>
-     <!-- Footer -->
-     <footer class="footer">
-        <span>UI Design by Chroms</span>
-        <span>&copy; 2024 MlakuMlaku. All rights reserved.</span>
-        <a href="#" class="footer-link">About</a>
-    </footer>
 </body>
 </html>

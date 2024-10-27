@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib import messages
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse,HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.utils import timezone
@@ -11,14 +11,11 @@ from .models import Journal, Souvenir
 from .jurnalform import JournalForm
 from django.http import JsonResponse
 import json
+from django.core import serializers
 
 @login_required
 def landing_page(request):
     return render(request, 'main/landing_page.html', {'user': request.user})
-
-
-
-
 
 
 @login_required(login_url='/login')
@@ -63,40 +60,7 @@ def journal_home(request):
         'souvenirs': souvenirs,
         'places': places,
     })
-    # journals = Journal.objects.all().order_by('-created_at')  # Urutkan berdasarkan tanggal terbaru
-    # souvenirs = Souvenir.objects.all()  # Ambil semua souvenir untuk filter
-
-    # # Filter berdasarkan harga
-    # price_filter = request.GET.get('price')
-    # if price_filter == 'low_to_high':
-    #     souvenirs = souvenirs.order_by('price')
-    # elif price_filter == 'high_to_low':
-    #     souvenirs = souvenirs.order_by('-price')
-
-    # # Filter berdasarkan rating
-    # rating_filter = request.GET.get('rating')
-    # if rating_filter == 'high_to_low':
-    #     souvenirs = souvenirs.order_by('-rating')
-    # elif rating_filter == 'low_to_high':
-    #     souvenirs = souvenirs.order_by('rating')
-
-    # return render(request, 'main/journal_home.html', {'journals': journals, 'souvenirs': souvenirs})
-# def journal_home(request):
-#     journals = Journal.objects.all().order_by('-created_at')  # Urutkan berdasarkan tanggal terbaru
-#     return render(request, 'main/journal_home.html', {'journals': journals})
-
-# @login_required(login_url='/login')
-# def create_journal(request):
-#        if request.method == 'POST':
-#            form = JournalForm(request.POST, request.FILES)
-#            if form.is_valid():
-#                journal = form.save(commit=False)
-#                journal.author = request.user
-#                journal.save()
-#                return redirect('main:journal_home')
-#        else:
-#            form = JournalForm()
-#        return render(request, 'main/create_journal.html', {'form': form})
+   
 @login_required(login_url='/login')
 def create_journal(request):
     # Ambil souvenir_id dari query parameter jika ada
@@ -169,17 +133,98 @@ def edit_journal(request, journal_id):
     if request.method == 'POST':
         form = JournalForm(request.POST, request.FILES, instance=journal)
         if form.is_valid():
-            # Cek apakah checkbox "Clear Image" dicentang
-            if 'clear_image' in request.POST:
-                journal.image.delete(save=False)  # Hapus gambar dari filesystem
-                journal.image = None  # Set gambar ke None
+            # Check if the "Clear Image" checkbox is checked
+            if 'delete_image' in request.POST and request.POST['delete_image'] == 'on':
+                if journal.image:
+                    journal.image.delete(save=False)  # Delete image from filesystem
+                journal.image = None  # Set image to None
 
-            form.save()  # Simpan perubahan
-            return redirect('main:journal_history')  # Redirect setelah menyimpan
-    else:
-        form = JournalForm(instance=journal)
+            form.save()  # Save changes
+            return JsonResponse({
+                'title': journal.title,
+                'content': journal.content,
+                'image_url': journal.image.url if journal.image else None,
+            })  # Return updated journal data as JSON
+    elif request.method == 'GET':
+        # Return journal data for editing
+        data = {
+            'title': journal.title,
+            'content': journal.content,
+            'image_url': journal.image.url if journal.image else None,
+        }
+        return JsonResponse(data)
 
-    return render(request, 'main/edit_journal.html', {'form': form})
+    return JsonResponse({'error': 'Invalid request'}, status=400)
+# def edit_journal(request, journal_id):
+#     journal = get_object_or_404(Journal, id=journal_id)
+
+#     if request.method == 'POST':
+#         form = JournalForm(request.POST, request.FILES, instance=journal)
+#         if form.is_valid():
+#             # Check if the "Clear Image" checkbox is checked
+#             if 'delete_image' in request.POST:
+#                 journal.image.delete(save=False)  # Delete image from filesystem
+#                 journal.image = None  # Set image to None
+
+#             form.save()  # Save changes
+#             return JsonResponse({
+#                 'title': journal.title,
+#                 'content': journal.content,
+#                 'image_url': journal.image.url if journal.image else None,
+#             })  # Return updated journal data as JSON
+#     elif request.method == 'GET':
+#         # Return journal data for editing
+#         data = {
+#             'title': journal.title,
+#             'content': journal.content,
+#             'image_url': journal.image.url if journal.image else None,
+#         }
+#         return JsonResponse(data)
+
+#     return JsonResponse({'error': 'Invalid request'}, status=400)
+    # journal = get_object_or_404(Journal, id=journal_id)
+
+    # if request.method == 'POST':
+    #     form = JournalForm(request.POST, request.FILES, instance=journal)
+    #     if form.is_valid():
+    #         # Check if the "Clear Image" checkbox is checked
+    #         if 'delete_image' in request.POST:
+    #             journal.image.delete(save=False)  # Delete image from filesystem
+    #             journal.image = None  # Set image to None
+
+    #         form.save()  # Save changes
+    #         return JsonResponse({
+    #             'title': journal.title,
+    #             'content': journal.content,
+    #             'image_url': journal.image.url if journal.image else None,
+    #         })  # Return updated journal data as JSON
+    # elif request.method == 'GET':
+    #     # Return journal data for editing
+    #     data = {
+    #         'title': journal.title,
+    #         'content': journal.content,
+    #         'image_url': journal.image.url if journal.image else None,
+    #     }
+    #     return JsonResponse(data)
+
+    # return JsonResponse({'error': 'Invalid request'}, status=400)
+# def edit_journal(request, journal_id):
+#     journal = get_object_or_404(Journal, id=journal_id)
+
+#     if request.method == 'POST':
+#         form = JournalForm(request.POST, request.FILES, instance=journal)
+#         if form.is_valid():
+#             # Cek apakah checkbox "Clear Image" dicentang
+#             if 'clear_image' in request.POST:
+#                 journal.image.delete(save=False)  # Hapus gambar dari filesystem
+#                 journal.image = None  # Set gambar ke None
+
+#             form.save()  # Simpan perubahan
+#             return redirect('main:journal_history')  # Redirect setelah menyimpan
+#     else:
+#         form = JournalForm(instance=journal)
+
+#     return render(request, 'main/edit_journal.html', {'form': form})
 
 
 @login_required(login_url='/login')
@@ -246,3 +291,24 @@ def logout_user(request):
     response = HttpResponseRedirect(reverse('main:login'))
     response.delete_cookie('last_login')
     return response
+
+
+def show_xml(request):
+    # Get all journals for the current user
+    data = Journal.objects.filter(author=request.user)
+    return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
+
+def show_json(request):
+    # Get all journals for the current user
+    data = Journal.objects.filter(author=request.user)
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+
+def show_xml_by_id(request, id):
+    # Get a specific journal by ID
+    data = Journal.objects.filter(pk=id)
+    return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
+
+def show_json_by_id(request, id):
+    # Get a specific journal by ID
+    data = Journal.objects.filter(pk=id)
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")

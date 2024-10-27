@@ -3,16 +3,18 @@ body {
   font-family: 'Geist', 'Geist';
   margin: 0;
   padding: 0;
-  background-image: url('{% static "images/background.jpg" %}'); /* Ganti dengan path gambar Anda */
-  background-size: cover; /* Menutupi seluruh latar belakang */
-  background-position: center; /* Pusatkan gambar */
+  background-image: url('{% static "images/background.jpg" %}');
+  background-size: cover;
+  background-position: center;
 }
+
 .container {
   background-image: url('{% static "images/background.jpg" %}');
-  background-size: cover; /* Menutupi seluruh latar belakang kontainer */
-  background-position: center; /* Pusatkan gambar */
-  background-color: rgba(255, 255, 255, 0.8); /* Warna putih dengan transparansi */
+  background-size: cover;
+  background-position: center;
+  background-color: rgba(255, 255, 255, 0.8);
 }
+
 .journal .div {
   width: 100%;
   max-width: 1200px;
@@ -49,19 +51,21 @@ body {
 
 /* Journal container */
 .journal-container {
-  display: flex; /* Menggunakan flexbox untuk layout */
+  display: flex;
+  flex-wrap: wrap; /* Menggunakan flexbox untuk layout */
 }
 
+
 .left-column {
-  flex: 3; /* Lebar kolom kiri */
+  flex: 3;
   padding: 20px;
 }
 
 .right-column {
-  flex: 1; /* Lebar kolom kanan */
+  flex: 1;
   padding: 20px;
-  background-color: #f8f8f8; /* Warna latar belakang untuk kolom kanan */
-  border-left: 1px solid #ccc; /* Garis pemisah */
+  background-color: #f8f8f8;
+  border-left: 1px solid #ccc;
 }
 
 /* Navigation */
@@ -83,16 +87,16 @@ body {
 
 /* Post card */
 .post-card {
-  background-color: white; /* Latar belakang putih */
-  border-radius: 10px; /* Sudut melengkung */
-  padding: 15px; /* Padding untuk setiap jurnal */
-  margin-bottom: 20px; /* Jarak antar jurnal */
-  box-shadow: 0 2px 5px gray; /* Ubah warna bayangan di sini */
+  background-color: white;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 5px gray;
 }
 
 .post-card .header {
-  display: flex; /* Menggunakan flexbox untuk header post */
-  align-items: center; /* Rata tengah secara vertikal */
+  display: flex;
+  align-items: center;
 }
 
 .post-card .profile {
@@ -145,152 +149,153 @@ body {
 
 /* Footer styles */
 .footer {
-  background-color: #252525; /* Warna latar belakang footer */
-  color: #FFFFFF; /* Warna teks footer */
-  padding: 20px 0; /* Padding atas dan bawah */
-  width: 100%; /* Lebar penuh */
+  background-color: #252525;
+  color: #FFFFFF;
+  padding: 20px 0;
+  width: 100%;
 }
 
 .footer-content {
-  display: flex; /* Menggunakan flexbox */
-  justify-content: space-between; /* Memisahkan elemen kiri, tengah, dan kanan */
-  align-items: center; /* Rata tengah secara vertikal */
-  max-width: 1200px; /* Lebar maksimum */
-  margin: auto; /* Pusatkan konten */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: auto;
 }
 
 .footer-link {
-  color: #FFFFFF; /* Warna link */
-  text-decoration: none; /* Menghilangkan garis bawah */
+  color: #FFFFFF;
+  text-decoration: none;
 }
 
 .footer-link:hover {
-  text-decoration: underline; /* Garis bawah saat hover */
+  text-decoration: underline;
 }
 
 /* Responsive adjustments */
 @media screen and (max-width: 768px) {
   .footer-content {
-      flex-direction: column; /* Mengubah arah flex menjadi kolom */
-      text-align: center; /* Centering teks */
+      flex-direction: column;
+      text-align: center;
   }
 
   .footer-left, .footer-center, .footer-right {
-      margin: 5px 0; /* Margin vertikal */
+      margin: 5px 0;
   }
 }
 
 .header {
-  background-color: #1a201a; /* Latar belakang hitam untuk header */
-  padding: 10px 20px; /* Padding untuk header */
-  border-radius: 8px; /* Sudut melengkung */
-  display: flex; /* Menggunakan flexbox untuk tata letak */
-  align-items: center; /* Rata tengah secara vertikal */
-  justify-content: space-between; /* Memisahkan elemen */
+  background-color: #1a201a;
+  padding: 10px 20px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .header h2 {
-  color: #FFFFFF; /* Warna teks putih untuk judul */
-  margin: 0; /* Menghilangkan margin default */
+  color: #FFFFFF;
+  margin: 0;
 }
 
 .header-links {
-  display: flex; /* Menggunakan flexbox untuk tombol */
-  gap: 10px; /* Jarak antara tombol */
+  display: flex;
+  gap: 10px;
 }
 
 .publish-button, .my-journals-button {
-  background-color: #007BFF; /* Warna latar belakang tombol */
-  color: #FFFFFF; /* Warna teks putih */
-  padding: 10px 15px; /* Padding untuk tombol */
-  border: none; /* Menghilangkan border default */
-  border-radius: 5px; /* Sudut melengkung untuk tombol */
-  text-decoration: none; /* Menghilangkan garis bawah */
-  transition: background-color 0.3s; /* Efek transisi saat hover */
+  background-color: #007BFF;
+  color: #FFFFFF;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s;
 }
 
 .publish-button:hover, .my-journals-button:hover {
-  background-color: #0056b3; /* Warna saat hover */
+  background-color: #0056b3;
 }
 
 .journal-content {
-  background-color: #2D3748; /* Warna latar belakang konten jurnal */
-  border-radius: 20px; /* Sudut melengkung */
-  padding: 20px; /* Padding untuk konten */
-  color: #FFFFFF; /* Warna teks */
+  background-color: #2D3748;
+  border-radius: 20px;
+  padding: 20px;
+  color: #FFFFFF;
 }
 
 .journal-card {
-  margin-bottom: 15px; /* Jarak antar jurnal */
-  padding: 15px; /* Padding untuk setiap jurnal */
-  background-color: #1A202C; /* Warna latar belakang jurnal */
-  border-radius: 10px; /* Sudut melengkung */
+  margin-bottom: 15px;
+  padding: 15px;
+  background-color: #1A202C;
+  border-radius: 10px;
 }
 
 .profile-icon {
-  display: inline-block; /* Menampilkan ikon profil */
-  margin-right: 10px; /* Jarak kanan untuk teks */
-  width: 40px; /* Ukuran ikon */
-  height: 40px; /* Ukuran ikon */
-  border-radius: 50%; /* Membuat ikon bulat */
-  background-color: #000; /* Latar belakang hitam untuk kontras */
-  padding: 5px; /* Padding untuk memberikan ruang di sekitar ikon */
+  display: inline-block;
+  margin-right: 10px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #000;
+  padding: 5px;
 }
 
-.journal-card h2, /* Untuk username */
-.journal-card .date { /* Untuk tanggal */
-  color: #FFFFFF; /* Mengubah warna teks menjadi putih */
+.journal-card h2,
+.journal-card .date {
+  color: #FFFFFF;
 }
 
 .like-button {
-  background-color: #3279E6; /* Warna tombol biru */
-  color: #FFFFFF; /* Warna teks putih */
-  border: none; /* Menghilangkan border */
-  cursor: pointer; /* Pointer saat hover */
-  padding: 10px; /* Padding tombol */
-  border-radius: 5px; /* Sudut melengkung */
+  background-color: #3279E6;
+  color: #FFFFFF;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 5px;
 }
 
 .like-button:hover {
-  background-color: #32BA7C; /* Warna hijau saat hover */
+  background-color: #32BA7C;
 }
 
 @media (max-width: 768px) {
   .header {
-      flex-direction: column; /* Kolom untuk tampilan kecil */
-      align-items: flex-start; /* Rata kiri */
+      flex-direction: column;
+      align-items: flex-start;
   }
 
   .header-item {
-      margin: 5px 0; /* Margin vertikal */
+      margin: 5px 0;
   }
 
   .post-card {
-      padding: 10px; /* Padding lebih kecil untuk tampilan kecil */
+      padding: 10px;
   }
 }
 
 .post-card .header {
-  display: flex; /* Menggunakan flexbox untuk header post */
-  align-items: center; /* Rata tengah secara vertikal */
+  display: flex;
+  align-items: center;
 }
 
 .profile {
-  margin-right: 15px; /* Jarak antara ikon profil dan info pengguna */
+  margin-right: 15px;
 }
 
 .user-info {
-  color: #FFFFFF; /* Warna teks putih untuk username dan tanggal */
+  color: #FFFFFF;
+  
 }
 
 .username {
-  margin: 0; /* Menghilangkan margin default */
-  font-weight: bold; /* Menebalkan teks username */
+  margin: 0;
+  font-weight: bold;
 }
 
 .date {
-  margin: 0; /* Menghilangkan margin default */
-  font-size: 0.9em; /* Ukuran font lebih kecil untuk tanggal */
+  margin: 0;
+  font-size: 0.9em;
 }
 
 /* Journal container */
@@ -298,10 +303,10 @@ body {
   padding: 20px;
   max-width: 1200px;
   margin: 20px auto;
-  background-color: rgba(255, 255, 255, 0.8); /* Warna latar belakang kontainer */
-  border-radius: 8px; /* Sudut melengkung */
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Bayangan */
-  padding-top: 10px; /* Tambahkan padding atas jika perlu */
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding-top: 10px;
 }
 
 .navbar {
@@ -309,27 +314,40 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 1rem 2rem;
-    background-color: #1b1b32; /* Warna latar belakang navbar */
+    background-color: #1b1b32;
 }
 
 .nav-link {
     color: white;
     text-decoration: none;
     margin-right: 1rem;
-    padding: 10px 15px; /* Tambahkan padding untuk tombol */
-    background-color: #0056b3; /* Ubah warna latar belakang tombol */
-    border-radius: 5px; /* Sudut melengkung */
-    transition: background-color 0.3s; /* Transisi untuk efek hover */
+    padding: 10px 15px;
+    background-color: #0056b3;
+    border-radius: 5px;
+    transition: background-color 0.3s;
 }
 
 .nav-link:hover {
-    background-color: #004494; /* Ubah warna saat hover */
+    background-color: #004494;
 }
 
 .nav-logo {
     font-size: 24px;
     font-weight: bold;
     color: white;
+}
+
+#edit-modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1000; /* Sit on top */
+  left: 50%; /* Center horizontally */
+  top: 50%; /* Center vertically */
+  transform: translate(-50%, -50%); /* Adjust for the width and height */
+  background-color: white; /* Background color */
+  padding: 20px; /* Padding */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Shadow for depth */
+  border-radius: 5px; /* Rounded corners */
 }
 
 .edit-button, .delete-button {
@@ -341,17 +359,105 @@ body {
 }
 
 .edit-button {
-    background-color: #0056b3; /* Warna tombol edit */
+    background-color: #0056b3;
     color: white;
 }
 
 .delete-button {
-    background-color: #d9534f; /* Warna tombol delete */
+    background-color: #d9534f;
     color: white;
 }
 
 .edit-button:hover, .delete-button:hover {
-    opacity: 0.8; /* Efek hover */
+    opacity: 0.8;
+}
+
+
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #003366; /* Dark background */
+  color: white;
+}
+
+.nav-logo {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center; /* Center the logo */
+  flex: 1; /* Allow the logo to take available space */
+}
+
+.nav-links {
+  display: flex;
+  align-items: center; /* Align items vertically */
+}
+
+.nav-link {
+  margin: 0 10px;
+  color: white; /* White text */
+  text-decoration: none; /* Remove underline */
+  font-size: 16px; /* Adjust font size */
+}
+
+/* Hamburger Menu */
+.hamburger {
+  display: none; /* Hidden by default */
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* Mobile Menu */
+.mobile-menu {
+  display: none; /* Hidden by default */
+  flex-direction: column;
+  background-color: #003366; /* Same background as navbar */
+  position: absolute;
+  top: 50px; /* Adjust based on navbar height */
+  width: 100%;
+  z-index: 1000; /* Ensure it appears above other content */
+}
+
+.mobile-menu .nav-link {
+  padding: 10px;
+  border-bottom: 1px solid #ccc; /* Optional: add a separator */
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .nav-links {
+      display: none; /* Hide links on mobile */
+  }
+
+  .hamburger {
+      display: block; /* Show hamburger icon */
+  }
+
+  .mobile-menu {
+      display: flex; /* Show mobile menu when toggled */
+  }
+}
+
+@media (min-width: 769px) {
+  .mobile-menu {
+      display: none; /* Hide mobile menu on larger screens */
+  }
+}
+
+/* Modal Styles */
+.modal-content {
+  padding: 20px;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.close-button {
+  cursor: pointer;
+  float: right;
+  font-size: 20px;
 }
 
 
