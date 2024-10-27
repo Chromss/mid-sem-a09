@@ -12,6 +12,7 @@ from .jurnalform import JournalForm
 from django.http import JsonResponse
 import json
 from django.core import serializers
+from django.views.decorators.csrf import csrf_exempt
 
 @login_required
 def landing_page(request):
@@ -62,27 +63,39 @@ def journal_home(request):
     })
    
 @login_required(login_url='/login')
+@csrf_exempt
 def create_journal(request):
-    # Ambil souvenir_id dari query parameter jika ada
-    souvenir_id = request.GET.get('souvenir_id')
-
     if request.method == 'POST':
         form = JournalForm(request.POST, request.FILES)
         if form.is_valid():
-            journal = form.save(commit=False)
-            journal.author = request.user
+            journal = form.save(commit=False)  # Simpan tanpa langsung ke database
+            journal.author = request.user  # Set author ke pengguna yang sedang login
+            journal.save()  # Simpan ke database
+            return JsonResponse({'success': True, 'journal_id': journal.id})
+        else:
+            return JsonResponse({'success': False, 'errors': form.errors}, status=400)
+    return JsonResponse({'success': False}, status=400)
+# def create_journal(request):
+#     # Ambil souvenir_id dari query parameter jika ada
+#     souvenir_id = request.GET.get('souvenir_id')
+
+#     if request.method == 'POST':
+#         form = JournalForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             journal = form.save(commit=False)
+#             journal.author = request.user
             
-            # Jika souvenir_id ada, kaitkan dengan jurnal
-            if souvenir_id:
-                souvenir = get_object_or_404(Souvenir, id=souvenir_id)
-                journal.souvenir = souvenir  # Asumsikan ada field 'souvenir' di model Journal
+#             # Jika souvenir_id ada, kaitkan dengan jurnal
+#             if souvenir_id:
+#                 souvenir = get_object_or_404(Souvenir, id=souvenir_id)
+#                 journal.souvenir = souvenir  # Asumsikan ada field 'souvenir' di model Journal
             
-            journal.save()
-            return redirect('main:journal_home')
-    else:
-        form = JournalForm()
+#             journal.save()
+#             return redirect('main:journal_home')
+#     else:
+#         form = JournalForm()
     
-    return render(request, 'main/create_journal.html', {'form': form, 'souvenir_id': souvenir_id})
+#     return render(request, 'main/create_journal.html', {'form': form, 'souvenir_id': souvenir_id})
 
 @login_required(login_url='/login')
 def like_journal(request, journal_id):

@@ -130,7 +130,7 @@
                 <div class="header">
                     <h2>For You</h2>
                     <div class="header-links">
-                        <a href="{% url 'main:create_journal' %}" class="publish-button">Publish</a>
+                        <button class="publish-button" id="open-modal">Publish</button>
                         <a href="{% url 'main:journal_history' %}" class="my-journals-button">My Journals</a>
                     </div>
                 </div>
@@ -223,7 +223,27 @@
         </div>
     </div>
 
-   <!-- Modal for Edit Journal -->
+    <!-- Modal for Create Journal -->
+    <div id="create-journal-modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-button" id="close-modal">&times;</span>
+            <h2>Create Journal</h2>
+            <form id="create-journal-form">
+                <label for="modal-title">Title:</label>
+                <input type="text" id="modal-title" name="title" required>
+                
+                <label for="modal-content">Content:</label>
+                <textarea id="modal-content" name="content" required></textarea>
+                
+                <label for="modal-image">Image:</label>
+                <input type="file" id="modal-image" name="image">
+                
+                <button type="submit">Create Journal</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal for Edit Journal -->
     <div id="edit-modal" style="display: none;">
         <div class="modal-content">
             <span class="close-button">&times;</span>
@@ -269,7 +289,34 @@
 
         // Close modal when the close button is clicked
         $('.close-button').on('click', function() {
-            $('#edit-modal').hide(); // Hide the modal
+            $('#edit-modal').hide(); // Hide the edit modal
+            $('#create-journal-modal').hide(); // Hide the create modal
+        });
+
+        // Open create journal modal
+        $('#open-modal').on('click', function() {
+            $('#create-journal-modal').show(); // Show the create modal
+        });
+
+        // Create journal via AJAX
+        $('#create-journal-form').on('submit', function(e) {
+            e.preventDefault(); // Prevent default form submission
+            var formData = new FormData(this);
+            $.ajax({
+                type: 'POST',
+                url: '{% url "main:create_journal" %}', // URL untuk create journal
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    // Handle success (e.g., redirect or show a success message)
+                    window.location.reload(); // Reload page to see new journal
+                },
+                error: function(xhr) {
+                    // Handle error
+                    alert('Error creating journal.');
+                }
+            });
         });
 
         // Edit journal
@@ -300,38 +347,7 @@
                 }
             });
         });
-        
-        // Tambahkan ini di dalam script di journal_home.html
-        $(document).ready(function() {
-            // Event listener untuk tombol edit di journal_history.html
-            $('.edit-button').on('click', function(e) {
-                e.preventDefault(); // Mencegah default action
-                var journalId = $(this).data('id'); // Ambil ID jurnal dari data-id
-                $.ajax({
-                    type: 'GET',
-                    url: '/edit/' + journalId + '/', // Ganti dengan URL yang sesuai
-                    success: function(data) {
-                        $('#edit-form-title').val(data.title);
-                        $('#edit-form-content').val(data.content);
-                        $('#edit-form-id').val(journalId);
-                        
-                        // Tampilkan gambar saat ini jika ada
-                        if (data.image_url) {
-                            $('#current-image').attr('src', data.image_url).show();
-                            $('#current-image-message').text('Current image:').show();
-                        } else {
-                            $('#current-image').hide();
-                            $('#current-image-message').text('No image currently uploaded.').show();
-                        }
-                        
-                        $('#edit-modal').show(); // Tampilkan modal edit
-                    },
-                    error: function(xhr) {
-                        console.error('Error fetching journal data:', xhr);
-                    }
-                });
-            });
-        });
+
         // Save changes
         $('#edit-form').on('submit', function(e) {
             e.preventDefault();
@@ -385,6 +401,8 @@
                 });
             }
         });
+
+        // Like journal
         $(document).ready(function() {
             $('.like-button').on('click', function() {
                 var form = $(this).closest('.like-form');

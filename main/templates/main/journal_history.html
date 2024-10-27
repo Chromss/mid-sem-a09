@@ -27,6 +27,7 @@
 
     <div class="container responsive-container">  <!-- Menambahkan kelas 'responsive-container' -->
         <h1>Your Journals</h1>
+        <p>Logged in as: {{ user.username }}</p>  <!-- Menampilkan username yang sedang login -->
         <div class="post-cards-container"> <!-- Kontainer untuk card -->
             {% for journal in journals %}
                 <div class="post-card responsive-card">  <!-- Menambahkan kelas 'responsive-card' -->
