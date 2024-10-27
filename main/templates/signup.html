@@ -1,0 +1,131 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/geist.css' %}">
+    <title>Signup | MlakuMlaku</title>
+
+    <style>
+        :root {
+            --primary-dark: #282A3A;
+            --primary-light: #F3F4F8;
+            --black-accent: #252525;
+            --white-accent: #F7F7F7;
+            --dark-gray-accent: #6B6B6B;
+            --gray-accent: #C6C6C6;
+            --line: #A1A1A1;
+            --blue-accent: #3279E6;
+            --green-accent: #32BA7C;
+            --red-accent: #FC3644;
+            --peach-accent: #FFD8BE;
+            --yellow-accent: #FDCC0D;
+            --hovered-blue: #1F5DBD;
+            --hovered-green: #309667;
+        }
+
+        body, html {
+            font-family: 'Geist';
+            letter-spacing: -0.5px;
+            scrollbar-width: none;
+            overflow-x: hidden;
+        }
+
+        .mainframe {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            top: 0;
+            left: 0;
+            width: 576px;
+            height: 100vh;
+            background-color: var(--primary-light);
+        }
+
+        .hbox {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .background {
+            position: absolute;
+            object-fit: cover;  
+            top: 0;
+            right: 0;
+            width: 960px;
+            height: 100vh;
+        }
+
+        .button {
+            cursor: pointer;
+            background-color: var(--primary-dark);
+            width: 427px;
+            height: 64px;
+            border-radius: 99px;
+            border-width: 0;
+        }
+
+        #to_signupnext:hover {
+            border: 0.8px solid var(--blue-accent) !important;
+            box-shadow: 0 0 10px rgba(50, 121, 230, 0.1) !important;
+        }
+
+        .line {
+            border-radius: 9px;
+            background-color: var(--line);
+            width: 192px;
+            height: 1px;
+        }
+    </style>
+</head>
+<body>
+    <div class="mainframe">
+        <span style="font-weight: 600; line-height: 120%; font-size: 30px; color: var(--black-accent);">Sign Up to MlakuMlaku</span>
+        <button class="button" style="margin-top: 28px;">
+            <div class="hbox">
+                <img style="width: 21px; height: 21px; object-fit: cover; margin-right: 32px;" src="{% static 'image/googleicon.png' %}">
+                <span style="letter-spacing: -0.5px; font-family: 'Geist'; font-weight: 500; line-height: 120%; font-size: 17px; color: var(--white-accent);">Sign up with Google</span>
+            </div>
+        </button>
+        <div class="hbox">
+            <div class="line"></div>
+            <span style="font-family: 'Geist'; font-weight: 400; line-height: 120%; font-size: 15px; color: var(--dark-gray-accent); margin: 21px 13px">or</span>
+            <div class="line"></div>
+        </div>
+        <button class="button" id="to_signupnext" style="background-color: var(--white-accent); border: 0.8px solid var(--line);">
+            <span style="letter-spacing: -0.5px; font-family: 'Geist'; font-weight: 600; line-height: 120%; font-size: 17px; color: var(--black-accent);">Continue via our website</span>
+        </button>
+        <span style="font-weight: 400; line-height: 120%; font-size: 15px; color: var(--black-accent); margin-top: 14px;">Already have an account? <span id="to_login" style="font-weight: 600; text-decoration: underline; cursor: pointer;">Log in</span>.</span>
+        <span style="font-weight: 400; line-height: 120%; font-size: 15px; color: var(--black-accent); margin-top: 54px; width: 425px; text-align: center;">By creating an account you agree with our <span id="to_about2" style="font-weight: 600; text-decoration: underline; cursor: pointer;">Terms of Service</span> and <span id="to_about3" style="font-weight: 600; text-decoration: underline; cursor: pointer;">Privacy Policy</span>.</span>
+    </div>
+    <img class="background" src="{% static 'image/signupbg.png' %}">
+
+    <script>
+        const toLogIn = document.getElementById("to_login");
+        const toSignUpNext = document.getElementById("to_signupnext");
+        const toAbout2 = document.getElementById("to_about2");
+        const toAbout3 = document.getElementById("to_about3");
+
+        toLogIn.addEventListener("click", function() {
+            window.location.href = "{% url 'main:login' %}"
+        });
+        
+        toSignUpNext.addEventListener("click", function() {
+            window.location.href = "{% url 'main:signup_next' %}"
+        });
+
+        toAbout2.addEventListener("click", function() {
+            window.location.href = "{% url 'main:about' %}?section=terms-of-service";
+        });
+
+        toAbout3.addEventListener("click", function() {
+            window.location.href = "{% url 'main:about' %}?section=privacy-policy";
+        });
+    </script>
+</body>
+</html>

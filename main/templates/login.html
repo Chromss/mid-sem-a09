@@ -1,0 +1,179 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/geist.css' %}">
+    <title>Login | MlakuMlaku</title>
+
+    <style>
+        :root {
+            --primary-dark: #282A3A;
+            --primary-light: #F3F4F8;
+            --black-accent: #252525;
+            --white-accent: #F7F7F7;
+            --dark-gray-accent: #6B6B6B;
+            --gray-accent: #C6C6C6;
+            --line: #A1A1A1;
+            --blue-accent: #3279E6;
+            --green-accent: #32BA7C;
+            --red-accent: #FC3644;
+            --peach-accent: #FFD8BE;
+            --yellow-accent: #FDCC0D;
+            --hovered-blue: #1F5DBD;
+            --hovered-green: #309667;
+        }
+
+        body, html {
+            font-family: 'Geist';
+            letter-spacing: -0.5px;
+            scrollbar-width: none;
+            overflow-x: hidden;
+        }
+
+        .mainframe {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            top: 0;
+            left: 0;
+            width: 576px;
+            height: 100vh;
+            background-color: var(--primary-light);
+        }
+
+        .hbox {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .vbox {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .background {
+            position: absolute;
+            object-fit: cover;  
+            top: 0;
+            right: 0;
+            width: 960px;
+            height: 100vh;
+        }
+
+        .button {
+            cursor: pointer;
+            background-color: var(--primary-dark);
+            width: 427px;
+            height: 64px;
+            border-radius: 99px;
+            border-width: 0;
+        }
+
+        #login_google:hover {
+            border: 0.8px solid var(--blue-accent) !important;
+            box-shadow: 0 0 10px rgba(50, 121, 230, 0.1) !important;
+        }
+
+        .line {
+            border-radius: 9px;
+            background-color: var(--line);
+            width: 123px;
+            height: 1px;
+        }
+
+        .input-txt {
+            font-family: 'Geist';
+            font-weight: 400;
+            letter-spacing: -0.5px;
+            line-height: 100%;
+            font-size: 16px;
+            padding-left: 22px;
+            color: var(--black-accent);
+            background-color: var(--white-accent);
+            width: 245px;
+            height: 56px;
+            border: 0.8px solid var(--line);
+            border-radius: 16px;
+            outline: none;
+        }
+
+        .input-txt:focus {
+            border: 0.8px solid var(--blue-accent);
+            box-shadow: 0 0 10px rgba(50, 121, 230, 0.1);
+        }
+
+        .input-txt::placeholder {
+            font-family: 'Geist';
+            letter-spacing: -0.5px;
+            font-weight: 300;
+            line-height: 100%;
+            font-size: 16px;
+            color: var(--gray-accent);
+        }
+
+        .text-missing {
+            display: block;
+            letter-spacing: -0.25px;
+            align-self: flex-start;
+            line-height: 120%;
+            font-size: 14px;
+            color: var(--black-accent);
+            margin: 2px 30px 0 30px;
+        }
+
+        .overlay {
+            position: fixed;
+            display: none;
+            background-color: #000000;
+            opacity: 0.7;
+            width: 100vw;
+            height: 100vh;
+            left: 0px;
+            top: 0px;
+        }
+    </style>
+</head>
+<body>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="mainframe">
+            <span style="font-weight: 600; line-height: 120%; font-size: 30px; color: var(--black-accent); margin-bottom: 29px;">Log In to MlakuMlaku</span>
+            <button type="button" class="button" id="login_google" style="background-color: var(--white-accent); border: 0.8px solid var(--line);">
+                <div class="hbox">
+                    <img style="width: 21px; height: 21px; object-fit: cover; margin-right: 32px;" src="{% static 'image/googleicon.png' %}">
+                    <span style="letter-spacing: -0.5px; font-family: 'Geist'; font-weight: 600; line-height: 120%; font-size: 17px; color: var(--black-accent);">Log in with Google</span>
+                </div>
+            </button>
+            <div class="hbox">
+                <div class="line"></div>
+                <span style="font-family: 'Geist'; font-weight: 400; line-height: 120%; font-size: 15px; color: var(--dark-gray-accent); margin: 21px 13px">or log in via our website</span>
+                <div class="line"></div>
+            </div>
+            <div class="vbox">
+                <span style="font-weight: 600; line-height: 120%; font-size: 16px; color: var(--black-accent); margin-left: 3px;">Username</span>
+                <input name="username" type="text" class="input-txt" style="width: 410px; margin-top: 5px;">
+                <span style="font-weight: 600; line-height: 120%; font-size: 16px; color: var(--black-accent); margin: 15px 0 0 3px;">Password</span>
+                <input name="password" type="password" class="input-txt" style="width: 410px; margin-top: 5px;">
+            </div>
+            <button type="submit" class="button" style="margin-top: 29px;">
+                <span style="letter-spacing: -0.5px; font-family: 'Geist'; font-weight: 500; line-height: 120%; font-size: 17px; color: var(--white-accent);">Log in</span>
+            </button>
+            <span style="font-weight: 400; line-height: 120%; font-size: 15px; color: var(--black-accent); margin-top: 14px;">Do not have an account? <span id="to_signup" style="font-weight: 600; text-decoration: underline; cursor: pointer;">Sign up</span>.</span>
+        </div>
+        <img class="background" src="{% static 'image/loginbg.png' %}">
+    </form>
+
+    <script>
+        const toSignUp = document.getElementById("to_signup");
+        toSignUp.addEventListener("click", function() {
+            window.location.href = "{% url 'main:signup' %}"
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,220 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/geist.css' %}">
+    <title>About | MlakuMlaku</title>
+
+    <style>
+        :root {
+            --primary-dark: #282A3A;
+            --primary-light: #F3F4F8;
+            --black-accent: #252525;
+            --white-accent: #F7F7F7;
+            --dark-gray-accent: #6B6B6B;
+            --gray-accent: #C6C6C6;
+            --line: #A1A1A1;
+            --blue-accent: #3279E6;
+            --green-accent: #32BA7C;
+            --red-accent: #FC3644;
+            --peach-accent: #FFD8BE;
+            --yellow-accent: #FDCC0D;
+            --hovered-blue: #1F5DBD;
+            --hovered-green: #309667;
+        }
+
+        body, html {
+            background-color: var(--primary-light);
+            font-family: 'Geist';
+            letter-spacing: -0.5px;
+            scrollbar-width: none;
+            overflow-x: hidden;
+        }
+
+        .vbox {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .hbox {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .content {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            left: 131px;
+            top: 139px;
+            width: 908px;
+        }
+
+        .table {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            left: 1085px;
+            top: 139px;
+            width: 908px;
+        }
+
+        .button {
+            cursor: pointer;
+            background-color: var(--blue-accent);
+            border-radius: 99px;
+            border-width: 0;
+        }
+
+        .button:hover {
+            background-color: var(--hovered-blue);
+        }
+
+        .text-prop:hover {
+            cursor: pointer !important;
+            color: var(--red-accent) !important;
+        }
+
+        .line {
+            border-radius: 9px;
+            background-color: var(--gray-accent);
+            width: 853px;
+            height: 1px;
+        }
+    </style>
+</head>
+<body>
+    <div class="hbox" style="margin-top: 32px;">
+        <button class="button" id="to_signup" style="width: 128px; height: 38px; margin-right: 49px;">
+            <span style="letter-spacing: -0.5px; font-weight: 600; line-height: 120%; font-size: 17px; color: var(--white-accent)">Sign up</span>
+        </button>
+        <span class="text-prop" id="to_login" style="font-weight: 500; line-height: 120%; font-size: 17px; color: var(--black-accent); margin-right: 400px;">Log in</span>
+        <span class="text-prop" style="font-weight: 700; line-height: 120%; font-size: 17px; color: var(--black-accent); margin-right: 253px;">MlakuMlaku</span>
+        <span class="text-prop" style="font-weight: 500; line-height: 120%; font-size: 17px; color: var(--black-accent); margin-right: 83px;">Itinerary</span>
+        <span class="text-prop" style="font-weight: 500; line-height: 120%; font-size: 17px; color: var(--black-accent); margin-right: 83px;">Journal</span>
+        <span class="text-prop" style="font-weight: 500; line-height: 120%; font-size: 17px; color: var(--black-accent)">Collection</span>
+    </div>
+    <div class="content">
+        <span id="subh1" style="font-weight: 500; line-height: 120%; font-size: 30px; color: var(--black-accent); margin-left: 10px;">About Us</span>
+        <div class="line" style="margin-top: 14px;"></div>
+        <p style="font-weight: 400; line-height: 160%; font-size: 17px; color: var(--black-accent); margin-left: 10px;">
+            Jogja is a special city with countless stories to tell. It’s a place that always finds a way to leave visitors longing to return. However, falling in love with Jogja feels incomplete without exploring every corner of its vibrant streets. Wondering where to go next in Jogja? MlakuMlaku is your solution! In Javanese, MlakuMlaku means "taking a walk," and true to its name, the app is designed to accompany your adventures around the city. More than just a travel guide, MlakuMlaku also showcases souvenirs available at the various tourist spots you visit.
+            <br><br>
+            Using MlakuMlaku comes with many benefits. One key feature is the ability to browse and purchase local souvenirs from specific destinations. This makes finding and shopping for authentic items easy while you explore. Another highlight is the review and rating system, where users can not only leave feedback but also read reviews from other travelers. This feature builds confidence when deciding which spots to visit, offering insights from real experiences.
+            <br><br>
+            The app also offers customizable itinerary templates, such as "Two Days in Jogja," which can be adjusted based on your preferences. You can add or remove destinations to create the perfect itinerary that suits your trip goals. Additionally, the app’s bookmark feature allows you to save favorite places to a personal list or even create themed playlists based on your interests. These playlists can be made public to share with friends or kept private for your own collection.
+            <br><br>
+            Lastly, #JurnalJogjaku is a platform within the app, inspired by Medium, where users can share their personal experiences in Jogja. Whether it's a memorable moment, travel tips, or a unique story, users are encouraged to write and share their adventures. It’s a space for travelers to connect, inspire, and relive the best moments of their journeys in Jogja.
+        </p>
+        <span id="subh2" style="font-weight: 500; line-height: 120%; font-size: 30px; color: var(--black-accent); margin: 43px 0 0 10px;">Terms of Service</span>
+        <div class="line" style="margin-top: 14px;"></div>
+        <p style="font-weight: 400; line-height: 160%; font-size: 17px; color: var(--black-accent); margin-left: 10px;">
+            By using the MlakuMlaku platform, you agree to the terms and conditions outlined here. The platform provides users access to travel-related services such as destination guides, souvenir listings, reviews, and itinerary templates. MlakuMlaku reserves the right to modify these services at any time without prior notice. Continued use of the platform after changes are made will constitute acceptance of the updated terms.
+            <br><br>
+            All content shared on MlakuMlaku, including reviews, itineraries, and stories through #JurnalJogjaku, must comply with local regulations and must not contain offensive or inappropriate material. Users are solely responsible for the accuracy and originality of the content they post. MlakuMlaku retains the right to remove or modify any user-generated content that violates these terms or is flagged by other users.
+            <br><br>
+            Purchases made through the MlakuMlaku platform, such as souvenirs or other products, are subject to the terms and conditions of the respective vendors. MlakuMlaku acts solely as a facilitator and is not responsible for any disputes between users and vendors regarding products or services. Users must contact vendors directly for inquiries or issues related to purchases.
+        </p>
+        <span id="subh3" style="font-weight: 500; line-height: 120%; font-size: 30px; color: var(--black-accent); margin: 43px 0 0 10px;">Privacy Policy</span>
+        <div class="line" style="margin-top: 14px;"></div>
+        <p style="font-weight: 400; line-height: 160%; font-size: 17px; color: var(--black-accent); margin-left: 10px;">
+            At MlakuMlaku, we prioritize your privacy and are committed to protecting your personal information. We collect data such as names, email addresses, and preferences to enhance your experience on the platform. This data is used to personalize your interactions, provide recommendations, and improve our services. We do not share your personal information with third parties without your explicit consent.
+            <br><br>
+            When you use features such as reviews, #JurnalJogjaku, or itinerary templates, any public content shared may be visible to other users. However, sensitive information such as payment details during souvenir purchases is securely handled through trusted third-party providers. We take every precaution to ensure your data is transmitted and stored safely, following industry-standard security practices.
+            <br><br>
+            You have full control over your personal information on MlakuMlaku, with the ability to edit or delete your account at any time. Should you have any concerns about data usage or security, you can contact us directly. Any updates to this privacy policy will be communicated to users, and continued use of the platform will indicate acceptance of the revised terms.
+        </p>
+        <span id="subh4" style="font-weight: 500; line-height: 120%; font-size: 30px; color: var(--black-accent); margin: 43px 0 0 10px;">Board of Developers</span>
+        <div class="line" style="margin-top: 14px;"></div>
+        <p style="font-weight: 400; line-height: 160%; font-size: 17px; color: var(--black-accent); margin-left: 10px;">
+            Project Officer: <span style="font-weight: 600;">Alica Kinar Deska</span>
+            <br><br>
+            Web Designer: <span style="font-weight: 600;">Nabil Zahid Rahman</span>
+            <br><br>
+            Creative Director: <span style="font-weight: 600;">Nur Khoirunnisa Salsabila, Malika Atha Indurasmi, Patricia Gloria Sujatmoko Silaban</span>
+        </p>
+        <span id="subh5" style="font-weight: 500; line-height: 120%; font-size: 30px; color: var(--black-accent); margin: 43px 0 0 10px;">Disclaimer (Important)</span>
+        <div class="line" style="margin-top: 14px;"></div>
+        <p style="font-weight: 400; line-height: 160%; font-size: 17px; color: var(--black-accent); margin-left: 10px; margin-bottom: 175px;">
+            The content provided on MlakuMlaku is intended solely for educational and practice purposes as part of a platform-based programming project. All features, including images, layouts, and functionalities, are part of a mock web development exercise and are not intended for actual commercial use or public production. Any references to destinations, souvenirs, or user-generated content are fictional and serve as examples for this learning environment.
+            <br><br>
+            MlakuMlaku does not claim ownership or rights to any images, references, or materials used, which may be sourced from public domains or educational resources. These elements are utilized strictly for demonstration purposes within the project scope. Users should not rely on any content for actual travel or purchase decisions, as this web platform is not operational or linked to real services.
+        </p>
+    </div>
+    <div style="display: flex; flex-direction: row; align-items: center; justify-content: center; position: absolute; left: 0; bottom: -1832px; height: 85px; width: 100vw; background-color: var(--primary-dark);">
+        <div class="hbox">
+            <span style="font-weight: 400; line-height: 120%; font-size: 17px; color: var(--white-accent); margin-right: 400px;">UI Design by Chroms</span>
+            <span style="font-weight: 400; line-height: 120%; font-size: 17px; color: var(--white-accent); margin-right: 503px;">© 2024 MlakuMlaku. All rights reserved.</span>
+            <span class="text-prop" id="to_about" style="font-weight: 400; line-height: 120%; font-size: 17px; color: var(--white-accent)">About</span>
+        </div>
+    </div>
+    <div class="table">
+        <span style="font-weight: 500; line-height: 120%; font-size: 23px; color: var(--black-accent); margin-left: 10px;">Table of Contents</span>
+        <div class="line" style="width: 320px; height: 2px; margin-top: 10px;"></div>
+        <span class="text-prop" id="toc1" style="font-weight: 400; line-height: 120%; font-size: 17px; color: var(--black-accent); margin: 10px 0 0 10px;">About Us</span>
+        <span class="text-prop" id="toc2" style="font-weight: 400; line-height: 120%; font-size: 17px; color: var(--black-accent); margin: 10px 0 0 10px;">Terms of Service</span>
+        <span class="text-prop" id="toc3" style="font-weight: 400; line-height: 120%; font-size: 17px; color: var(--black-accent); margin: 10px 0 0 10px;">Privacy Policy</span>
+        <span class="text-prop" id="toc4" style="font-weight: 400; line-height: 120%; font-size: 17px; color: var(--black-accent); margin: 10px 0 0 10px;">Board of Developers</span>
+        <span class="text-prop" id="toc5" style="font-weight: 400; line-height: 120%; font-size: 17px; color: var(--black-accent); margin: 10px 0 0 10px;">Disclaimer (Important)</span>
+    </div>
+
+    <script>
+        const toSignUp = document.getElementById("to_signup");
+        const toLogIn = document.getElementById("to_login");
+        const toAbout = document.getElementById("to_about");
+        const toc1 = document.getElementById("toc1");
+        const toc2 = document.getElementById("toc2");
+        const toc3 = document.getElementById("toc3");
+        const toc4 = document.getElementById("toc4");
+        const toc5 = document.getElementById("toc5");
+        const subh1 = document.getElementById("subh1");
+        const subh2 = document.getElementById("subh2");
+        const subh3 = document.getElementById("subh3");
+        const subh4 = document.getElementById("subh4");
+        const subh5 = document.getElementById("subh5");
+
+        toSignUp.addEventListener("click", function() {
+            window.location.href = "{% url 'main:signup' %}"
+        });
+
+        toLogIn.addEventListener("click", function() {
+            window.location.href = "{% url 'main:login' %}"
+        });
+
+        toAbout.addEventListener("click", function() {
+            window.location.href = "{% url 'main:about' %}"
+        });
+
+        toc1.addEventListener("click", function() {
+            subh1.scrollIntoView({ behavior: "smooth" });
+        });
+
+        toc2.addEventListener("click", function() {
+            subh2.scrollIntoView({ behavior: "smooth" });
+        });
+
+        toc3.addEventListener("click", function() {
+            subh3.scrollIntoView({ behavior: "smooth" });
+        });
+
+        toc4.addEventListener("click", function() {
+            subh4.scrollIntoView({ behavior: "smooth" });
+        });
+
+        toc5.addEventListener("click", function() {
+            subh5.scrollIntoView({ behavior: "smooth" });
+        });
+
+        window.addEventListener("load", function() {
+            const section = new URLSearchParams(window.location.search).get("section");
+            if (section === "terms-of-service") {subh2.scrollIntoView({ behavior: "smooth" });}
+            else if (section === "privacy-policy") {subh3.scrollIntoView({ behavior: "smooth" });};
+            if (window.location.pathname === '/about/' && window.location.search) {window.history.replaceState({}, document.title, '/about/');}
+        })
+    </script>
+</body>
+</html>

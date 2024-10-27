@@ -1,0 +1,405 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/geist.css' %}">
+    <title>Finish | MlakuMlaku</title>
+
+    <style>
+        :root {
+            --primary-dark: #282A3A;
+            --primary-light: #F3F4F8;
+            --black-accent: #252525;
+            --white-accent: #F7F7F7;
+            --dark-gray-accent: #6B6B6B;
+            --gray-accent: #C6C6C6;
+            --line: #A1A1A1;
+            --blue-accent: #3279E6;
+            --green-accent: #32BA7C;
+            --red-accent: #FC3644;
+            --peach-accent: #FFD8BE;
+            --yellow-accent: #FDCC0D;
+            --hovered-blue: #1F5DBD;
+            --hovered-green: #309667;
+        }
+
+        body, html {
+            font-family: 'Geist';
+            letter-spacing: -0.5px;
+            scrollbar-width: none;
+            overflow-x: hidden;
+        }
+
+        .mainframe {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            top: 0;
+            left: 0;
+            width: 576px;
+            height: 100vh;
+            background-color: var(--primary-light);
+        }
+
+        .hbox {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .hbox-center {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .vbox {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .background {
+            position: absolute;
+            object-fit: cover;  
+            top: 0;
+            right: 0;
+            width: 960px;
+            height: 100vh;
+        }
+
+        .button {
+            cursor: pointer;
+            background-color: var(--primary-dark);
+            width: 427px;
+            height: 64px;
+            border-radius: 99px;
+            border-width: 0;
+        }
+
+        .button-upload {
+            cursor: pointer;
+            background-color: var(--blue-accent);
+            width: 128px;
+            height: 30px;
+            border-radius: 99px;
+            border-width: 0;
+        }
+
+        .button-upload:hover {
+            background-color: var(--hovered-blue);
+        }
+
+        .button-back {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            background-color: var(--white-accent);
+            left: 72px;
+            width: 32px;
+            height: 32px;
+            border-radius: 99px;
+            margin-right: 60px;
+            border: 0.8px solid var(--line);
+        }
+
+        .input-txt {
+            font-family: 'Geist';
+            font-weight: 400;
+            letter-spacing: -0.5px;
+            line-height: 100%;
+            font-size: 16px;
+            padding-left: 22px;
+            padding-right: 22px;
+            color: var(--black-accent);
+            background-color: var(--white-accent);
+            width: 223px;
+            height: 56px;
+            border: 0.8px solid var(--line);
+            border-radius: 16px;
+            outline: none;
+        }
+
+        .input-txt:focus {
+            border: 0.8px solid var(--blue-accent);
+            box-shadow: 0 0 10px rgba(50, 121, 230, 0.1);
+        }
+
+        .input-txt::placeholder {
+            font-family: 'Geist';
+            letter-spacing: -0.5px;
+            font-weight: 300;
+            line-height: 100%;
+            font-size: 16px;
+            color: var(--gray-accent);
+        }
+
+        .input-img {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--white-accent);
+            object-fit: cover;
+            width: 100px;
+            height: 100px;
+            border: 0.8px solid var(--line);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .input-checkbox {
+            cursor: pointer;
+            width: 17px;
+            height: 17px;
+        }
+
+        .text-missing {
+            display: block;
+            letter-spacing: -0.25px;
+            align-self: flex-start;
+            line-height: 120%;
+            font-size: 14px;
+            color: var(--black-accent);
+            margin: 2px 30px 0 30px;
+        }
+
+        .overlay {
+            position: fixed;
+            display: none;
+            background-color: #000000;
+            opacity: 0;
+            width: 100vw;
+            height: 100vh;
+            left: 0px;
+            top: 0px;
+            transition: opacity 0.3s ease;
+        }
+
+        .info {
+            background-color: var(--white-accent);
+            opacity: 0;
+            border-radius: 16px;
+            box-shadow: 0 0 12px rgba(247, 247, 247, 0.3);
+            width: 320px;
+            left: 50vw;
+            top: 10px;
+            position: absolute;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            transform: translateX(-50%);
+            transition: top 0.3s ease, opacity 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mainframe">
+            <div class="hbox" style="align-items: center;  margin-bottom: 30px;">
+                <button type="button" class="button-back" id="to_signup">
+                    <img style="scale: 0.5; margin-right: 3px;" src="{% static 'image/backicon.png' %}">
+                </button>
+                <span style="font-weight: 600; line-height: 120%; font-size: 30px; color: var(--black-accent)">Finish Your Setup</span>
+            </div>
+            <div class="hbox">
+                <div class="vbox" style="margin-right: 37px;">
+                    <span style="font-weight: 600; line-height: 120%; font-size: 16px; color: var(--black-accent); margin-left: 3px;">Name</span>
+                    <input id="fullname" name="name" type="text" class="input-txt" style="margin-top: 5px;" placeholder="Maximum 25 characters">
+                    <span style="font-weight: 600; line-height: 120%; font-size: 16px; color: var(--black-accent); margin: 15px 0 0 3px;">Username</span>
+                    <input id="username" name="username" type="text" class="input-txt" style="margin-top: 5px;" placeholder="Maximum 20 characters">
+                </div>
+                <div class="vbox">
+                    <span style="font-weight: 600; line-height: 120%; font-size: 16px; color: var(--black-accent); margin-left: 3px;">Profile Picture</span>
+                    <div class="input-img" id="input_img" style="margin-top: 5px">
+                        <img id="preview" style="width: 100px; height: 100px; object-fit: cover; display: none;">
+                        <img id="blank" style="width: 26px; height: 26px; object-fit: cover;" src="{% static 'image/blankicon.png' %}">
+                        <span id="optional" style="font-family: 'Geist'; font-weight: 400; line-height: 120%; font-size: 15px; color: var(--gray-accent); margin-top: 4px">Optional</span>
+                    </div>
+                    <button type="button" class="button-upload" id="upload_img" style="margin-top: 7px">
+                        <span style="font-family: 'Geist'; font-weight: 500; line-height: 120%; font-size: 14px; color: var(--white-accent)">Upload Image</span>
+                    </button>
+                    <span id="imgname" style="font-family: 'Geist'; font-weight: 400; line-height: 120%; font-size: 14px; color: var(--gray-accent); margin-top: 5px;">No image chosen</span>
+                </div>
+            </div>
+            <div class="vbox" style="margin-top: 15px;">
+                <span style="font-weight: 600; line-height: 120%; font-size: 16px; color: var(--black-accent); margin-left: 3px;">Password</span>
+                <input id="password" name="password" type="password" class="input-txt" style="width: 388px; margin-top: 5px;" placeholder="Contains uppercase, lowercase, digit, and special char">
+                <span style="font-weight: 600; line-height: 120%; font-size: 16px; color: var(--black-accent); margin: 15px 0 0 3px;">Repeat Password</span>
+                <input id="repeat_password" name="repeat_password" type="password" class="input-txt" style="width: 388px; margin-top: 5px;" placeholder="Must match the password field">
+            </div>
+            <div class="hbox-center" style="margin-top: 24px;">
+                <input id="agreement" type="checkbox" class="input-checkbox">
+                <span style="font-weight: 400; line-height: 120%; font-size: 15px; color: var(--black-accent); margin-left: 8px;">I agree with MlakuMlaku's <span id="to_about2" style="font-weight: 600; text-decoration: underline; cursor: pointer;">Terms of Service</span> and <span id="to_about3" style="font-weight: 600; text-decoration: underline; cursor: pointer;">Privacy Policy</span>.</span>
+            </div>
+            <button type="button" id="submit" class="button" style="margin-top: 40px;">
+                <span style="letter-spacing: -0.5px; font-family: 'Geist'; font-weight: 500; line-height: 120%; font-size: 17px; color: var(--white-accent);">Finish and sign in</span>
+            </button>
+            <span style="font-weight: 400; line-height: 120%; font-size: 15px; color: var(--black-accent); margin-top: 14px;">Already have an account? <span id="to_login" style="font-weight: 600; text-decoration: underline; cursor: pointer;">Log in</span>.</span>
+        </div>
+        <img class="background" src="{% static 'image/signupnextbg.png' %}">
+        <div class="overlay" id="overlay"></div>
+        <div id="info" class="info">
+            <div class="hbox-center" style="margin: 20px 0 8px 0">
+                <img id="image_status" style="width: 48px; height: 48px; object-fit: cover;">
+                <div class="vbox">
+                    <span id="title_status" style="font-family: 'Geist'; font-weight: 600; letter-spacing: -0.25px; line-height: 120%; font-size: 16px; color: var(--black-accent); margin-left: 14px"></span>
+                    <span id="subtitle_status" style="font-family: 'Geist'; font-weight: 400; letter-spacing: -0.25px; line-height: 120%; font-size: 14px; color: var(--black-accent); width: 195px; margin-left: 14px"></span>
+                </div>
+            </div>
+            <div id="error-messages" style="align-self: flex-start"></div>
+            <span id="to_submit_form" style="font-family: 'Geist'; font-weight: 400; letter-spacing: -0.25px; cursor: pointer; align-self: flex-end; line-height: 120%; text-decoration: underline; font-size: 16px; color: var(--dark-gray-accent); margin: 14px 36px 24px 0;">continue</span>
+        </div>
+    
+        <!-- Hidden -->
+        <input name="profile_picture" type="file" id="file_input" accept="image/png, image/jpeg, image/jpeg" style="display: none;">
+        <input id="agree" name="agreement" value="False" style="display: none">
+        <button id="submit_form" type="submit" style="display: none"></button>
+    </form>
+
+    <script>
+        const uploadImg = document.getElementById("upload_img");
+        const inputImg = document.getElementById("input_img");
+        const fileInput = document.getElementById("file_input");
+        const toSignUp = document.getElementById("to_signup");
+        const toLogIn = document.getElementById("to_login");
+        const toAbout2 = document.getElementById("to_about2");
+        const toAbout3 = document.getElementById("to_about3");
+        const preview = document.getElementById("preview");
+        const blank = document.getElementById("blank");
+        const optional = document.getElementById("optional");
+        const imgName = document.getElementById("imgname");
+        const info = document.getElementById("info");
+        const overlay = document.getElementById("overlay");
+        const submit = document.getElementById("submit");
+        const toSubmitForm = document.getElementById("to_submit_form");
+        const submitForm = document.getElementById("submit_form");
+        const errorMessages = document.getElementById("error-messages");
+        const imageStatus = document.getElementById("image_status");
+        const titleStatus = document.getElementById("title_status");
+        const subtitleStatus = document.getElementById("subtitle_status");
+        const agreement = document.getElementById("agreement");
+
+        toSubmitForm.addEventListener("click", function() {
+            submitForm.click();
+            overlay.style.opacity = "0";
+            overlay.style.display = "none";
+            info.style.opacity = "0";
+            info.style.top = "10px";
+            info.style.display = "none";
+        });
+
+        agreement.addEventListener('change', function() {
+            document.getElementById('agree').value = this.checked ? 'True' : 'False';
+        });
+
+        submit.addEventListener("click", function() {
+            overlay.style.display = "block";
+            setTimeout(() => {overlay.style.opacity = "0.7";}, 0);
+            info.style.display = "flex";
+            setTimeout(() => {info.style.opacity = "1"; info.style.top = "30px";}, 0);
+
+            let isError = false;
+            let errors = [];
+            let passwordErrors = [];
+            const fullname = document.getElementById('fullname').value;
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const repeatPassword = document.getElementById('repeat_password').value;
+            const agreement = document.getElementById('agreement').checked;
+            
+            if (!agreement) {errors.push('- You must agree to the Terms of Service.')};
+            if (fullname.length == 0 || username.length == 0 || password.length == 0 || repeatPassword.length == 0) {
+                errors.push('- All fields can not be empty.');
+            } else {
+                if (!/^[A-Za-z\s]+$/.test(fullname)) {errors.push('- Name can only contain letters and spaces.');}
+                if (fullname.length < 5 || fullname.length > 25) {errors.push('- Name is too short.');}
+
+                if (!/^[A-Za-z0-9_.]+$/.test(username)) {errors.push('- Username can only contain letters, numbers, underscores, and periods.');}
+                if (username.length < 5 || username.length > 20) {errors.push('- Username is too short.');}
+                
+                if (password.length < 10 || password.length > 40) {errors.push('- Password must be 10—40 characters.');}
+                if (!/[A-Z]/.test(password)) passwordErrors.push('uppercase letter');
+                if (!/[a-z]/.test(password)) passwordErrors.push('lowercase letter');
+                if (!/[0-9]/.test(password)) passwordErrors.push('numerical character');
+                if (!/[-#_.*]/.test(password)) passwordErrors.push('one of special character between -, #, _, ., or *');
+                if (passwordErrors.length > 0) {errors.push(`- Password must include ${passwordErrors.join(', ')}.`);}
+
+                if (repeatPassword !== password) {errors.push('- Repeated password does not match.');}
+            }
+
+            if (errors.length > 0) {
+                imageStatus.src = "{% static 'image/crossicon.png' %}";
+                titleStatus.textContent = "Failed!";
+                subtitleStatus.textContent = "Please fill the sign up form properly!";
+
+                errorMessages.innerHTML = "";
+                errors.forEach((e) => {
+                    const errorText = document.createElement('span');
+                    errorText.className = 'text-missing';
+                    errorText.textContent = e;
+                    errorMessages.appendChild(errorText);
+                });
+            } else {
+                imageStatus.src = "{% static 'image/tickicon.png' %}"
+                titleStatus.textContent = "Succeed!";
+                subtitleStatus.textContent = "You have been successfully registered!";
+            }
+        });
+
+        toSignUp.addEventListener("click", function() {
+            window.location.href = "{% url 'main:signup' %}"
+        });
+
+        toLogIn.addEventListener("click", function() {
+            window.location.href = "{% url 'main:login' %}"
+        });
+
+        toAbout2.addEventListener("click", function() {
+            window.location.href = "{% url 'main:about' %}?section=terms-of-service";
+        });
+
+        toAbout3.addEventListener("click", function() {
+            window.location.href = "{% url 'main:about' %}?section=privacy-policy";
+        });
+
+        uploadImg.addEventListener("click", function() {
+            fileInput.click();
+        });
+
+        fileInput.addEventListener("change", function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.style.display = "block";
+                    preview.src = e.target.result;
+                    preview.style.cursor = "pointer";
+                    blank.style.display = "none";
+                    optional.style.display = "none";
+                    imgName.textContent = file.name;
+                    imgName.style.color = "var(--black-accent)";
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        preview.addEventListener("click", function() {
+            preview.src = "";
+            preview.style.display = "none";
+            preview.style.cursor = "default";
+            blank.style.display = "block";
+            optional.style.display = "block";
+            imgName.textContent = "No image chosen";
+            imgName.style.color = "var(--gray-accent)";
+            fileInput.value = "";
+        });
+    </script>
+</body>
+</html>

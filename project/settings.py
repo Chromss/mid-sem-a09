@@ -9,7 +9,7 @@ PRODUCTION = os.getenv("PRODUCTION", False)
 
 DEBUG = not PRODUCTION
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "mlakumlaku.com"]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -80,6 +80,9 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'main', 'imgdata')
+MEDIA_URL = '/media/'
 
 STATIC_URL = '/static/'
 if DEBUG:
