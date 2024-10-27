@@ -19,6 +19,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main',
+    'placeCollection',
+    'places',
 ]
 
 MIDDLEWARE = [
@@ -37,8 +39,11 @@ ROOT_URLCONF = 'project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'main/templates')],
-        'APP_DIRS': True,
+        'DIRS': [
+            os.path.join(BASE_DIR, 'main/templates'),
+            os.path.join(BASE_DIR, 'places/templates'),
+            os.path.join(BASE_DIR, 'placeCollection/templates'),
+        ],
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -72,7 +77,7 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
-]
+]                                               
 
 LANGUAGE_CODE = 'en-us'
 
@@ -92,5 +97,10 @@ else:
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# MEDIA_URL = '/media/'
-# MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# # Login settings
+# LOGIN_URL = 'login'
+# LOGIN_REDIRECT_URL = 'home'  # Ensure 'home' is correctly defined in your URLs
+# LOGOUT_REDIRECT_URL = 'home'

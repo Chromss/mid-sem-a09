@@ -1,0 +1,1096 @@
+/* Import Geist Font */
+@font-face {
+    font-family: 'Geist';
+    src: url('/static/places/font/Geist/Geist-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+/* Global Styles */
+body {
+    background-color: #F3F4F8;
+    font-family: 'Geist', sans-serif;
+    letter-spacing: -2.25%;
+    line-height: 160%;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1440px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box; /* Ensure padding is included in width */
+}
+
+/* Banner Styles */
+.banner {
+    position: relative;
+    width: 100%;
+    max-width: 1240px;
+    height: 400px;
+    margin: 0 auto;
+    background-color: #F3F4F8;
+}
+
+/* Banner Image */
+.banner-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    max-height: 400px;
+}
+
+/* Banner Overlay */
+.banner-overlay {
+    position: absolute;
+    bottom: -56px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 900px;
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+
+/* Rounded Rectangle Section */
+.rounded-rectangle {
+    width: 100%;
+    background-color: #F7F7F7;
+    border-radius: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    padding: 20px 30px;
+    align-items: flex-start;
+    gap: 15px;
+    box-sizing: border-box;
+    margin-top: 30px;
+}
+
+@media (max-width: 1024px) {
+    .rounded-rectangle {
+        padding: 15px 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .rounded-rectangle {
+        padding: 10px 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .rounded-rectangle {
+        padding: 5px 10px;
+    }
+}
+
+/* Rectangle and Label Sections */
+.rectangle-section, .label-section {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+}
+
+.info-item, .label-item {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex: 1 1 30%;
+    position: relative;
+    min-width: 150px;
+}
+
+.info-item:not(:last-child)::after, 
+.label-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background-color: #A1A1A1;
+}
+
+.section-text {
+    color: #252525;
+    font-size: 20px;
+    font-weight: 500;
+    margin-right: 5px;
+    text-align: left;
+}
+
+@media (max-width: 768px) {
+    .section-text {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    .section-text {
+        font-size: 16px;
+    }
+}
+
+/* Rating and Label Styles */
+.rating-star {
+    width: 18px;
+    height: 18px;
+    margin: 0 5px;
+}
+
+.label-logo {
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+}
+
+.label-text {
+    color: #6B6B6B;
+    font-size: 14px;
+    text-align: left;
+}
+
+/* Add to Collection Button */
+.add-to-collection-btn-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.add-to-collection-btn {
+    background-color: #3279E6;
+    color: #FFFFFF;
+    font-size: 16px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: flex;
+    align-items: center;
+}
+
+.add-to-collection-btn:hover {
+    background-color: #2868C7;
+    transform: scale(1.05);
+}
+
+/* Content Sections */
+.content-sections {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 100px;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 1024px) {
+    .content-sections {
+        flex-direction: column;
+        margin-top: 80px;
+    }
+}
+
+@media (max-width: 768px) {
+    .content-sections {
+        margin-top: 70px;
+    }
+}
+
+@media (max-width: 480px) {
+    .content-sections {
+        margin-top: 50px;
+    }
+}
+
+/* Overview and Souvenir Sections */
+.overview-section, .souvenir-section {
+    width: 48%;
+    box-sizing: border-box;
+}
+
+@media (max-width: 1024px) {
+    .overview-section, .souvenir-section {
+        width: 100%;
+    }
+}
+
+/* Section Titles */
+.section-title {
+    color: #6B6B6B;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+    .section-title {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    .section-title {
+        font-size: 16px;
+    }
+}
+
+/* Overview Content */
+.overview-content {
+    color: #252525;
+    font-size: 16px;
+    line-height: 160%;
+    text-align: justify;
+}
+
+@media (max-width: 768px) {
+    .overview-content {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .overview-content {
+        font-size: 12px;
+    }
+}
+
+/* Latest Review Section */
+.latest-review-section {
+    margin-top: 40px;
+    position: relative; /* Enables sticky positioning */
+}
+
+/* Reviews Container */
+.reviews-container {
+    max-height: 360px;
+    overflow-y: auto;
+    padding-right: 10px;
+    margin-bottom: 10px; /* Space between reviews and write-review */
+}
+
+@media (max-width: 768px) {
+    .reviews-container {
+        max-height: none;
+    }
+}
+
+/* Review Item */
+.review-item {
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Review Header */
+.review-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+}
+
+/* Profile Picture */
+.profile-pic {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+    object-fit: cover;
+}
+
+@media (max-width: 480px) {
+    .profile-pic {
+        width: 40px;
+        height: 40px;
+        margin-right: 10px;
+    }
+}
+
+/* Review User Info */
+.review-user-info {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Username and Date */
+.username {
+    color: #252525;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.review-date {
+    color: gray;
+    font-size: 12px;
+}
+
+@media (max-width: 480px) {
+    .username {
+        font-size: 12px;
+    }
+    
+    .review-date {
+        font-size: 10px;
+    }
+}
+
+/* Review Stars */
+.review-stars {
+    display: flex;
+    margin-left: auto;
+    gap: 2px;
+}
+
+.star-icon {
+    width: 20px;
+    height: 20px;
+}
+
+@media (max-width: 480px) {
+    .star-icon {
+        width: 16px;
+        height: 16px;
+    }
+}
+
+/* Review Content */
+.review-content {
+    color: #252525;
+    font-size: 14px;
+    line-height: 160%;
+}
+
+@media (max-width: 480px) {
+    .review-content {
+        font-size: 12px;
+    }
+}
+
+/* Write Your Review */
+.write-review-container {
+    position: sticky; /* Keeps the form visible */
+    bottom: 0; /* Sticks to the bottom */
+    background-color: #252525;
+    border-radius: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+    z-index: 1; /* Ensures it stays above other elements */
+}
+
+@media (max-width: 768px) {
+    .write-review-container {
+        position: static;
+        border-radius: 0;
+    }
+}
+
+/* Write Review Textarea */
+.write-review-container textarea {
+    width: 100%;
+    min-height: 44px;
+    border: none;
+    background: transparent;
+    color: #F7F7F7;
+    font-size: 14px;
+    font-family: 'Geist', sans-serif;
+    resize: none;
+    outline: none;
+    overflow: hidden;
+    padding-right: 50px;
+    box-sizing: border-box;
+}
+
+.write-review-container textarea::placeholder {
+    color: #F7F7F7;
+}
+
+@media (max-width: 480px) {
+    .write-review-container textarea {
+        min-height: 36px;
+        font-size: 12px;
+    }
+}
+
+/* Review Actions */
+.review-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: 10px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+@media (max-width: 480px) {
+    .review-actions {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+/* Star Rating */
+.star-rating {
+    display: flex;
+    align-items: center;
+}
+
+.star-rating img {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+@media (max-width: 480px) {
+    .star-rating img {
+        width: 16px;
+        height: 16px;
+    }
+}
+
+/* Send Button */
+.send-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.send-btn img {
+    width: 30px;
+    height: 30px;
+}
+
+@media (max-width: 480px) {
+    .send-btn img {
+        width: 24px;
+        height: 24px;
+    }
+}
+
+/* Login Prompt */
+.login-prompt {
+    color: #F7F7F7;
+    font-size: 14px;
+}
+
+.login-prompt a {
+    color: #3279E6;
+    text-decoration: none;
+}
+
+.login-prompt a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+    .login-prompt {
+        font-size: 12px;
+    }
+}
+
+/* Souvenir List Styles */
+.souvenir-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: flex-start; /* Align items to the left */
+}
+
+@media (max-width: 480px) {
+    .souvenir-list {
+        gap: 10px;
+    }
+}
+
+/* Souvenir Item */
+.souvenir-item {
+    position: relative; /* Enables absolute positioning of children */
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    width: 140px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    overflow: visible; /* Changed from hidden to visible to allow "Out of Stock" label outside */
+    display: flex;
+    flex-direction: column;
+}
+
+@media (max-width: 768px) {
+    .souvenir-item {
+        width: 45%;
+    }
+}
+
+@media (max-width: 480px) {
+    .souvenir-item {
+        width: 100%;
+    }
+}
+
+/* Souvenir Image */
+.souvenir-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    display: block; /* Ensures the image takes up full width */
+    z-index: 1; /* Lower z-index to stay below the Buy Button */
+    position: relative; /* Create stacking context */
+}
+
+/* Buy Button Styles */
+.buy-button {
+    position: absolute;
+    top: -35px; /* Positioned within the image area */
+    right: -40px;
+    width: 100px; /* Adjust size as needed */
+    height: 100px;
+    border: none;
+    cursor: pointer;
+    z-index: 3; /* Ensure it's above the image and description */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.3s ease;
+    background: none; /* Remove any background */
+    padding: 0; /* Remove any padding */
+    border-radius: 50%; /* Circular button */
+}
+
+.buy-button img {
+    width: 60%;
+    height: 60%;
+}
+
+.buy-button:hover {
+    opacity: 1; /* Maintain hover effect */
+}
+
+.buy-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5; /* Dim the button to indicate it's disabled */
+}
+
+.buy-button:disabled img {
+    filter: grayscale(100%); /* Optional: make the image grayscale */
+}
+
+/* "Out of Stock" Label */
+.out-of-stock-label {
+    position: absolute;
+    top: 50%; /* Position at the vertical center */
+    left: 50%; /* Position at the horizontal center */
+    transform: translate(-50%, -50%); /* Offset to truly center */
+    background-color: rgba(255, 0, 0, 0.8);
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-size: 14px;
+    white-space: nowrap;
+    z-index: 4; /* Ensure it's above all */
+    text-align: center;
+}
+
+/* Souvenir Description */
+.souvenir-description {
+    position: absolute; /* Position absolutely within the parent */
+    bottom: 0; /* Align to the bottom */
+    left: 0;
+    width: 100%;
+    background: rgba(40, 42, 58, 0.8); /* Semi-transparent background for readability */
+    color: #FFFFFF;
+    padding: 10px;
+    box-sizing: border-box;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    z-index: 2; /* Lower than Buy Button */
+}
+
+@media (max-width: 480px) {
+    .souvenir-description {
+        padding: 8px;
+    }
+}
+
+.souvenir-name {
+    color: #FFFFFF; /* Set text color to white */
+    font-size: 14px; /* Adjusted font size for better visibility */
+    text-align: left;
+    font-weight: normal; /* Regular weight */
+    margin-bottom: 5px; /* Added margin for spacing */
+}
+
+.souvenir-price {
+    color: #FFFFFF; /* Set text color to white */
+    font-size: 14px; /* Font size 14px */
+    font-weight: bold; /* Bold text */
+    text-align: left;
+    margin-bottom: 5px; /* Added margin for spacing */
+}
+
+.souvenir-stock {
+    display: block; /* Ensure it starts on a new line */
+    color: #FFFFFF; /* Set text color to white */
+    font-size: 14px; /* Increased font size for better readability */
+    text-align: left;
+}
+
+.souvenir-stock strong {
+    font-weight: bold; /* Ensures the stock amount is bold */
+}
+
+/* Optional Hover Effect for Description */
+.souvenir-item:hover .souvenir-description {
+    background: rgba(40, 42, 58, 0.9); /* Slightly more opaque on hover */
+    transition: background 0.3s ease;
+}
+
+/* Scrollbar Styling */
+.reviews-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.reviews-container::-webkit-scrollbar-track {
+    background: #F3F4F8;
+}
+
+.reviews-container::-webkit-scrollbar-thumb {
+    background-color: #A1A1A1;
+    border-radius: 4px;
+}
+
+/* Responsive Design */
+@media (max-width: 1440px) {
+    .container {
+        padding: 10px;
+    }
+
+    .content-sections {
+        margin-top: 80px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .content-sections {
+        margin-top: 80px;
+    }
+
+    .latest-review-section {
+        height: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+
+    .content-sections {
+        margin-top: 70px;
+    }
+
+    .section-text {
+        font-size: 18px;
+    }
+
+    .review-stars img {
+        width: 18px;
+        height: 18px;
+    }
+
+    .souvenir-list {
+        justify-content: flex-start; /* Ensure alignment to the left */
+    }
+
+    .latest-review-section {
+        height: auto;
+    }
+
+    /* Responsive Souvenir Styles */
+    .souvenir-item {
+        width: 45%; /* Adjust width for smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 5px;
+    }
+
+    .content-sections {
+        margin-top: 50px;
+    }
+
+    .section-text {
+        font-size: 16px;
+    }
+
+    .review-stars img {
+        width: 16px;
+        height: 16px;
+    }
+
+    .souvenir-item {
+        width: 100%; /* Full width on very small screens */
+        height: auto;
+    }
+
+    .souvenir-image {
+        width: 100%;
+        height: auto;
+    }
+
+    .souvenir-description {
+        padding: 8px;
+    }
+
+    .latest-review-section {
+        height: auto;
+    }
+}
+
+/* Additional Styling for Accessibility and UX */
+
+/* Star Hover Effect */
+.star-rating img:hover {
+    transform: scale(1.2);
+    transition: transform 0.2s;
+}
+
+/* Send Button Hover Effect */
+.send-btn img:hover {
+    opacity: 0.8;
+    transition: opacity 0.2s;
+}
+
+.comment-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: auto; /* Allows the actions to align at the bottom */
+    justify-content: flex-end; /* Aligns buttons to the right */
+}
+
+.edit-btn, .delete-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.edit-btn img, .delete-btn img {
+    width: 24px;
+    height: 24px;
+    transition: opacity 0.2s;
+}
+
+/* Hover Effect for Edit and Delete Buttons */
+.edit-btn img:hover, .delete-btn img:hover {
+    opacity: 0.8;
+    transition: opacity 0.2s;
+}
+
+.edit-comment-form {
+    margin-top: 10px;
+}
+
+.edit-comment-textarea {
+    width: 100%;
+    min-height: 44px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+    font-family: 'Geist', sans-serif;
+    font-size: 14px;
+    resize: none;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.edit-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 5px;
+}
+
+/* Star Rating in Edit Form */
+.edit-star {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.edit-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+/* Send and Cancel Edit Buttons */
+.send-edit-btn, .cancel-edit-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.send-edit-btn img, .cancel-edit-btn img {
+    width: 30px;
+    height: 30px;
+    transition: opacity 0.2s;
+}
+
+/* Hover Effects */
+.send-edit-btn img:hover, .cancel-edit-btn img:hover {
+    opacity: 0.8;
+    transition: opacity 0.2s;
+}
+
+/* Add to Collection Modal Styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Slight dimming */
+    display: none; /* Hide the modal by default */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.modal-overlay.show {
+    display: flex;
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 15px; /* Rounded corners */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); /* Shadow around the modal */
+    max-width: 500px;
+    width: 90%; /* Responsive */
+    transform: translateY(-50px);
+    transition: transform 0.3s ease;
+}
+
+.modal-overlay.show .modal {
+    transform: translateY(0);
+}
+
+.modal-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #252525;
+    text-align: center;
+}
+
+.collection-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.collection-item {
+    display: flex;
+    align-items: center;
+}
+
+.collection-item input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+.modal-add-btn {
+    background-color: #3279E6;
+    color: #FFFFFF;
+    font-size: 16px;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: 30px;
+    width: 100%;
+}
+
+.modal-add-btn:hover {
+    background-color: #2868C7;
+    transform: scale(1.02);
+}
+
+/* Optional: Close Button Styles */
+.modal-close-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #A1A1A1;
+}
+
+.modal-close-btn:hover {
+    color: #6B6B6B;
+}
+
+body.modal-open {
+    overflow: hidden; /* Prevent background scrolling */
+}
+
+/* Notification Popup */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #32BA7C; /* Green background */
+    color: #FFFFFF; /* White text */
+    padding: 15px 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+    z-index: 1001; /* Above modal */
+}
+
+.notification.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Responsive Add to Collection Button */
+@media (max-width: 768px) {
+    .add-to-collection-btn {
+        font-size: 14px;
+        padding: 10px 20px;
+    }
+
+    .add-to-collection-overlay .login-prompt {
+        padding: 10px 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .add-to-collection-btn {
+        font-size: 12px;
+        padding: 8px 15px;
+    }
+}
+
+/* Additional Styling for Accessibility and UX */
+
+/* Star Hover Effect */
+.star-rating img:hover {
+    transform: scale(1.2);
+    transition: transform 0.2s;
+}
+
+/* Send Button Hover Effect */
+.send-btn img:hover {
+    opacity: 0.8;
+    transition: opacity 0.2s;
+}
+
+.comment-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: auto; /* Allows the actions to align at the bottom */
+    justify-content: flex-end; /* Aligns buttons to the right */
+}
+
+.edit-btn, .delete-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.edit-btn img, .delete-btn img {
+    width: 24px;
+    height: 24px;
+    transition: opacity 0.2s;
+}
+
+/* Hover Effect for Edit and Delete Buttons */
+.edit-btn img:hover, .delete-btn img:hover {
+    opacity: 0.8;
+    transition: opacity 0.2s;
+}
+
+.edit-comment-form {
+    margin-top: 10px;
+}
+
+.edit-comment-textarea {
+    width: 100%;
+    min-height: 44px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+    font-family: 'Geist', sans-serif;
+    font-size: 14px;
+    resize: none;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.edit-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 5px;
+}
+
+/* Star Rating in Edit Form */
+.edit-star {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.edit-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+/* Send and Cancel Edit Buttons */
+.send-edit-btn, .cancel-edit-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.send-edit-btn img, .cancel-edit-btn img {
+    width: 30px;
+    height: 30px;
+    transition: opacity 0.2s;
+}
+
+/* Hover Effects */
+.send-edit-btn img:hover, .cancel-edit-btn img:hover {
+    opacity: 0.8;
+    transition: opacity 0.2s;
+}
