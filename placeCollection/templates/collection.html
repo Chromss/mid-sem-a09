@@ -27,7 +27,11 @@
                     <div class="collection-card-container" id="collection-{{ coll.id }}">
                         <a href="{% url 'placeCollection:show_collection_places' coll.id %}" class="collection-card-link">
                             <div class="collection-card">
-                                <img src="{% static 'images/d.png' %}" alt="Default Image" class="card-image">
+                                {% if coll.places.count > 0 %}
+                                    <img src="{{ coll.places.first.image.url }}" alt="{{ coll.places.first.name }}" class="card-image">
+                                {% else %}
+                                    <img src="{% static 'images/d.png' %}" alt="Default Image" class="card-image">
+                                {% endif %}
                                 <div class="card-content">
                                     <h3 class="card-title">{{ coll.name }}</h3>
                                     <div class="card-meta">
