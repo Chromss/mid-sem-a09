@@ -1,0 +1,403 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Page | MlakuMlaku</title>
+    <style>
+        body, html {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hbox {
+            display: flex;
+            flex-direction: row;
+            margin-top: 5px;
+        }
+
+        .vbox {
+            display: flex;
+            flex-direction: column;
+            width: 400px;
+        }
+
+        .hbox span {
+            flex-shrink: 0;
+            margin-right: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .hbox input[type="text"],
+        .hbox input[type="file"] {
+            flex: 1;
+            padding: 5px;
+            border: 1px solid #CCCCCC;
+            border-radius: 4px;
+        }
+
+        .vbox#editor {
+            display: none;
+        }
+
+        .place-item {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="vbox">
+        <h2 style="align-self: center;">Add Places</h2>
+        <div class="hbox">
+            <span>Name: </span>
+            <input id="place-name" name="name" type="text">
+        </div>
+        <div class="hbox">
+            <span>Description: </span>
+            <input id="place-description" name="description" type="text">
+        </div>
+        <div class="hbox">
+            <span>Image: </span>
+            <input name="image" type="file" accept="image/*">
+        </div>
+        <button style="height: 32px; width: 170px; align-self: center; margin: 20px 0; cursor: pointer; border-radius: 8px; border: 1px solid #3279E6; font-weight: 600;" id="add-place">Assign Place</button>
+
+        <h2 style="align-self: center;">Add Souvenirs</h2>
+        <div class="hbox">
+            <span>Name: </span>
+            <input name="name" id="souvenir-name" type="text">
+        </div>
+        <div class="hbox">
+            <span>Price: </span>
+            <input name="price" id="souvenir-price" type="text">
+        </div>
+        <div class="hbox">
+            <span>Stock: </span>
+            <input name="stock" id="souvenir-stock" type="text">
+        </div>
+        <div class="hbox">
+            <span>Image: </span>
+            <input name="image" id="souvenir-image" type="file" accept="image/*">
+        </div>
+        <div class="hbox">
+            <span>Add to place: </span>
+            <select name="place" id="place-select" style="height: 24px; width: 150px;">
+                <option value="No places added" selected>No places added</option>
+            </select>
+        </div>        
+        <button style="height: 32px; width: 170px; align-self: center; margin: 20px 0; cursor: pointer; border-radius: 8px; border: 1px solid #3279E6; font-weight: 600;" id="add-souvenir">Assign Souvenir</button>
+
+        <h3 style="align-self: center;">List Places</h3>
+        <div style="display: flex; flex-direction: column; height: 150px; overflow-y: scroll; overflow-x: hidden; margin-bottom: 20px;" id="place-list"></div>
+
+        <div class="vbox" id="editor">
+            <h2 style="align-self: center;" id="editor-heading">Edit [Place Name]</h2>
+            <div class="hbox">
+                <span>Name: </span>
+                <input id="editor-place-name" name="name" type="text">
+            </div>
+            <div class="hbox">
+                <span>Description: </span>
+                <input id="editor-place-description" name="description" type="text">
+            </div>
+            <div class="hbox">
+                <span>Image: </span>
+                <input id="editor-place-image" name="image" type="file" accept="image/*">
+            </div>
+            <div class="hbox" style="align-self: center;">
+                <button style="height: 32px; width: 170px; margin: 20px 0 20px 0; cursor: pointer; border-radius: 8px; border: 1px solid #3279E6; font-weight: 600;" id="edit-place">Save Changes</button>
+                <button style="height: 32px; width: 170px; margin: 20px 0 20px 10px; cursor: pointer; border-radius: 8px; border: 1px solid #3279E6; font-weight: 600;" id="delete-place">Delete Place</button>
+            </div>
+        </div>
+        <form style="align-self: center;" method="post" action="{% url 'admin_only:logout_admin' %}">
+            {% csrf_token %}
+            <button type="submit" style="height: 32px; width: 170px; margin: 20px 0 20px 0px; cursor: pointer; border-radius: 8px; border: 1px solid #3279E6; font-weight: 600;">Dismiss As Admin</button>
+        </form>
+    </div>
+
+    <script>
+        let selectedPlaceId = null;
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const placeList = document.getElementById('place-list');
+            const placeSelect = document.getElementById('place-select');
+            try {
+                const response = await fetch('/admin/show-places/');
+                const data = await response.json();
+                if (data.places) {
+                    placeList.innerHTML = '';
+                    placeSelect.innerHTML = '';
+                    const defaultOption = document.createElement('option');
+                    defaultOption.value = 'No places added';
+                    defaultOption.textContent = 'No places added';
+                    placeSelect.appendChild(defaultOption);
+                    data.places.forEach(place => {
+                        const newPlace = document.createElement('span');
+                        newPlace.textContent = `${place.id}. ${place.name}`;
+                        newPlace.classList.add('place-item');
+                        newPlace.addEventListener('click', () => {
+                            selectedPlaceId = place.id;
+                            document.querySelectorAll('#place-list span').forEach(span => {
+                                span.style.color = 'black';
+                            });
+                            newPlace.style.color = 'blue';
+                            document.getElementById('editor').style.display = 'flex';
+                            document.getElementById('editor-heading').textContent = `Edit ${place.name}`;
+                            document.getElementById('editor-place-name').value = place.name;
+                            document.getElementById('editor-place-description').value = place.description;
+                        });
+                        placeList.appendChild(newPlace);
+                        const newOption = document.createElement('option');
+                        newOption.value = place.id;
+                        newOption.textContent = place.name;
+                        placeSelect.appendChild(newOption);
+                    });
+                }
+            } catch (error) {
+                console.error('Error fetching places:', error);
+            }
+        });
+
+        const addPlace = document.getElementById('add-place');
+        addPlace.addEventListener('click', async () => {
+            const name = document.getElementById('place-name').value;
+            const description = document.getElementById('place-description').value;
+            const imageInput = document.querySelector('input[name="image"]');
+            const image = imageInput.files[0];
+
+            if (!name || !description || !image) {
+                alert('Please provide all fields!');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('name', name);
+            formData.append('description', description);
+            formData.append('image', image);
+
+            try {
+                const response = await fetch('/admin/create-place/', {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}',
+                    },
+                    body: formData,
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to create place.');
+                }
+
+                const data = await response.json();
+                const newPlace = document.createElement('span');
+                newPlace.textContent = `${data.id}. ${data.name}`;
+                newPlace.classList.add('place-item');
+                newPlace.addEventListener('click', () => {
+                    selectedPlaceId = data.id;
+                    document.querySelectorAll('#place-list span').forEach(span => {
+                        span.style.color = 'black';
+                    });
+                    newPlace.style.color = 'blue';
+                    document.getElementById('editor').style.display = 'flex';
+                    document.getElementById('editor-heading').textContent = `Edit ${data.name}`;
+                    document.getElementById('editor-place-name').value = data.name;
+                    document.getElementById('editor-place-description').value = data.description;
+                });
+
+                const placeList = document.getElementById('place-list');
+                placeList.appendChild(newPlace);
+
+                const placeSelect = document.getElementById('place-select');
+                const newOption = document.createElement('option');
+                newOption.value = data.id;
+                newOption.textContent = data.name;
+                placeSelect.appendChild(newOption);
+
+                document.getElementById('place-name').value = '';
+                document.getElementById('place-description').value = '';
+                imageInput.value = '';
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+
+        const editPlace = document.getElementById('edit-place');
+        editPlace.addEventListener('click', async () => {
+            const name = document.getElementById('editor-place-name').value;
+            const description = document.getElementById('editor-place-description').value;
+            const imageInput = document.getElementById('editor-place-image');
+            const image = imageInput.files[0];
+            
+            if (!name || !description || !image) {
+                alert('Please provide all fields including an image!');
+                return;
+            }
+            
+            const formData = new FormData();
+            formData.append('name', name);
+            formData.append('description', description);
+            formData.append('image', image);
+            
+            try {
+                const response = await fetch(`/admin/update-place/${selectedPlaceId}/`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}',
+                    },
+                    body: formData,
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Failed to update place.');
+                }
+
+                const updatedPlace = await response.json();
+                const placeSpans = document.querySelectorAll('#place-list span');
+                let placeSpan = null;
+                
+                placeSpans.forEach(span => {
+                    if (span.textContent.includes(selectedPlaceId)) {
+                        placeSpan = span;
+                    }
+                });
+
+                if (placeSpan) {
+                    placeSpan.textContent = `${updatedPlace.id}. ${updatedPlace.name}`;
+                    placeSpan.style.color = 'blue';
+                }
+
+                const placeSelect = document.getElementById('place-select');
+                const placeOptions = placeSelect.querySelectorAll('option');
+                
+                placeOptions.forEach(option => {
+                    if (option.value == selectedPlaceId) {
+                        option.textContent = updatedPlace.name;
+                    }
+                });
+
+                placeSpans.forEach(span => {
+                    span.style.color = 'black';
+                });
+
+                document.getElementById('editor').style.display = 'none';
+                document.getElementById('editor-place-name').value = '';
+                document.getElementById('editor-place-description').value = '';
+                imageInput.value = '';
+                selectedPlaceId = null;
+
+                const responseList = await fetch('/admin/show-places/');
+                const data = await responseList.json();
+                if (data.places) {
+                    const placeList = document.getElementById('place-list');
+                    placeList.innerHTML = '';
+                    data.places.forEach(place => {
+                        const newPlace = document.createElement('span');
+                        newPlace.textContent = `${place.id}. ${place.name}`;
+                        newPlace.classList.add('place-item');
+                        newPlace.addEventListener('click', () => {
+                            selectedPlaceId = place.id;
+                            document.querySelectorAll('#place-list span').forEach(span => {
+                                span.style.color = 'black';
+                            });
+                            newPlace.style.color = 'blue';
+                            document.getElementById('editor').style.display = 'flex';
+                            document.getElementById('editor-heading').textContent = `Edit ${place.name}`;
+                            document.getElementById('editor-place-name').value = place.name;
+                            document.getElementById('editor-place-description').value = place.description;
+                        });
+                        placeList.appendChild(newPlace);
+                    });
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+
+        const deletePlace = document.getElementById('delete-place');
+        deletePlace.addEventListener('click', async () => {
+            if (!selectedPlaceId) return;
+            try {
+                const response = await fetch(`/admin/delete-place/${selectedPlaceId}/`, {
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}',
+                    },
+                });
+                if (!response.ok) {
+                    throw new Error('Failed to delete place.');
+                }
+                document.querySelectorAll('#place-list span').forEach(span => {
+                    if (span.textContent.includes(selectedPlaceId)) {
+                        span.remove();
+                    }
+                });
+                document.querySelectorAll('#place-select option').forEach(option => {
+                    if (option.value == selectedPlaceId) {
+                        option.remove();
+                    }
+                });
+                document.querySelectorAll('#place-list span').forEach(span => {
+                    span.style.color = 'black';
+                });
+                document.getElementById('editor').style.display = 'none';
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+
+        const addSouvenir = document.getElementById('add-souvenir');
+        addSouvenir.addEventListener('click', async () => {
+            const name = document.getElementById('souvenir-name').value;
+            const price = document.getElementById('souvenir-price').value;
+            const stock = document.getElementById('souvenir-stock').value;
+            const imageInput = document.getElementById('souvenir-image');
+            const image = imageInput.files[0];
+            const placeId = document.getElementById('place-select').value;
+
+            if (!name || !price || !stock || !image || placeId === 'No places added') {
+                console.log('Form validation failed');
+                alert('Please provide all fields and select a place!');
+                return;
+            }
+
+            if (isNaN(price) || isNaN(stock)) {
+                alert('Price and stock must be numbers!');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('name', name);
+            formData.append('price', price);
+            formData.append('stock', stock);
+            formData.append('image', image);
+            formData.append('place', placeId);
+
+            try {
+                const response = await fetch('/admin/create-souvenir/', {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}',
+                    },
+                    body: formData,
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to create souvenir.');
+                }
+
+                const data = await response.json();
+                document.getElementById('souvenir-name').value = '';
+                document.getElementById('souvenir-price').value = '';
+                document.getElementById('souvenir-stock').value = '';
+                imageInput.value = '';
+                placeId = 'No places added';
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+    </script>
+</body>
+</html>

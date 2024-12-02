@@ -9,7 +9,7 @@ from main.views import landing_page
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
-    path('admin/', admin.site.urls),
+    path('admin/', include('admin_only.urls')),
     path('', include('main.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
     path('places/', include('places.urls')),  # Include places URLs

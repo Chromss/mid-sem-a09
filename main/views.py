@@ -100,12 +100,12 @@ def souvenir_list(request):
     elif price_filter == 'high_to_low':
         souvenirs = souvenirs.order_by('-price')
 
-    # Filter berdasarkan rating
-    rating_filter = request.GET.get('rating')
-    if rating_filter == 'high_to_low':
-        souvenirs = souvenirs.order_by('-rating')
-    elif rating_filter == 'low_to_high':
-        souvenirs = souvenirs.order_by('rating')
+    # # Filter berdasarkan rating
+    # rating_filter = request.GET.get('rating')
+    # if rating_filter == 'high_to_low':
+    #     souvenirs = souvenirs.order_by('-rating')
+    # elif rating_filter == 'low_to_high':
+    #     souvenirs = souvenirs.order_by('rating')
 
     return render(request, 'main/souvenir_list.html', {'souvenirs': souvenirs})
 

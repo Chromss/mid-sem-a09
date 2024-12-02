@@ -21,6 +21,7 @@ INSTALLED_APPS = [
     'main',
     'placeCollection',
     'places',
+    'admin_only',
 ]
 
 MIDDLEWARE = [
@@ -43,6 +44,7 @@ TEMPLATES = [
             os.path.join(BASE_DIR, 'main/templates'),
             os.path.join(BASE_DIR, 'places/templates'),
             os.path.join(BASE_DIR, 'placeCollection/templates'),
+            os.path.join(BASE_DIR, 'admin_only/templates'),
         ],
         'OPTIONS': {
             'context_processors': [
