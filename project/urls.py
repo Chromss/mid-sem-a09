@@ -9,14 +9,15 @@ from main.views import landing_page
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
-    path('admin/', admin.site.urls),
+    path('admin/', include('admin_only.urls')),
+    path('auth/', include('authentication.urls')),
     path('', include('main.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
     path('places/', include('places.urls')),  # Include places URLs
     # path('accounts/login/', CustomLoginView.as_view(), name='login'),  # Use custom login view
     # path('accounts/logout/', auth_views.LogoutView.as_view(), name='logout'), ini dua yh
     # path('placecollections/', include('placeCollection.urls', namespace='placeCollection')),  # Tambahkan namespace jika dibutuhkan
-    path('show-collections/', include(('placeCollection.urls', 'placeCollection'), namespace='placeCollection')),
+    # path('show-collections/', include(('placeCollection.urls', 'placeCollection'), namespace='placeCollection')),
     # path('placeCollection/', include('placeCollection.urls')), 
     path('placeCollection/', include('placeCollection.urls', namespace='placeCollection')),
     path('', landing_page, name='landing_page'),  # Ini akan mengarahkan root URL ke landing page
