@@ -212,6 +212,7 @@ def show_xml(request):
 def show_json(request):
     # Get all journals for the current user
     data = Journal.objects.filter(author=request.user)
+    print(data)
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
 def show_xml_by_id(request, id):
@@ -222,6 +223,26 @@ def show_xml_by_id(request, id):
 def show_json_by_id(request, id):
     # Get a specific journal by ID
     data = Journal.objects.filter(pk=id)
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+
+def show_xml_itin(request):
+    # Get all journals for the current user
+    data = Itinerary.objects.all()
+    return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
+
+def show_json_itin(request):
+    # Get all journals for the current user
+    itineraries = Itinerary.objects.all()
+    return HttpResponse(serializers.serialize("json", itineraries), content_type="application/json")
+
+def show_xml_by_id_itin(request, id):
+    # Get a specific journal by ID
+    data = Itinerary.objects.all()
+    return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
+
+def show_json_by_id_itin(request, id):
+    # Get a specific journal by ID
+    data = Itinerary.objects.all()
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
 def show_itineraries(request):

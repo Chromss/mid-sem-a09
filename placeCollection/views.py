@@ -73,3 +73,5 @@ def show_collection_places(request, collection_id):
         'collection': collection,
         'places': places
     })
+
+
