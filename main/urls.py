@@ -1,5 +1,3 @@
-
-
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
@@ -11,7 +9,8 @@ from main.views import (
     landing_page, journal_home, create_journal, edit_journal, delete_journal, journal_history,
     like_journal, journal_detail, register, login_user, logout_user, specific_journal, save_journal, logout, souvenir_list, itinerary_list, itinerary_detail, login, logout, 
     show_xml, show_xml_by_id, show_json, show_json_by_id,
-    show_xml_itin, show_xml_by_id_itin, show_json_itin, show_json_by_id_itin
+    show_xml_itin, show_xml_by_id_itin, show_json_itin, show_json_by_id_itin,
+    get_places, get_souvenirs, create_journal_flutter
 )
 
 
@@ -52,6 +51,10 @@ urlpatterns = [
     path('jsonitin/', show_json_itin, name='show_json_itin'),
     path('xmlitin/<str:id>/', show_xml_by_id_itin, name='show_xml_by_id_itin'),
     path('jsonitin/<str:id>/', show_json_by_id_itin, name='show_json_by_id_itin'),
+    path('get-places/', get_places, name='get_places'),
+    path('get-souvenirs/', get_souvenirs, name='get_souvenirs'),
+    path('create-journal-flutter/', create_journal_flutter, name='create_journal_flutter'),
+    
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

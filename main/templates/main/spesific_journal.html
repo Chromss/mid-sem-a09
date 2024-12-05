@@ -152,7 +152,55 @@
                 display: none; /* Sembunyikan ikon hamburger pada layar besar */
             }
         }
+
+        .location-souvenir-details {
+            margin: 20px 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .detail-item {
+            margin-bottom: 20px;
+        }
+
+        .detail-item h3 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .detail-item i {
+            color: #007bff;
+            margin-right: 8px;
+        }
+
+        .souvenir-card {
+            background-color: white;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .souvenir-name {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+
+        .souvenir-price {
+            color: #28a745;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .souvenir-desc {
+            color: #666;
+            font-size: 0.9em;
+        }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body class="spesific-journal">
     <div class="navbar">
@@ -190,6 +238,33 @@
                 <img class="journal-image" src="{{ journal.image.url }}" alt="{{ journal.title }}">
             {% endif %}
             <p class="journal-content">{{ journal.content }}</p>
+
+            <!-- Tambahkan ini untuk menampilkan place dan souvenir -->
+            {% if journal.place_name or journal.souvenir %}
+            <div class="location-souvenir-details">
+                {% if journal.place_name %}
+                <div class="detail-item">
+                    <h3>Location</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> {{ journal.place_name }}</p>
+                </div>
+                {% endif %}
+                
+                {% if journal.souvenir %}
+                <div class="detail-item">
+                    <h3>Featured Souvenir</h3>
+                    <div class="souvenir-card">
+                        <p class="souvenir-name"><i class="fas fa-gift"></i> {{ journal.souvenir.name }}</p>
+                        <p class="souvenir-price">IDR {{ journal.souvenir.price }}</p>
+                        <p class="souvenir-desc">{{ journal.souvenir.description }}</p>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            {% endif %}
+
+            
+            </div>
+
             <!-- Back Button -->
             <div class="back-button">
                 <a href="{% url 'main:journal_home' %}" class="back-link">Back to Journal Home</a>

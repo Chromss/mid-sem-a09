@@ -62,19 +62,52 @@ def journal_home(request):
         'places': places,
     })
    
-@login_required(login_url='/login')
+@login_required
 @csrf_exempt
 def create_journal(request):
     if request.method == 'POST':
-        form = JournalForm(request.POST, request.FILES)
-        if form.is_valid():
-            journal = form.save(commit=False)  # Simpan tanpa langsung ke database
-            journal.author = request.user  # Set author ke pengguna yang sedang login
-            journal.save()  # Simpan ke database
-            return JsonResponse({'success': True, 'journal_id': journal.id})
-        else:
-            return JsonResponse({'success': False, 'errors': form.errors}, status=400)
-    return JsonResponse({'success': False}, status=400)
+        try:
+            # Ambil data dari form
+            title = request.POST.get('title')
+            content = request.POST.get('content')
+            place_name = request.POST.get('place_name')
+            souvenir_id = request.POST.get('souvenir')
+            
+            # Buat journal baru
+            journal = Journal(
+                author=request.user,
+                title=title,
+                content=content,
+                place_name=place_name
+            )
+            
+            # Handle souvenir jika ada
+            if souvenir_id:
+                try:
+                    souvenir = Souvenir.objects.get(id=souvenir_id)
+                    journal.souvenir = souvenir
+                except Souvenir.DoesNotExist:
+                    pass
+            
+            # Handle image jika ada
+            if 'image' in request.FILES:
+                journal.image = request.FILES['image']
+            
+            journal.save()
+            
+            return JsonResponse({
+                'success': True, 
+                'journal_id': journal.id,
+                'message': 'Journal created successfully!'
+            })
+            
+        except Exception as e:
+            return JsonResponse({
+                'success': False,
+                'error': str(e)
+            }, status=400)
+            
+    return JsonResponse({'success': False, 'error': 'Invalid request method'}, status=400)
 
 
 @login_required(login_url='/login')
@@ -122,32 +155,64 @@ def specific_journal(request, journal_id):
 @login_required(login_url='/login')
 def edit_journal(request, journal_id):
     journal = get_object_or_404(Journal, id=journal_id)
-
+    
     if request.method == 'POST':
-        form = JournalForm(request.POST, request.FILES, instance=journal)
-        if form.is_valid():
-            # Check if the "Clear Image" checkbox is checked
-            if 'delete_image' in request.POST and request.POST['delete_image'] == 'on':
-                if journal.image:
-                    journal.image.delete(save=False)  # Delete image from filesystem
-                journal.image = None  # Set image to None
-
-            form.save()  # Save changes
-            return JsonResponse({
+        try:
+            # Update basic fields
+            journal.title = request.POST.get('title')
+            journal.content = request.POST.get('content')
+            journal.place_name = request.POST.get('place_name')
+            
+            # Update souvenir if provided
+            souvenir_id = request.POST.get('souvenir')
+            if souvenir_id:
+                try:
+                    souvenir = Souvenir.objects.get(id=souvenir_id)
+                    journal.souvenir = souvenir
+                except Souvenir.DoesNotExist:
+                    journal.souvenir = None
+            else:
+                journal.souvenir = None
+            
+            # Handle image update
+            if 'image' in request.FILES:
+                journal.image = request.FILES['image']
+            
+            journal.save()
+            
+            # Prepare response data
+            response_data = {
+                'success': True,
                 'title': journal.title,
                 'content': journal.content,
+                'place_name': journal.place_name,
                 'image_url': journal.image.url if journal.image else None,
-            })  # Return updated journal data as JSON
+            }
+            
+            if journal.souvenir:
+                response_data['souvenir'] = {
+                    'id': journal.souvenir.id,
+                    'name': journal.souvenir.name,
+                    'price': str(journal.souvenir.price)
+                }
+            
+            return JsonResponse(response_data)
+            
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)}, status=400)
+            
     elif request.method == 'GET':
         # Return journal data for editing
         data = {
             'title': journal.title,
             'content': journal.content,
+            'place_name': journal.place_name,
             'image_url': journal.image.url if journal.image else None,
+            'souvenir_id': journal.souvenir.id if journal.souvenir else None
         }
         return JsonResponse(data)
-
-    return JsonResponse({'error': 'Invalid request'}, status=400)
+    
+    return JsonResponse({'success': False, 'error': 'Invalid request'}, status=400)
 
 @login_required(login_url='/login')
 def delete_journal(request, journal_id):
@@ -259,7 +324,42 @@ def itinerary_detail(request, pk):
     itinerary = get_object_or_404(Itinerary, pk=pk)
     return render(request, 'itinerary_detail.html', {'itinerary': itinerary})
 
+@login_required
+def get_places(request):
+    places = Souvenir.objects.values_list('place_name', flat=True).distinct()
+    return JsonResponse({'places': list(places)})
+
+@login_required
+def get_souvenirs(request):
+    place_name = request.GET.get('place_name')
+    souvenirs = Souvenir.objects.filter(place_name=place_name).values('id', 'name')
+    return JsonResponse({'souvenirs': list(souvenirs)})
 
 
+@csrf_exempt
+def create_journal_flutter(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        
+        # Adjusted to match the Fields structure in your journal entry
+        new_entry = Welcome.objects.create(
+            model="JournalEntry",  # Assuming you want to set a model name
+            pk=None,  # Auto-incremented primary key
+            fields=Fields(
+                author=request.user.id,  # Assuming user ID is used as author
+                title=data["title"],  # Assuming title is part of the incoming data
+                content=data["content"],  # Assuming content is part of the incoming data
+                createdAt=datetime.now(),  # Set current time for createdAt
+                updatedAt=datetime.now(),  # Set current time for updatedAt
+                image=data.get("image", ""),  # Optional image field
+                souvenir=data.get("souvenir"),  # Optional souvenir field
+                placeName=data.get("place_name"),  # Optional place name field
+                likes=[],  # Initialize likes as an empty list
+            )
+        )
 
+        new_entry.save()
 
+        return JsonResponse({"status": "success"}, status=200)
+    else:
+        return JsonResponse({"status": "error"}, status=401)
