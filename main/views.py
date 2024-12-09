@@ -1,3 +1,4 @@
+import base64
 import datetime
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
@@ -12,7 +13,10 @@ from .jurnalform import JournalForm
 from django.http import JsonResponse
 import json
 from django.core import serializers
+from django.core.files.base import ContentFile
 from django.views.decorators.csrf import csrf_exempt
+
+
 
 @login_required
 def landing_page(request):
@@ -334,32 +338,166 @@ def get_souvenirs(request):
     place_name = request.GET.get('place_name')
     souvenirs = Souvenir.objects.filter(place_name=place_name).values('id', 'name')
     return JsonResponse({'souvenirs': list(souvenirs)})
+# @login_required
+# def get_places(request):
+#     places = Souvenir.objects.values_list('place_name', flat=True).distinct()
+#     return JsonResponse({'places': list(places)})
 
+# @login_required
+# def get_souvenirs(request):
+#     place_name = request.GET.get('place_name')
+#     souvenirs = Souvenir.objects.filter(place_name=place_name).values('id', 'name')
+#     return JsonResponse({'souvenirs': list(souvenirs)})
+
+
+# @csrf_exempt
+# def create_journal_flutter(request):
+#     if request.method == 'POST':
+#         data = json.loads(request.body)
+        
+#         # Adjusted to match the Fields structure in your journal entry
+#         new_entry = Journal.objects.create(
+#             model="JournalEntry",  # Assuming you want to set a model name
+#             pk=None,  # Auto-incremented primary key
+#             author=request.user,
+#             title=data["title"],
+#             content=data["content"],
+#             created_at=datetime.datetime.now(),
+#             updated_at=datetime.datetime.now(),
+#             image=data.get("image", ""),
+#             souvenir_id=data.get("souvenir"),
+#             place_name=data.get("place_name"),
+#         )
+
+#         new_entry.save()
+
+#         return JsonResponse({"status": "success"}, status=200)
+#     else:
+#         return JsonResponse({"status": "error"}, status=401)
 
 @csrf_exempt
 def create_journal_flutter(request):
     if request.method == 'POST':
-        data = json.loads(request.body)
-        
-        # Adjusted to match the Fields structure in your journal entry
-        new_entry = Welcome.objects.create(
-            model="JournalEntry",  # Assuming you want to set a model name
-            pk=None,  # Auto-incremented primary key
-            fields=Fields(
-                author=request.user.id,  # Assuming user ID is used as author
-                title=data["title"],  # Assuming title is part of the incoming data
-                content=data["content"],  # Assuming content is part of the incoming data
-                createdAt=datetime.now(),  # Set current time for createdAt
-                updatedAt=datetime.now(),  # Set current time for updatedAt
-                image=data.get("image", ""),  # Optional image field
-                souvenir=data.get("souvenir"),  # Optional souvenir field
-                placeName=data.get("place_name"),  # Optional place name field
-                likes=[],  # Initialize likes as an empty list
+        try:
+            # Decode JSON data
+            data = json.loads(request.body)
+            
+            # Extract data
+            title = data.get('title')
+            content = data.get('content')
+            place_name = data.get('place_name')
+            souvenir_id = data.get('souvenir')
+            image_base64 = data.get('image')
+
+            # Create journal
+            journal = Journal.objects.create(
+                author=request.user,
+                title=title,
+                content=content,
+                place_name=place_name
             )
-        )
 
-        new_entry.save()
+            # Handle souvenir if provided
+            if souvenir_id:
+                try:
+                    souvenir = Souvenir.objects.get(id=int(souvenir_id))
+                    journal.souvenir = souvenir
+                except Souvenir.DoesNotExist:
+                    pass
 
-        return JsonResponse({"status": "success"}, status=200)
-    else:
-        return JsonResponse({"status": "error"}, status=401)
+            # Handle image if provided
+            if image_base64:
+                try:
+                    # Decode base64 image
+                    image_data = base64.b64decode(image_base64)
+                    journal.image.save(f'journal_image_{journal.id}.jpg', ContentFile(image_data), save=True)
+                except Exception as e:
+                    print(f"Error saving image: {e}")
+
+            journal.save()
+
+            return JsonResponse({"status": "success"})
+
+        except json.JSONDecodeError as e:
+            print(f"JSON Decode Error: {e}")
+            return JsonResponse({"status": "error", "message": "Invalid JSON data"}, status=400)
+        except Exception as e:
+            print(f"Error: {e}")
+            return JsonResponse({"status": "error", "message": str(e)}, status=400)
+
+    return JsonResponse({"status": "error", "message": "Invalid request method"}, status=405)
+
+
+# views.py
+def get_journals_json(request):
+    journals = Journal.objects.all().order_by('-created_at')
+    return JsonResponse([{
+        'model': 'main.journal',
+        'pk': journal.id,
+        'fields': {
+            'author': journal.author.id,
+            'author_username': journal.author.username,
+            'title': journal.title,
+            'content': journal.content,
+            'created_at': journal.created_at.isoformat(),
+            'updated_at': journal.updated_at.isoformat(),
+            'image': journal.image.url if journal.image else '',
+            'place_name': journal.place_name,
+            'souvenir': journal.souvenir.id if journal.souvenir else None,
+            'likes': list(journal.likes.values_list('id', flat=True)),
+        }
+    } for journal in journals], safe=False)
+# @csrf_exempt
+# def create_journal_flutter(request):
+#     if request.method == 'POST':
+#         try:
+#             data = json.loads(request.body)
+            
+#             # Create journal entry directly
+#             new_entry = JournalEntry.objects.create(
+#                 author=request.user,
+#                 title=data["title"],
+#                 content=data["content"],
+#                 place_name=data.get("place_name", ""),
+#                 souvenir_id=data.get("souvenir"),  # Assuming this is the souvenir ID
+#                 image=data.get("image", "")
+#             )
+
+#             return JsonResponse({
+#                 'status': 'success',
+#                 'message': 'Journal created successfully',
+#                 'data': {
+#                     'id': new_entry.id,
+#                     'title': new_entry.title
+#                 }
+#             })
+#         except Exception as e:
+#             print(f"Error: {str(e)}")  # For debugging
+#             return JsonResponse({
+#                 'status': 'error',
+#                 'message': str(e)
+#             }, status=400)
+    
+#     return JsonResponse({
+#         'status': 'error',
+#         'message': 'Invalid request method'
+#     }, status=405)
+
+# def get_journals_json(request):
+#     journals = Journal.objects.all()
+#     return JsonResponse([{
+#         'model': 'main.journal',
+#         'pk': journal.id,
+#         'fields': {
+#             'author': journal.author.id,
+#             'username': journal.author.username,  # Add this line to include username
+#             'title': journal.title,
+#             'content': journal.content,
+#             'created_at': journal.created_at.isoformat(),
+#             'updated_at': journal.updated_at.isoformat(),
+#             'image': journal.image.url if journal.image else '',
+#             'souvenir': journal.souvenir.id if journal.souvenir else None,
+#             'place_name': journal.place_name,
+#             'likes': list(journal.likes.values_list('id', flat=True)),
+#         }
+#     } for journal in journals], safe=False)

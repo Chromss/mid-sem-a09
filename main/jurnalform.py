@@ -3,7 +3,7 @@ from .models import Journal, Souvenir
 
 class JournalForm(forms.ModelForm):
     place_name = forms.ChoiceField(choices=[], required=False)
-    souvenir = forms.ModelChoiceField(queryset=Souvenir.objects.none(), required=False)
+    souvenir = forms.ModelChoiceField(queryset=Souvenir.objects.all(), required=False)
 
     class Meta:
         model = Journal
