@@ -447,57 +447,6 @@ def get_journals_json(request):
             'likes': list(journal.likes.values_list('id', flat=True)),
         }
     } for journal in journals], safe=False)
-# @csrf_exempt
-# def create_journal_flutter(request):
-#     if request.method == 'POST':
-#         try:
-#             data = json.loads(request.body)
-            
-#             # Create journal entry directly
-#             new_entry = JournalEntry.objects.create(
-#                 author=request.user,
-#                 title=data["title"],
-#                 content=data["content"],
-#                 place_name=data.get("place_name", ""),
-#                 souvenir_id=data.get("souvenir"),  # Assuming this is the souvenir ID
-#                 image=data.get("image", "")
-#             )
 
-#             return JsonResponse({
-#                 'status': 'success',
-#                 'message': 'Journal created successfully',
-#                 'data': {
-#                     'id': new_entry.id,
-#                     'title': new_entry.title
-#                 }
-#             })
-#         except Exception as e:
-#             print(f"Error: {str(e)}")  # For debugging
-#             return JsonResponse({
-#                 'status': 'error',
-#                 'message': str(e)
-#             }, status=400)
-    
-#     return JsonResponse({
-#         'status': 'error',
-#         'message': 'Invalid request method'
-#     }, status=405)
 
-# def get_journals_json(request):
-#     journals = Journal.objects.all()
-#     return JsonResponse([{
-#         'model': 'main.journal',
-#         'pk': journal.id,
-#         'fields': {
-#             'author': journal.author.id,
-#             'username': journal.author.username,  # Add this line to include username
-#             'title': journal.title,
-#             'content': journal.content,
-#             'created_at': journal.created_at.isoformat(),
-#             'updated_at': journal.updated_at.isoformat(),
-#             'image': journal.image.url if journal.image else '',
-#             'souvenir': journal.souvenir.id if journal.souvenir else None,
-#             'place_name': journal.place_name,
-#             'likes': list(journal.likes.values_list('id', flat=True)),
-#         }
-#     } for journal in journals], safe=False)
+

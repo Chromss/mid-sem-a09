@@ -6,6 +6,9 @@ from django.views.decorators.http import require_http_methods
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
+from django.core import serializers
+
 
 @require_http_methods(["DELETE"])
 def delete_collection(request, collection_id):
@@ -74,4 +77,41 @@ def show_collection_places(request, collection_id):
         'places': places
     })
 
+def show_xml(request):
+    # Get all journals for the current user
+    data = Collection.objects.filter(user=request.user)
+    return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
+
+@login_required
+def show_json(request):
+    # Get all journals for the current user
+    data = Collection.objects.filter(user=request.user)
+    print(data)
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+
+@login_required
+def show_json_collection_places(request, collection_id):
+    """
+    Returns JSON data for all places in a specific collection.
+    """
+    try:
+        collection = get_object_or_404(Collection, id=collection_id, user=request.user)
+        places = collection.places.all()
+
+        places_data = [
+            {
+                "id": place.id,
+                "name": place.name,
+                "description": place.description,
+                "image_url": place.image.url if place.image else None,
+                "price": place.price,
+                "stock": place.stock,
+            }
+            for place in places
+        ]
+
+        return JsonResponse({"collection": collection.name, "places": places_data}, safe=False)
+
+    except Exception as e:
+        return JsonResponse({"success": False, "error": str(e)}, status=500)
 
