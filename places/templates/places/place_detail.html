@@ -23,7 +23,11 @@
     
         <!-- Banner Section -->
         <div class="banner">
-            <img src="{{ place.image.url }}" alt="{{ place.name }}" class="banner-image">
+            {% if place.image %}
+                <img src="{{ place.image.url }}" alt="{{ place.name }}" class="banner-image">
+            {% else %}
+                <img src="{% static 'places/images/pantai-siung.jpg' %}" alt="{{ place.name }}" class="banner-image">
+            {% endif %}
             <div class="banner-overlay">
                 <div class="rounded-rectangle">
                     <!-- Primary Information Row -->
@@ -110,7 +114,11 @@
                     {% for souvenir in souvenirs %}
                         <div class="souvenir-item" data-souvenir-id="{{ souvenir.id }}">
                             <!-- Souvenir Image -->
-                            <img src="{{ souvenir.image.url }}" alt="{{ souvenir.name }}" class="souvenir-image">
+                            {% if souvenir.image %}
+                                <img src="{{ souvenir.image.url }}" alt="{{ souvenir.name }}" class="souvenir-image">
+                            {% else %}
+                                <img src="{% static 'places/images/pantai-siung.jpg' %}" alt="{{ souvenir.name }}" class="souvenir-image">
+                            {% endif %}
 
                             <!-- Buy Button -->
                             <button class="buy-button" aria-label="Buy {{ souvenir.name }}" 
@@ -584,8 +592,6 @@
                 }, 3000); // Show for 3 seconds
             }
         });
-
-        
     </script>
     
 </body>
