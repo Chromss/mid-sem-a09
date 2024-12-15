@@ -338,42 +338,6 @@ def get_souvenirs(request):
     place_name = request.GET.get('place_name')
     souvenirs = Souvenir.objects.filter(place_name=place_name).values('id', 'name')
     return JsonResponse({'souvenirs': list(souvenirs)})
-# @login_required
-# def get_places(request):
-#     places = Souvenir.objects.values_list('place_name', flat=True).distinct()
-#     return JsonResponse({'places': list(places)})
-
-# @login_required
-# def get_souvenirs(request):
-#     place_name = request.GET.get('place_name')
-#     souvenirs = Souvenir.objects.filter(place_name=place_name).values('id', 'name')
-#     return JsonResponse({'souvenirs': list(souvenirs)})
-
-
-# @csrf_exempt
-# def create_journal_flutter(request):
-#     if request.method == 'POST':
-#         data = json.loads(request.body)
-        
-#         # Adjusted to match the Fields structure in your journal entry
-#         new_entry = Journal.objects.create(
-#             model="JournalEntry",  # Assuming you want to set a model name
-#             pk=None,  # Auto-incremented primary key
-#             author=request.user,
-#             title=data["title"],
-#             content=data["content"],
-#             created_at=datetime.datetime.now(),
-#             updated_at=datetime.datetime.now(),
-#             image=data.get("image", ""),
-#             souvenir_id=data.get("souvenir"),
-#             place_name=data.get("place_name"),
-#         )
-
-#         new_entry.save()
-
-#         return JsonResponse({"status": "success"}, status=200)
-#     else:
-#         return JsonResponse({"status": "error"}, status=401)
 
 @csrf_exempt
 def create_journal_flutter(request):
@@ -427,7 +391,6 @@ def create_journal_flutter(request):
 
     return JsonResponse({"status": "error", "message": "Invalid request method"}, status=405)
 
-
 # views.py
 def get_journals_json(request):
     journals = Journal.objects.all().order_by('-created_at')
@@ -444,9 +407,10 @@ def get_journals_json(request):
             'image': journal.image.url if journal.image else '',
             'place_name': journal.place_name,
             'souvenir': journal.souvenir.id if journal.souvenir else None,
+            'souvenir_name': journal.souvenir.name if journal.souvenir else 'Unknown',  # Add this line
+            'souvenir_price': str(journal.souvenir.price) if journal.souvenir else '0.00', 
             'likes': list(journal.likes.values_list('id', flat=True)),
         }
     } for journal in journals], safe=False)
-
 
 
