@@ -33,7 +33,6 @@ urlpatterns = [
     path('register/', register, name='register'),
     path('login/', login_user, name='login'),
     path('logout/', logout_user, name='logout'),
-    # path('history/', user_history, name='user_history'),
     path('<int:journal_id>/', specific_journal, name='specific_journal'),
     path('save/<int:journal_id>/', save_journal, name='save_journal'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
@@ -41,11 +40,7 @@ urlpatterns = [
     path('itinerary/', itinerary_list, name='itinerary_list'),
     path('itinerary/<int:pk>/', itinerary_detail, name='itinerary_detail'),
     path('places/', include('places.urls')),  # namespace will be defined in places/urls.py
-    # path('accounts/login/', CustomLoginView.as_view(), name='login'),
-    # path('accounts/logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('admin/', admin.site.urls),  # Remove admin namespace from here
-    # path('placecollections/', include('placeCollection.urls')),  # namespace will be defined in placeCollection/urls.py
-# ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     path('accounts/logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
     path('accounts/login/', auth_views.LoginView.as_view(), name='login'),
     path('xml/', show_xml, name='show_xml'),

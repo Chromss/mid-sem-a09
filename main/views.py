@@ -156,7 +156,26 @@ def journal_history(request):
 
 def specific_journal(request, journal_id):
     journal = get_object_or_404(Journal, id=journal_id)
-    return render(request, 'main/specific_journal.html', {'journal': journal})
+    
+    # Mengembalikan data jurnal dalam format JSON
+    response_data = {
+        'id': journal.id,
+        'author': journal.author.username,
+        'title': journal.title,
+        'content': journal.content,
+        'created_at': journal.created_at.isoformat(),
+        'updated_at': journal.updated_at.isoformat(),
+        'image_url': journal.image.url if journal.image else None,
+        'place_name': journal.place_name,
+        'souvenir': {
+            'id': journal.souvenir.id if journal.souvenir else None,
+            'name': journal.souvenir.name if journal.souvenir else 'Unknown',
+            'price': str(journal.souvenir.price) if journal.souvenir else '0.00',
+        } if journal.souvenir else None,
+        'likes_count': journal.likes.count(),
+    }
+    
+    return JsonResponse(response_data)
 
 @login_required(login_url='/login')
 def edit_journal(request, journal_id):
