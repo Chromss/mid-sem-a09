@@ -120,4 +120,10 @@ SESSION_COOKIE_SAMESITE = 'None'
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:*",
     "http://127.0.0.1:*",
+    'http://localhost:60489',  # URL asal request Flutter
+    'http://127.0.0.1:60489',  # Tambahkan ini jika Flutter menggunakan 127.0.0.1
+    'http://localhost:64325',  # URL asal request Flutter
+    'http://localhost:50246',  # URL asal request Flutter
+
+
 ]
