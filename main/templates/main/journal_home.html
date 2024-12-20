@@ -106,6 +106,11 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect */
         }
 
+        .modal-left {
+            width: 100%; /* Kolom kiri menjadi 100% */
+            padding: 10px; /* Padding untuk konten */
+        }
+
         .options-button {
             background-color: transparent; /* Set background color */
             border: none; /* Remove border */
@@ -207,7 +212,7 @@
         <div class="nav-links">
             <a href="{% url 'main:itinerary_list' %}"class="nav-link">Itinerary</a>
             <a href="{% url 'main:journal_home' %}" class="nav-link">Journal</a>
-            <a href="#" class="nav-link">Collection</a>
+            <a href="{% url 'placeCollection:show_collections' %}" class="nav-link">Collection</a>
         </div>
         <div class="hamburger" id="hamburger">
             &#9776; <!-- Hamburger icon -->
@@ -220,7 +225,7 @@
         <a href="{% url 'main:login' %}" class="nav-link">Log In</a>
         <a href="#" class="nav-link">Itinerary</a>
         <a href="{% url 'main:journal_home' %}" class="nav-link">Journal</a>
-        <a href="#" class="nav-link">Collection</a>
+        <a href="{% url 'placeCollection:show_collections' %}" class="nav-link">Collection</a>
     </div>
 
     <div class="div">
@@ -260,6 +265,24 @@
                             <img class="journal-image" src="{{ journal.image.url }}" alt="{{ journal.title }}">
                         {% endif %}
                         <p class="content">{{ journal.content|truncatewords:30 }}</p>
+                        <!-- Tambahkan ini untuk menampilkan place dan souvenir -->
+                        {% if journal.place_name or journal.souvenir %}
+                        <div class="journal-details">
+                            {% if journal.place_name %}
+                            <div class="place-info">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Location: {{ journal.place_name }}</span>
+                            </div>
+                            {% endif %}
+                            
+                            {% if journal.souvenir %}
+                            <div class="souvenir-info">
+                                <i class="fas fa-gift"></i>
+                                <span>Souvenir: {{ journal.souvenir.name }} - IDR {{ journal.souvenir.price }}</span>
+                            </div>
+                            {% endif %}
+                        </div>
+                        {% endif %}
                         <div class="card-footer">
                             <form class="like-form" data-journal-id="{{ journal.id }}">
                                 {% csrf_token %}
@@ -328,12 +351,23 @@
         <div class="modal-content">
             <span class="close-button" id="close-create-modal">&times;</span>
             <h2>Create a New Journal</h2>
-            <form id="create-journal-form">
+            <form id="create-journal-form" enctype="multipart/form-data">
+                {% csrf_token %}
                 <label for="modal-title">Title:</label>
                 <input type="text" id="modal-title" name="title" required>
                 
                 <label for="modal-content">Content:</label>
                 <textarea id="modal-content" name="content" required></textarea>
+                
+                <label for="modal-place">Place:</label>
+                <select id="modal-place" name="place_name" required>
+                    <option value="">-- Select Place --</option>
+                </select>
+
+                <label for="modal-souvenir">Souvenir:</label>
+                <select id="modal-souvenir" name="souvenir" disabled>
+                    <option value="">-- Select Souvenir --</option>
+                </select>
                 
                 <label for="modal-image">Image:</label>
                 <input type="file" id="modal-image" name="image">
@@ -347,7 +381,7 @@
     <!-- Modal for Edit Journal -->
     <div id="edit-modal" style="display: none;">
         <div class="modal-content">
-            <span class="close-button">&times;</span>
+            <span class="close-button" id="close-edit-modal">&times;</span>
             <h2>Edit Journal</h2>
             <form id="edit-form">
                 <input type="hidden" id="edit-form-id" name="journal_id">
@@ -358,13 +392,24 @@
                 <label for="edit-form-content">Content:</label>
                 <textarea id="edit-form-content" name="content" required></textarea>
                 
+                <label for="edit-form-place">Place:</label>
+                <select id="edit-form-place" name="place_name" required>
+                    <option value="">-- Select Place --</option>
+                    <!-- Options will be populated dynamically -->
+                </select>
+
+                <label for="edit-form-souvenir">Souvenir:</label>
+                <select id="edit-form-souvenir" name="souvenir" required disabled>
+                    <option value="">-- Select Souvenir --</option>
+                    <!-- Options will be populated dynamically -->
+                </select>
+                
                 <label for="edit-form-image">Image:</label>
                 <input type="file" id="edit-form-image" name="image">
                 <p id="current-image-message">No image currently uploaded.</p>
                 <img id="current-image" src="" alt="Current Image" style="display: none; max-width: 100%; margin-top: 10px;">
                 
-                
-                <button type="submit">Save Changes</button>
+                <button type="submit" class="btn">Save Changes</button>
             </form>
         </div>
     </div>
@@ -402,7 +447,7 @@
         });
 
         // Close edit journal modal when the close button is clicked
-        $('.close-button').on('click', function() {
+        $('#close-edit-modal').on('click', function() {
             $('#edit-modal').hide(); // Hide the edit modal
         });
 
@@ -418,21 +463,33 @@
 
         // Create journal via AJAX
         $('#create-journal-form').on('submit', function(e) {
-            e.preventDefault(); // Prevent default form submission
+            e.preventDefault();
+            
             var formData = new FormData(this);
+            
             $.ajax({
                 type: 'POST',
-                url: '{% url "main:create_journal" %}', // URL untuk create journal
+                url: '{% url "main:create_journal" %}',
                 data: formData,
                 processData: false,
                 contentType: false,
                 success: function(response) {
-                    // Handle success (e.g., redirect or show a success message)
-                    window.location.reload(); // Reload page to see new journal
+                    if (response.success) {
+                        // Tutup modal
+                        $('#create-journal-modal').hide();
+                        
+                        // Reset form
+                        $('#create-journal-form')[0].reset();
+                        
+                        // Refresh halaman atau tambahkan journal baru ke daftar
+                        window.location.reload();
+                    } else {
+                        alert('Error: ' + response.error);
+                    }
                 },
-                error: function(xhr) {
-                    // Handle error
-                    alert('Error creating journal.');
+                error: function(xhr, status, error) {
+                    alert('Error creating journal. Please try again.');
+                    console.error(xhr.responseText);
                 }
             });
         });
@@ -448,6 +505,12 @@
                     $('#edit-form-title').val(data.title);
                     $('#edit-form-content').val(data.content);
                     $('#edit-form-id').val(journalId);
+                    
+                    // Load places
+                    loadPlaces(data.place_name);
+                    
+                    // Load current souvenir
+                    loadSouvenirs(data.place_name, data.souvenir_id);
                     
                     // Display current image if it exists
                     if (data.image_url) {
@@ -465,6 +528,58 @@
                 }
             });
         });
+
+        function loadPlaces(selectedPlace) {
+            $.ajax({
+                url: '{% url "main:get_places" %}',
+                type: 'GET',
+                success: function(response) {
+                    const placeSelect = $('#edit-form-place');
+                    placeSelect.empty();
+                    placeSelect.append('<option value="">-- Select Place --</option>');
+                    response.places.forEach(function(place) {
+                        const isSelected = place === selectedPlace ? 'selected' : '';
+                        placeSelect.append(`<option value="${place}" ${isSelected}>${place}</option>`);
+                    });
+                }
+            });
+        }
+
+        function loadSouvenirs(place, selectedSouvenir) {
+            const souvenirSelect = $('#edit-form-souvenir');
+            souvenirSelect.empty();
+            souvenirSelect.append('<option value="">-- Select Souvenir --</option>');
+            
+            if (place) {
+                $.ajax({
+                    url: '{% url "main:get_souvenirs" %}',
+                    type: 'GET',
+                    data: { place_name: place },
+                    success: function(response) {
+                        if (response.souvenirs && response.souvenirs.length > 0) {
+                            response.souvenirs.forEach(function(souvenir) {
+                                const isSelected = souvenir.id == selectedSouvenir ? 'selected' : '';
+                                souvenirSelect.append(`<option value="${souvenir.id}" ${isSelected}>${souvenir.name}</option>`);
+                            });
+                            souvenirSelect.prop('disabled', false);
+                        } else {
+                            souvenirSelect.append('<option value="">No souvenirs available</option>');
+                            souvenirSelect.prop('disabled', true);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error fetching souvenirs:', error);
+                        souvenirSelect.empty();
+                        souvenirSelect.append('<option value="">Error loading souvenirs</option>');
+                        souvenirSelect.prop('disabled', true);
+                    }
+                });
+            } else {
+                souvenirSelect.empty();
+                souvenirSelect.append('<option value="">-- Select Souvenir --</option>');
+                souvenirSelect.prop('disabled', true);
+            }
+        }
 
         // Save changes
         $('#edit-form').on('submit', function(e) {
@@ -486,10 +601,15 @@
                     // Update the journal card with new data
                     $('div[data-journal-id="' + journalId + '"] .title').text(response.title);
                     $('div[data-journal-id="' + journalId + '"] .content').text(response.content);
+                    // Update place and souvenir
+                    $('div[data-journal-id="' + journalId + '"] .place-info span').text('Location: ' + response.place_name);
+                    $('div[data-journal-id="' + journalId + '"] .souvenir-info span').text('Souvenir: ' + response.souvenir.name + ' - IDR ' + response.souvenir.price);
+                    
+                    // Update image
                     if (response.image_url) {
                         $('div[data-journal-id="' + journalId + '"] .journal-image').attr('src', response.image_url);
                     } else {
-                        $('div[data-journal-id="' + journalId + '"] .journal-image').attr('src', ''); // Clear image if deleted
+                        $('div[data-journal-id="' + journalId + '"] .journal-image').attr('src', '{% static "images/default_image.png" %}'); // Ganti dengan gambar default jika tidak ada
                     }
                     $('#edit-modal').hide();
                 },
@@ -549,6 +669,66 @@
                 });
             });
         });
+
+        // Load places when modal opens
+        $('#open-modal').on('click', function() {
+            $.ajax({
+                url: '{% url "main:get_places" %}',  // Akan kita buat view ini
+                type: 'GET',
+                success: function(response) {
+                    const placeSelect = $('#modal-place');
+                    placeSelect.empty();
+                    placeSelect.append('<option value="">-- Select Place --</option>');
+                    response.places.forEach(function(place) {
+                        placeSelect.append(`<option value="${place}">${place}</option>`);
+                    });
+                }
+            });
+        });
+
+        // Update souvenirs when place is selected
+        $('#modal-place').on('change', function() {
+            const place = $(this).val();
+            const souvenirSelect = $('#modal-souvenir');
+            
+            if (place) {
+                $.ajax({
+                    url: '{% url "main:get_souvenirs" %}',
+                    type: 'GET',
+                    data: { place_name: place },
+                    success: function(response) {
+                        souvenirSelect.empty();
+                        souvenirSelect.append('<option value="">-- Select Souvenir --</option>');
+                        if (response.souvenirs && response.souvenirs.length > 0) {
+                            response.souvenirs.forEach(function(souvenir) {
+                                souvenirSelect.append(`<option value="${souvenir.id}">${souvenir.name}</option>`);
+                            });
+                            souvenirSelect.prop('disabled', false);
+                        } else {
+                            souvenirSelect.append('<option value="">No souvenirs available</option>');
+                            souvenirSelect.prop('disabled', true);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error fetching souvenirs:', error);
+                        souvenirSelect.empty();
+                        souvenirSelect.append('<option value="">Error loading souvenirs</option>');
+                        souvenirSelect.prop('disabled', true);
+                    }
+                });
+            } else {
+                souvenirSelect.empty();
+                souvenirSelect.append('<option value="">-- Select Souvenir --</option>');
+                souvenirSelect.prop('disabled', true);
+            }
+        });
+
+        // Update souvenirs when place is selected
+        $('#edit-form-place').on('change', function() {
+            const selectedPlace = $(this).val();
+            loadSouvenirs(selectedPlace, null); // Clear selected souvenir
+        });
+        
     </script>
     <!-- Footer -->
     <footer class="footer">

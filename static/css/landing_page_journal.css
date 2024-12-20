@@ -1,12 +1,21 @@
 /* Base styles */
+
+@font-face {
+  font-family: 'Geist';
+  src: url('{% static "font/geist/Geist-Medium.ttf" %}') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 body {
-  font-family: 'Geist', 'Geist';
+  font-family: 'Geist', 'Geist';  /* Menggunakan font Geist */
   margin: 0;
   padding: 0;
   background-image: url('{% static "images/background.jpg" %}');
   background-size: cover;
   background-position: center;
 }
+
 
 .container {
   background-image: url('{% static "images/background.jpg" %}');

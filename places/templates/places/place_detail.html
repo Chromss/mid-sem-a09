@@ -1,0 +1,592 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ place.name }}</title>
+    <link rel="stylesheet" href="{% static 'places/css/styles_main.css' %}">
+</head>
+<body>
+
+    <!-- Messages -->
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <div class="message {{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <!-- Main Container -->
+    <div class="container">
+    
+        <!-- Banner Section -->
+        <div class="banner">
+            <img src="{{ place.image.url }}" alt="{{ place.name }}" class="banner-image">
+            <div class="banner-overlay">
+                <div class="rounded-rectangle">
+                    <!-- Primary Information Row -->
+                    <div class="rectangle-section">
+                        <div class="info-item">
+                            <span class="section-text">{{ place.name }}</span>
+                        </div>
+                        <div class="info-item" id="average-rating-container">
+                            <span class="section-text" id="average-rating">{{ average_rating }}</span>
+                            <img src="{% static 'places/images/star.png' %}" alt="Star" class="rating-star">
+                            <span class="section-text">/5</span>
+                        </div>
+                        <div class="info-item">
+                            <!-- Updated Souvenir Count Display with ID -->
+                            <span class="section-text" id="souvenir-count">{{ available_souvenirs_count }}/{{ total_souvenirs_count }} Souvenirs</span>
+                        </div>
+                    </div>
+
+                    <!-- Add to Collection Button Section -->
+                    <div class="add-to-collection-section">
+                        {% if user.is_authenticated %}
+                            <button class="add-to-collection-btn" aria-label="Add {{ place.name }} to your collection">Add to Collection</button>
+                        {% else %}
+                            <div class="login-prompt">
+                                <p>Please <a href="{% url 'login' %}?next={{ request.path }}">log in</a> to add to your collection.</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Content Sections -->
+        <div class="content-sections">
+            <!-- Overview Section -->
+            <div class="overview-section">
+                <h2 class="section-title">Overview</h2>
+                <p class="overview-content">{{ place.description }}</p>
+
+                <!-- Latest Review Section -->
+                <div class="latest-review-section">
+                    <h3 class="section-title">Latest Reviews</h3>
+                    
+                    <!-- Reviews Container -->
+                    <div class="reviews-container" id="reviews-container">
+                        {% for comment in comments %}
+                            {% include 'places/comment_partial.html' %}
+                        {% empty %}
+                            <p>No reviews yet. Be the first to review!</p>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Write Your Review Section -->
+                    <div class="write-review-container">
+                        {% if user.is_authenticated %}
+                            <form id="write-review-form">
+                                {% csrf_token %}
+                                <textarea id="review-input" name="comment" placeholder="Write your review here..." aria-label="Write your review"></textarea>
+                                <input type="hidden" name="rating" id="rating-value">
+                                <div class="review-actions">
+                                    <div class="star-rating">
+                                        {% for i in "12345" %}
+                                            <img src="{% static 'places/images/icon_empty_star.png' %}" class="star" data-value="{{ i }}" alt="Star {{ i }}">
+                                        {% endfor %}
+                                    </div>
+                                    <button type="button" class="send-btn" id="submit-comment-btn" aria-label="Send Review">
+                                        <img src="{% static 'places/images/icon_send.png' %}" alt="Send">
+                                    </button>
+                                </div>
+                            </form>
+                        {% else %}
+                            <div class="login-prompt">
+                                <p>Please <a href="{% url 'login' %}?next={{ request.path }}">log in</a> to write a review.</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Souvenir List Section -->
+            <div class="souvenir-section">
+                <h2 class="section-title">Souvenir List</h2>
+                <div class="souvenir-list">
+                    {% for souvenir in souvenirs %}
+                        <div class="souvenir-item" data-souvenir-id="{{ souvenir.id }}">
+                            <!-- Souvenir Image -->
+                            <img src="{{ souvenir.image.url }}" alt="{{ souvenir.name }}" class="souvenir-image">
+
+                            <!-- Buy Button -->
+                            <button class="buy-button" aria-label="Buy {{ souvenir.name }}" 
+                                {% if souvenir.stock == 0 %}disabled{% endif %}>
+                                <img src="{% static 'places/images/buy.svg' %}" alt="Buy">
+                            </button>
+
+                            <!-- "Out of Stock" Label -->
+                            {% if souvenir.stock == 0 %}
+                                <div class="out-of-stock-label">Out of Stock</div>
+                            {% endif %}
+
+                            <!-- Souvenir Description -->
+                            <div class="souvenir-description">
+                                <span class="souvenir-name">{{ souvenir.name }}</span>
+                                <span class="souvenir-price">IDR {{ souvenir.formatted_price }}</span>
+                                <div class="souvenir-stock">Stock: <strong>{{ souvenir.stock }}</strong></div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Notification Popup -->
+    <div class="notification" id="notification" role="alert" aria-live="assertive">
+        Souvenir berhasil dibeli!
+    </div>
+    
+    <!-- Add to Collection Modal -->
+    {% if user.is_authenticated %}
+    <div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <div class="modal" id="collection-modal">
+            <button class="modal-close-btn" id="modal-close-btn" aria-label="Close Modal">&times;</button>
+            <h2 class="modal-title" id="modal-title">Add to Your Collection</h2>
+            <form id="add-to-collection-form">
+                {% csrf_token %}
+                <div class="collection-list">
+                    {% for collection in user_collections %}
+                        <div class="collection-item">
+                            <input type="checkbox" name="collections" value="{{ collection.id }}" id="collection-{{ collection.id }}">
+                            <label for="collection-{{ collection.id }}">{{ collection.name }}</label>
+                        </div>
+                    {% empty %}
+                        <p>You have no collections. <a href="{% url 'placeCollection:create_collection' %}">Create one</a>.</p>
+                    {% endfor %}
+                </div>
+                <button type="submit" class="modal-add-btn">Add</button>
+            </form>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- JavaScript for Star Rating, AJAX, Buy Button, and Notification -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // CSRF token
+            function getCookie(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let cookie of cookies) {
+                        if (cookie.trim().startsWith(name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.trim().substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+            const csrftoken = getCookie('csrftoken');
+
+            // Star Rating Functionality for Write Review
+            const stars = document.querySelectorAll('.star-rating .star');
+            const ratingValue = document.getElementById('rating-value');
+            let currentRating = ratingValue.value || 0;
+
+            stars.forEach(star => {
+                star.addEventListener('click', function() {
+                    const value = this.getAttribute('data-value');
+                    currentRating = value;
+                    ratingValue.value = value;
+                    updateStars(value);
+                });
+
+                star.addEventListener('mouseover', function() {
+                    const value = this.getAttribute('data-value');
+                    updateStars(value);
+                });
+
+                star.addEventListener('mouseout', function() {
+                    updateStars(currentRating);
+                });
+            });
+
+            function updateStars(rating) {
+                stars.forEach(s => {
+                    if (s.getAttribute('data-value') <= rating) {
+                        s.src = "{% static 'places/images/star.png' %}";
+                    } else {
+                        s.src = "{% static 'places/images/icon_empty_star.png' %}";
+                    }
+                });
+            }
+            
+            // Initialize stars based on existing rating
+            updateStars(currentRating);
+
+            // Auto-expand textarea
+            const reviewInput = document.getElementById('review-input');
+            if (reviewInput) {
+                reviewInput.addEventListener('input', function() {
+                    this.style.height = 'auto';
+                    this.style.height = this.scrollHeight + 'px';
+                });
+            }
+
+            // Add Comment via AJAX
+            const submitCommentBtn = document.getElementById('submit-comment-btn');
+            if (submitCommentBtn) {
+                submitCommentBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const commentContent = document.getElementById('review-input').value.trim();
+                    const ratingVal = document.getElementById('rating-value').value;
+                    const placeId = "{{ place.id }}";
+
+                    if (!commentContent || !ratingVal) {
+                        alert('Please provide both a comment and a rating.');
+                        return;
+                    }
+
+                    fetch("{% url 'places:add_comment_ajax' place.id %}", {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': csrftoken,
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        body: new URLSearchParams({
+                            'comment': commentContent,
+                            'rating': ratingVal
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.comment_html) {
+                            // Prepend the new comment to the reviews container
+                            document.getElementById('reviews-container').insertAdjacentHTML('afterbegin', data.comment_html);
+                            // Update average rating
+                            document.getElementById('average-rating').textContent = data.average_rating;
+                            // Clear the form
+                            document.getElementById('review-input').value = '';
+                            document.getElementById('rating-value').value = '';
+                            currentRating = 0;
+                            updateStars(0);
+                            // Re-initialize stars for edit forms
+                            initializeEditStars();
+                        } else if (data.error) {
+                            alert(data.error);
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+                });
+            }
+
+            // Edit and Delete Comment via AJAX
+            document.addEventListener('click', function(e) {
+                // Edit Comment
+                if (e.target.closest('.edit-btn')) {
+                    const button = e.target.closest('.edit-btn');
+                    const commentId = button.getAttribute('data-comment-id');
+                    const reviewItem = document.querySelector(`.review-item[data-comment-id="${commentId}"]`);
+                    const reviewContent = reviewItem.querySelector('.review-content');
+                    const editForm = reviewItem.querySelector('.edit-comment-form');
+                    const commentActions = reviewItem.querySelector('.comment-actions');
+
+                    if (reviewContent && editForm && commentActions) {
+                        // Hide comment content and comment actions
+                        reviewContent.style.display = 'none';
+                        commentActions.style.display = 'none';
+                        // Show edit form
+                        editForm.style.display = 'block';
+                    }
+                }
+
+                // Update Comment
+                if (e.target.closest('.update-comment-btn')) {
+                    const button = e.target.closest('.update-comment-btn');
+                    const commentId = button.getAttribute('data-comment-id');
+                    const reviewItem = document.querySelector(`.review-item[data-comment-id="${commentId}"]`);
+                    const editForm = reviewItem.querySelector('.edit-comment-form');
+                    const content = editForm.querySelector('.edit-comment-textarea').value.trim();
+                    const rating = editForm.querySelector('.edit-rating-value').value;
+
+                    if (!content || !rating) {
+                        alert('Please provide both a comment and a rating.');
+                        return;
+                    }
+
+                    fetch("{% url 'places:edit_comment_ajax' 0 %}".replace('/0/', `/${commentId}/`), {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': csrftoken,
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        body: new URLSearchParams({
+                            'content': content,
+                            'rating': rating
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.comment_html) {
+                            // Replace the comment HTML
+                            reviewItem.outerHTML = data.comment_html;
+                            // Update average rating
+                            document.getElementById('average-rating').textContent = data.average_rating;
+                            // Re-initialize stars for edit forms
+                            initializeEditStars();
+                        } else if (data.error) {
+                            alert(data.error);
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+                }
+
+                // Cancel Edit
+                if (e.target.closest('.cancel-edit-btn')) {
+                    const button = e.target.closest('.cancel-edit-btn');
+                    const commentId = button.getAttribute('data-comment-id');
+                    const reviewItem = document.querySelector(`.review-item[data-comment-id="${commentId}"]`);
+                    const reviewContent = reviewItem.querySelector('.review-content');
+                    const editForm = reviewItem.querySelector('.edit-comment-form');
+                    const commentActions = reviewItem.querySelector('.comment-actions');
+
+                    if (reviewContent && editForm && commentActions) {
+                        // Hide edit form
+                        editForm.style.display = 'none';
+                        // Show original content and comment actions
+                        reviewContent.style.display = 'block';
+                        commentActions.style.display = 'flex';
+                    }
+                }
+
+                // Delete Comment
+                if (e.target.closest('.delete-btn')) {
+                    const button = e.target.closest('.delete-btn');
+                    const commentId = button.getAttribute('data-comment-id');
+                    if (confirm('Are you sure you want to delete this comment?')) {
+                        fetch("{% url 'places:delete_comment_ajax' 0 %}".replace('/0/', `/${commentId}/`), {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRFToken': csrftoken,
+                                'X-Requested-With': 'XMLHttpRequest',
+                            }
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.message) {
+                                // Remove the comment from the DOM
+                                const reviewItem = document.querySelector(`.review-item[data-comment-id="${commentId}"]`);
+                                reviewItem.remove();
+                                // Update average rating
+                                document.getElementById('average-rating').textContent = data.average_rating;
+                            } else if (data.error) {
+                                alert(data.error);
+                            }
+                        })
+                        .catch(error => console.error('Error:', error));
+                    }
+                }
+            });
+
+            // Initialize stars for edit forms
+            function initializeEditStars() {
+                const editForms = document.querySelectorAll('.edit-comment-form');
+                editForms.forEach(form => {
+                    const editStars = form.querySelectorAll('.edit-star');
+                    const editRatingValue = form.querySelector('.edit-rating-value');
+                    let currentEditRating = editRatingValue.value || 0;
+
+                    editStars.forEach(star => {
+                        star.addEventListener('click', function() {
+                            const value = this.getAttribute('data-value');
+                            currentEditRating = value;
+                            editRatingValue.value = value;
+                            updateEditStars(editStars, value);
+                        });
+
+                        star.addEventListener('mouseover', function() {
+                            const value = this.getAttribute('data-value');
+                            updateEditStars(editStars, value);
+                        });
+
+                        star.addEventListener('mouseout', function() {
+                            updateEditStars(editStars, currentEditRating);
+                        });
+                    });
+
+                    function updateEditStars(stars, rating) {
+                        stars.forEach(s => {
+                            if (s.getAttribute('data-value') <= rating) {
+                                s.src = "{% static 'places/images/star.png' %}";
+                            } else {
+                                s.src = "{% static 'places/images/icon_empty_star.png' %}";
+                            }
+                        });
+                    }
+
+                    // Initialize stars based on existing rating
+                    updateEditStars(editStars, currentEditRating);
+                });
+            }
+
+            // Call the function initially
+            initializeEditStars();
+
+            // Modal functionality
+            const addToCollectionBtn = document.querySelector('.add-to-collection-btn');
+            const modalOverlay = document.getElementById('modal-overlay');
+            const collectionModal = document.getElementById('collection-modal');
+            const modalCloseBtn = document.getElementById('modal-close-btn');
+
+            if (addToCollectionBtn) {
+                addToCollectionBtn.addEventListener('click', function() {
+                    modalOverlay.classList.add('show');
+                    document.body.classList.add('modal-open'); // Prevent background scrolling
+                });
+            }
+
+            // Function to close modal
+            function closeModal() {
+                modalOverlay.classList.remove('show');
+                document.body.classList.remove('modal-open'); // Allow background scrolling
+            }
+
+            // Close modal when clicking outside of it or on the close button
+            if (modalOverlay) {
+                modalOverlay.addEventListener('click', function(e) {
+                    if (e.target === modalOverlay || e.target === modalCloseBtn) {
+                        closeModal();
+                    }
+                });
+            }
+
+            if (modalCloseBtn) {
+                modalCloseBtn.addEventListener('click', function() {
+                    closeModal();
+                });
+            }
+
+            // Handle form submission
+            const addToCollectionForm = document.getElementById('add-to-collection-form');
+            if (addToCollectionForm) {
+                addToCollectionForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+
+                    const formData = new FormData(addToCollectionForm);
+
+                    fetch("{% url 'places:add_to_collection_ajax' place.id %}", {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': csrftoken,
+                            'X-Requested-With': 'XMLHttpRequest',
+                        },
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert('Place added to your collection(s) successfully!');
+                            closeModal();
+                        } else if (data.error) {
+                            alert(data.error);
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+                });
+            }
+
+            // Buy Button Hover Effect (existing)
+            const buyButtonsImages = document.querySelectorAll('.buy-button img');
+
+            buyButtonsImages.forEach(function(img) {
+                // Store the original and hover image sources
+                const originalSrc = img.getAttribute('src');
+                const hoverSrc = originalSrc.replace('buy.svg', 'buyhover.svg');
+
+                // Add event listeners for mouseover and mouseout
+                img.addEventListener('mouseover', function() {
+                    // Only change image if button is not disabled
+                    if (!img.parentElement.disabled) {
+                        img.setAttribute('src', hoverSrc);
+                    }
+                });
+
+                img.addEventListener('mouseout', function() {
+                    img.setAttribute('src', originalSrc);
+                });
+            });
+
+            // Buy Button Click Event
+            const buyButtons = document.querySelectorAll('.buy-button');
+
+            buyButtons.forEach(function(button) {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+
+                    // Prevent action if button is disabled
+                    if (button.disabled) return;
+
+                    const souvenirItem = this.closest('.souvenir-item');
+                    const souvenirId = souvenirItem.getAttribute('data-souvenir-id');
+
+                    fetch("{% url 'places:buy_souvenir_ajax' 0 %}".replace('/0/', `/${souvenirId}/`), {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': csrftoken,
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({})
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Show notification
+                            showNotification("Souvenir berhasil dibeli!");
+                            // Update stock in DOM
+                            const stockElement = souvenirItem.querySelector('.souvenir-stock strong');
+                            stockElement.textContent = data.new_stock;
+
+                            // Update souvenir count in banner
+                            const souvenirCountElement = document.getElementById('souvenir-count');
+                            souvenirCountElement.textContent = `${data.available_souvenirs_count}/${data.total_souvenirs_count} Souvenirs`;
+
+                            // Optionally, disable buy button if stock is 0
+                            if (data.new_stock <= 0) {
+                                button.disabled = true;
+                                button.style.cursor = 'not-allowed';
+                                button.style.opacity = '0.5';
+                                // Update the Buy Button image back to original
+                                const img = button.querySelector('img');
+                                img.setAttribute('src', "{% static 'places/images/buy.svg' %}");
+                                // Show "Out of Stock" label
+                                const outOfStockLabel = souvenirItem.querySelector('.out-of-stock-label');
+                                if (!outOfStockLabel) {
+                                    const label = document.createElement('div');
+                                    label.classList.add('out-of-stock-label');
+                                    label.textContent = 'Out of Stock';
+                                    souvenirItem.appendChild(label);
+                                }
+                            }
+                        } else if (data.error) {
+                            alert(data.error);
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+                });
+            });
+
+            // Function to show notification
+            function showNotification(message) {
+                const notification = document.getElementById('notification');
+                notification.textContent = message;
+                notification.classList.add('show');
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 3000); // Show for 3 seconds
+            }
+        });
+
+        
+    </script>
+    
+</body>
+</html>

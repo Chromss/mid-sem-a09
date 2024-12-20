@@ -1,0 +1,513 @@
+/* Global Styles */
+body {
+    font-family: 'Geist', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #ffffff; /* Dark background for the page */
+}
+
+.collections-page {
+    padding: 1rem;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.page-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.page-description {
+    color: #6b7280;
+}
+
+.create-collection-button {
+    background-color: #4caf50;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.create-collection-button:hover {
+    background-color: #45a049;
+}
+
+.collections-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.collection-card-container {
+    position: relative;
+}
+
+.collection-card {
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.2s;
+}
+
+.collection-card:hover {
+    transform: translateY(-5px);
+}
+
+.card-image {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+
+.card-content {
+    padding: 1rem;
+    position: relative;
+}
+
+.delete-button {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background-color: white;
+    border-radius: 50%;
+    padding: 0.25rem;
+    color: gray;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.delete-button:hover {
+    background-color: #f5f5f5;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.card-meta {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin-top: 0.5rem;
+}
+
+.dot-divider {
+    margin: 0 0.5rem;
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.tag {
+    background-color: #e0f7df;
+    color: #1b5e20;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+}
+
+.empty-state {
+    text-align: center;
+    color: #9ca3af;
+}
+
+.create-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    z-index: 10;
+}
+
+.hidden {
+    display: none;
+}
+
+.create-collection-confirm-button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.create-collection-confirm-button:hover {
+    background-color: #45a049;
+}
+
+
+.delete-button {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background-color: #f44336; /* Red background */
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* Hilangkan underline pada link */
+a.no-underline {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Membuat seluruh card area klik */
+a.no-underline .collection-card {
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+a.no-underline .collection-card:hover {
+    transform: scale(1.02); /* Menambahkan efek hover pada card */
+}
+
+
+.section-container {
+    padding: 2rem 2rem; /* Adjusted padding */
+    background-color: white; /* Switch to white background */
+    border-radius: 16px; /* Smooth border */
+    margin-bottom: 2rem; /* Space between sections */
+}
+
+/* Adjust Spacing for Headers */
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.2rem; /* Reduced space under header */
+}
+
+.header-content h2 {
+    margin: 0 0 0.2rem 0; /* Tighten space under heading */
+    color: #282c35; /* Dark text for heading */
+    font-size: 2rem; /* Adjusted heading size */
+    font-weight: bold;
+}
+
+.header-content p {
+    margin: 0;
+    color: #666;
+    font-size: 0.9rem; /* Adjusted paragraph font size */
+}
+
+.section-container .header-content h2 {
+    color: #282c35; /* Dark color for heading (matches the new background) */
+}
+
+.header-actions {
+    display: flex;
+    gap: 10px; /* Reduced space between buttons */
+}
+
+/* Button Styles */
+.create-btn, .show-all {
+    background-color: #007bff;
+    color: white;
+    padding: 8px 18px; /* Smaller padding for buttons */
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 1rem; /* Reduced button text size */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.create-btn:hover {
+    background-color: #0056b3;
+    box-shadow: 0 3px 10px rgba(0, 123, 255, 0.3);
+}
+
+.show-all {
+    color: #007bff;
+    background-color: transparent;
+    padding: 0;
+    border: none;
+    /* text-decoration: underline; */
+    font-size: 0.9rem; /* Smaller text for "Show All" */
+}
+
+.show-all:hover {
+    text-decoration: underline;
+}
+
+
+/* Space between buttons and container */
+.section-container .header-actions {
+    background-color: #f1f3f5; /* Switch to light gray for button container */
+    padding: 10px; /* Reduced padding */
+    border-radius: 16px; /* Ensure buttons are rounded */
+}
+
+/* Collections Grid */
+.collections-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 cards per row */
+    gap: 20px; /* Reduced gap between grid items */
+    background-color: #282c35; /* Dark background for collections grid */
+    padding: 10px; /* Reduced padding around the grid */
+    border-radius: 12px;
+}
+
+/* Card Styles */
+.collection-card {
+    background: white; /* White card background to stand out on dark grid */
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); /* Smaller shadow for smaller size */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+}
+
+.collection-card {
+    max-width: 300px; /* or any size you prefer */
+    /* other styles */
+}
+
+
+.collection-card:hover {
+    transform: translateY(-3px); /* Slight hover lift */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.card-image img {
+    width: 100%;
+    height: 140px; /* Reduced image height */
+    object-fit: cover;
+}
+
+/* Card Content */
+.card-content {
+    padding: 1rem; /* Reduced padding inside cards */
+    text-align: left;
+}
+
+.card-content h3 {
+    font-size: 1.1rem; /* Reduced card title size */
+    margin-bottom: 0.4rem;
+}
+
+.card-meta {
+    font-size: 0.8rem; /* Reduced meta font size */
+    color: #666;
+    margin-bottom: 0.6rem;
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.tags span {
+    background-color: #daf5da;
+    padding: 3px 8px; /* Reduced padding for tags */
+    border-radius: 12px;
+    font-size: 0.75rem; /* Smaller tag font size */
+    margin-right: 4px;
+    margin-bottom: 4px;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 15px; /* Reduced footer padding */
+    background-color: #282c35;
+    color: white;
+    font-size: 0.8rem; /* Smaller footer font size */
+}
+
+/* Responsive Media Queries */
+@media (max-width: 1024px) {
+    .collections-grid {
+        grid-template-columns: repeat(2, 1fr); /* Display 2 cards per row for smaller screens */
+    }
+}
+
+@media (max-width: 768px) {
+    .collections-grid {
+        grid-template-columns: repeat(1, 1fr); /* Display 1 card per row for mobile */
+    }
+}
+
+/* Container and layout */
+.collections-page {
+    padding: 1rem;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.page-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.page-description {
+    color: #6b7280;
+}
+
+.create-collection-button {
+    background-color: #4caf50;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.create-collection-button:hover {
+    background-color: #45a049;
+}
+
+.collections-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.collection-card-container {
+    position: relative;
+}
+
+.collection-card {
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.2s;
+}
+
+.collection-card-link {
+    display: block;
+    text-decoration: none;
+}
+
+.collection-card:hover {
+    transform: translateY(-5px);
+}
+
+.card-image {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+
+.card-content {
+    padding: 1rem;
+    position: relative;
+}
+
+.delete-button {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background-color: white;
+    border-radius: 50%;
+    padding: 0.25rem;
+    color: gray;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.delete-button:hover {
+    background-color: #f5f5f5;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.card-meta {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin-top: 0.5rem;
+}
+
+.dot-divider {
+    margin: 0 0.5rem;
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    margin-top: 0.5rem;
+}
+
+.tag {
+    background-color: #e0f7fa;
+    color: #00796b;
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+}
+
+/* Create collection modal */
+.create-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem;
+    background: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    z-index: 10;
+}
+
+.hidden {
+    display: none;
+}
+
+.create-collection-confirm-button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+}
+
+.create-collection-confirm-button:hover {
+    background-color: #45a049;
+}
+
+

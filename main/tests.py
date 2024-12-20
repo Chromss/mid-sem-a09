@@ -85,4 +85,3 @@ class SouvenirViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Test Souvenir')
         self.assertTemplateUsed(response, 'main/souvenir_list.html')
-

@@ -1,0 +1,183 @@
+{% include 'navbar.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Itinerary Planner</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+    <link rel="stylesheet" href="static/css/itinerary.css">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <!-- <nav class="bg-gray-800 p-4">
+        <div class="container mx-auto flex justify-between">
+            <a href="#" class="text-white font-bold text-xl">MlakuMlaku</a>
+            <div>
+                <a href="#itinerary" class="text-white px-4">iti</a>
+                <a href="#journal" class="text-white px-4">Journal</a>
+                <a href="#" class="text-white px-4">Collection</a>
+                <button class="ml-4 bg-gray-600 text-white px-4 py-2 rounded">Sign up</button>
+                <button class="ml-2 bg-gray-600 text-white px-4 py-2 rounded">Log in</button>
+            </div>>
+        </div>
+    </nav> -->
+
+    <!-- Hero Section -->
+    <div class="hero text-center">
+        <h1 class="text-5xl font-bold mb-4">Itinerary</h1>
+        <blockquote class="quote italic text-lg">
+            "Where exploring shared travel plans sparks <span class="text-red-500">inspiration</span>, and setting your dream journey becomes <span class="text-red-500">effortless</span>."
+        </blockquote>
+        <button id="plan-tour" class="bg-blue-600 text-white px-6 py-3 rounded-full">Plan your tour</button>
+    </div>
+
+    <!-- Modal for Planning Tour -->
+    <div id="tour-modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
+        <div class="bg-white p-6 rounded shadow-lg w-96 relative">
+            <button id="close-modal" class="absolute top-2 right-2 text-gray-600 hover:text-gray-800 text-3xl">&times;</button>
+            <h2 class="text-xl font-semibold mb-4">Create Your Itinerary</h2>
+            <div class="modal-content">
+                <form id="itinerary-form">
+                    <label class="block mb-2">Itinerary Name:</label>
+                    <input type="text" id="itinerary-name" class="border p-2 w-full mb-4" required>
+
+                    <label class="block mb-2">Cover Image:</label>
+                    <input type="file" id="itinerary-cover" class="border p-2 w-full mb-4" accept="image/*">
+
+                    <div id="days-container"></div>
+
+                    <button type="button" id="add-day" class="bg-blue-600 text-white px-4 py-2 rounded mb-4">Add Day</button>
+                    <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded">Create Itinerary</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Container for displaying created itineraries -->
+    <div id="itinerary-container" class="flex flex-wrap justify-center mt-8"></div>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const planTourButton = document.getElementById('plan-tour');
+            const tourModal = document.getElementById('tour-modal');
+            const closeModalButton = document.getElementById('close-modal');
+            const addDayButton = document.getElementById('add-day');
+            const daysContainer = document.getElementById('days-container');
+            const itineraryContainer = document.getElementById('itinerary-container');
+            let dayCount = 1;
+
+            // Show the modal when the button is clicked
+            planTourButton.onclick = function() {
+                tourModal.classList.toggle('hidden');
+            };
+
+            // Close the modal when "X" button is clicked
+            closeModalButton.onclick = function() {
+                tourModal.classList.add('hidden');
+            };
+
+            // Add day input fields
+            addDayButton.onclick = function() {
+                const dayDiv = document.createElement('div');
+                dayDiv.classList.add('mb-4');
+                dayDiv.innerHTML = `
+                    <h3 class="font-semibold mb-2">Day ${dayCount}</h3>
+                    <div class="destinations-container mb-2">
+                        <label class="block mb-1">Destination:</label>
+                        <input type="text" class="border p-2 w-full mb-1" required>
+                        
+                        <label class="block mb-1">Date:</label>
+                        <input type="date" class="border p-2 w-full mb-1" required>
+                        
+                        <label class="block mb-1">Time:</label>
+                        <input type="time" class="border p-2 w-full mb-2" required>
+                    </div>
+                    <button type="button" class="bg-blue-600 text-white px-2 py-1 rounded add-destination">Add Destination</button>
+                `;
+
+                // Add event listener for adding more destinations
+                dayDiv.querySelector('.add-destination').onclick = function() {
+                    const destinationDiv = document.createElement('div');
+                    destinationDiv.classList.add('destinations-container', 'mb-2');
+                    destinationDiv.innerHTML = `
+                        <label class="block mb-1">Destination:</label>
+                        <input type="text" class="border p-2 w-full mb-1" required>
+                        <label class="block mb-1">Time:</label>
+                        <input type="time" class="border p-2 w-full mb-2" required>
+                    `;
+                    dayDiv.appendChild(destinationDiv);
+                    dayDiv.appendChild(this);
+                };
+
+                daysContainer.appendChild(dayDiv);
+                dayCount++;
+            };
+
+            // Handle the form submission
+            document.getElementById('itinerary-form').onsubmit = function(e) {
+                e.preventDefault();
+                
+                const itineraryName = document.getElementById('itinerary-name').value;
+                const itineraryCover = document.getElementById('itinerary-cover').files[0];
+                const reader = new FileReader();
+                
+                // Collect day details dynamically
+                const daysData = [];
+                const dayContainers = document.querySelectorAll('#days-container > div');
+                dayContainers.forEach((dayDiv, index) => {
+                    const dayData = {
+                        day: index + 1, // Keep track of day index here
+                        date: dayDiv.querySelector('input[type="date"]').value,
+                        destination: dayDiv.querySelector('input[type="text"]').value,
+                        time: dayDiv.querySelector('input[type="time"]').value
+                    };
+                    daysData.push(dayData);
+                });
+                
+                reader.onload = function(e) {
+                    const coverImageUrl = e.target.result;
+                    
+                    // Generate card with actual data
+                    const itineraryCard = document.createElement('div');
+                    itineraryCard.classList.add('bg-white', 'rounded-lg', 'shadow-lg', 'p-6');
+                    
+                    itineraryCard.innerHTML = `
+                        <img src="${coverImageUrl}" alt="Cover Image" class="w-full h-48 object-cover rounded-lg mb-4">
+                        <h3 class="text-xl font-semibold mb-2">${itineraryName}</h3>
+                    `;
+                    
+                    const daysContainer = document.createElement('div');
+                    daysData.forEach(dayData => {
+                        const dayItem = document.createElement('div');
+                        dayItem.classList.add('mb-4', 'p-4', 'border', 'border-gray-300', 'rounded-lg');
+                        dayItem.innerHTML = `
+                            <h4 class="text-lg font-semibold mb-2">Day ${dayData.day} - ${dayData.date}</h4>
+                            <p><strong>Destination:</strong> ${dayData.destination}</p>
+                            <p><strong>Time:</strong> ${dayData.time}</p>
+                        `;
+                        daysContainer.appendChild(dayItem);
+                    });
+
+                    itineraryCard.appendChild(daysContainer);
+                    document.getElementById('itinerary-cards').appendChild(itineraryCard);
+                };
+                
+                if (itineraryCover) {
+                    reader.readAsDataURL(itineraryCover);
+                }
+
+                // Clear form and reset day count
+                document.getElementById('itinerary-name').value = '';
+                document.getElementById('itinerary-cover').value = '';
+                daysContainer.innerHTML = '';
+                dayCount = 1; // Reset dayCount to 1 here
+                tourModal.classList.add('hidden');
+            };
+
+        });
+    </script>
+</body>
+</html>

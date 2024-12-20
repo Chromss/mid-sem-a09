@@ -1,0 +1,57 @@
+{% load static %}
+<div class="review-item" data-comment-id="{{ comment.id }}">
+    <div class="review-header">
+        <img src="{% static 'places/images/profile_placeholder.svg' %}" alt="Profile" class="profile-pic">
+        <div class="review-user-info">
+            <span class="username">{{ comment.user.username }}</span>
+            <span class="review-date">{{ comment.created_at|date:"M d, Y" }}</span>
+        </div>
+        <div class="review-stars">
+            {% for i in "12345" %}
+                {% if i|add:"0" <= comment.rating %}
+                    <img src="{% static 'places/images/star.png' %}" class="star-icon" alt="Star">
+                {% else %}
+                    <img src="{% static 'places/images/icon_empty_star.png' %}" class="star-icon" alt="Empty Star">
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    <!-- Review Content or Edit Form -->
+    {% if user.is_authenticated and comment.user == user %}
+        <div class="review-content-container">
+            <p class="review-content">{{ comment.content }}</p>
+            <form class="edit-comment-form" style="display: none;">
+                {% csrf_token %}
+                <textarea name="content" class="edit-comment-textarea">{{ comment.content }}</textarea>
+                <div class="edit-actions">
+                    <div class="star-rating">
+                        {% for i in "12345" %}
+                            <img src="{% if i|add:"0" <= comment.rating %}{% static 'places/images/star.png' %}{% else %}{% static 'places/images/icon_empty_star.png' %}{% endif %}" class="edit-star" data-value="{{ i }}" alt="Star">
+                        {% endfor %}
+                        <input type="hidden" name="rating" class="edit-rating-value" value="{{ comment.rating }}">
+                    </div>
+                    <!-- New Buttons -->
+                    <div class="edit-buttons">
+                        <button type="button" class="send-edit-btn update-comment-btn" data-comment-id="{{ comment.id }}" aria-label="Send Edited Comment">
+                            <img src="{% static 'places/images/sendedit.svg' %}" alt="Send">
+                        </button>
+                        <button type="button" class="cancel-edit-btn" data-comment-id="{{ comment.id }}" aria-label="Cancel Editing Comment">
+                            <img src="{% static 'places/images/canceledit.svg' %}" alt="Cancel">
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- Edit and Delete Buttons -->
+        <div class="comment-actions">
+            <button class="edit-btn" data-comment-id="{{ comment.id }}" aria-label="Edit Comment">
+                <img src="{% static 'places/images/comment_edit.svg' %}" alt="Edit">
+            </button>
+            <button class="delete-btn" data-comment-id="{{ comment.id }}" aria-label="Delete Comment">
+                <img src="{% static 'places/images/comment_delete.svg' %}" alt="Delete">
+            </button>
+        </div>
+    {% else %}
+        <p class="review-content">{{ comment.content }}</p>
+    {% endif %}
+</div>
