@@ -17,34 +17,24 @@ def get_csrf_token(request):
     return JsonResponse({'csrfToken': token})
 
 
-# 1. Create Collection (HTML)
 @login_required
 def create_collection(request):
-    """
-    Render halaman untuk membuat koleksi melalui form HTML.
-    """
     if request.method == 'POST':
         name = request.POST.get('name')
         if name:
             try:
-                # Membuat koleksi baru
-                Collection.objects.create(name=name, user=request.user)
-                return render(request, 'create_collection.html', {
+                collection = Collection.objects.create(name=name, user=request.user)  # Menambahkan user
+                created_at = collection.created_at.strftime('%b %d, %Y')
+                return JsonResponse({
                     'success': True,
-                    'message': 'Collection successfully created'
+                    'name': collection.name,
+                    'created_at': created_at,
+                    'id': collection.id
                 })
             except Exception as e:
-                return render(request, 'create_collection.html', {
-                    'success': False,
-                    'error': str(e)
-                })
-        return render(request, 'create_collection.html', {
-            'success': False,
-            'error': 'Name is required'
-        })
-    
-    # Render form untuk GET request
-    return render(request, 'create_collection.html')
+                return JsonResponse({'success': False, 'error': str(e)})
+        return JsonResponse({'success': False, 'error': 'Name is required'})
+    return render(request, 'collection.html')
 
 @login_required
 @csrf_exempt
