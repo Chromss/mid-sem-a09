@@ -5,20 +5,24 @@ from django.conf.urls.static import static
 from places.views import CustomLoginView
 from django.contrib.auth import views as auth_views
 
-
 from main.views import (
-    landing_page, journal_home, create_journal, edit_journal, delete_journal, journal_history,
-    like_journal, journal_detail, register, login_user, logout_user, specific_journal, save_journal, logout, souvenir_list, itinerary_list, itinerary_detail, login, logout, 
+    landing_page, journal_home, create_journal, edit_journal, delete_journal, 
+    journal_history, like_journal, journal_detail, register, login_user, 
+    logout_user, specific_journal, save_journal, souvenir_list, 
+    itinerary_list, itinerary_detail,
     show_xml, show_xml_by_id, show_json, show_json_by_id,
     show_xml_itin, show_xml_by_id_itin, show_json_itin, show_json_by_id_itin,
     get_places, get_souvenirs, create_journal_flutter, get_journals_json, 
+    get_current_user, get_user_journals_json, edit_journal_flutter,
+    delete_journal_flutter,
+    like_journal_flutter,
 )
-
 
 app_name = 'main'
 
 urlpatterns = [
     path('', landing_page, name='landing_page'),  # Halaman landing
+    path('get-current-user/', get_current_user, name='get_current_user'),
     path('journal/', journal_home, name='journal_home'),
     path('create/', create_journal, name='create_journal'),
     path('edit/<int:journal_id>/', edit_journal, name='edit_journal'),
@@ -57,6 +61,10 @@ urlpatterns = [
     path('create-journal-flutter/', create_journal_flutter, name='create_journal_flutter'),
     # urls.py
     path('get-journals/', get_journals_json, name='get_journals_json'),
+    path('get-user-journals/', get_user_journals_json, name='get_user_journals'),
+    path('edit-journal-flutter/<int:journal_id>/', edit_journal_flutter, name='edit_journal_flutter'),
+    path('delete-journal-flutter/<int:journal_id>/', delete_journal_flutter, name='delete_journal_flutter'),
+    path('like-journal-flutter/<int:journal_id>/', like_journal_flutter, name='like_journal_flutter'),
 
     
 ]

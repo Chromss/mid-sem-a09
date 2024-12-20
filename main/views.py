@@ -15,7 +15,9 @@ import json
 from django.core import serializers
 from django.core.files.base import ContentFile
 from django.views.decorators.csrf import csrf_exempt
-
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
 
 
 @login_required
@@ -413,4 +415,170 @@ def get_journals_json(request):
         }
     } for journal in journals], safe=False)
 
+@login_required
+def get_user_journals_json(request):
+    journals = Journal.objects.filter(author=request.user).order_by('-created_at')
+    return JsonResponse([{
+        'model': 'main.journal',
+        'pk': journal.id,
+        'fields': {
+            'author': journal.author.id,
+            'author_username': journal.author.username,
+            'title': journal.title,
+            'content': journal.content,
+            'created_at': journal.created_at.isoformat(),
+            'updated_at': journal.updated_at.isoformat(),
+            'image': journal.image.url if journal.image else '',
+            'place_name': journal.place_name,
+            'souvenir': journal.souvenir.id if journal.souvenir else None,
+            'souvenir_name': journal.souvenir.name if journal.souvenir else 'Unknown',
+            'souvenir_price': str(journal.souvenir.price) if journal.souvenir else '0.00',
+            'likes': list(journal.likes.values_list('id', flat=True)),
+        }
+    } for journal in journals], safe=False)
 
+@login_required
+def get_current_user(request):
+    return JsonResponse({
+        'user_id': request.user.id,
+    })
+
+@csrf_exempt
+def edit_journal_flutter(request, journal_id):
+    if request.method == 'POST':
+        try:
+            # Get the journal
+            journal = get_object_or_404(Journal, id=journal_id, author=request.user)
+            
+            # Decode JSON data
+            data = json.loads(request.body)
+            
+            # Update fields
+            journal.title = data.get('title', journal.title)
+            journal.content = data.get('content', journal.content)
+            journal.place_name = data.get('place_name', journal.place_name)
+            
+            # Handle souvenir if provided
+            souvenir_id = data.get('souvenir')
+            if souvenir_id:
+                try:
+                    souvenir = Souvenir.objects.get(id=int(souvenir_id))
+                    journal.souvenir = souvenir
+                except Souvenir.DoesNotExist:
+                    pass
+
+            # Handle image if provided
+            image_base64 = data.get('image')
+            if image_base64:
+                try:
+                    # Decode base64 image
+                    image_data = base64.b64decode(image_base64)
+                    journal.image.save(f'journal_image_{journal.id}.jpg', ContentFile(image_data), save=True)
+                except Exception as e:
+                    print(f"Error saving image: {e}")
+
+            journal.save()
+
+            return JsonResponse({
+                "status": "success",
+                "message": "Journal updated successfully"
+            })
+
+        except Journal.DoesNotExist:
+            return JsonResponse({
+                "status": "error",
+                "message": "Journal not found"
+            }, status=404)
+        except json.JSONDecodeError as e:
+            print(f"JSON Decode Error: {e}")
+            return JsonResponse({
+                "status": "error",
+                "message": "Invalid JSON data"
+            }, status=400)
+        except Exception as e:
+            print(f"Error: {e}")
+            return JsonResponse({
+                "status": "error",
+                "message": str(e)
+            }, status=400)
+
+    return JsonResponse({
+        "status": "error",
+        "message": "Invalid request method"
+    }, status=405)
+
+@csrf_exempt
+def delete_journal_flutter(request, journal_id):
+    # Change to accept both DELETE and POST
+    if request.method in ['DELETE', 'POST']:
+        try:
+            # Get the journal and verify ownership
+            journal = get_object_or_404(Journal, id=journal_id, author=request.user)
+            journal.delete()
+            
+            return JsonResponse({
+                "status": "success",
+                "message": "Journal deleted successfully"
+            })
+            
+        except Journal.DoesNotExist:
+            return JsonResponse({
+                "status": "error",
+                "message": "Journal not found"
+            }, status=404)
+        except Exception as e:
+            print(f"Error: {e}")
+            return JsonResponse({
+                "status": "error",
+                "message": str(e)
+            }, status=400)
+            
+    return JsonResponse({
+        "status": "error",
+        "message": "Invalid request method"
+    }, status=405)
+
+
+@csrf_exempt
+def like_journal_flutter(request, journal_id):
+    if request.method == 'POST':
+        try:
+            journal = get_object_or_404(Journal, id=journal_id)
+            user = request.user
+            
+            if not user.is_authenticated:
+                return JsonResponse({
+                    'status': 'error',
+                    'message': 'User not authenticated'
+                }, status=401)
+            
+            # Toggle like
+            if user in journal.likes.all():
+                journal.likes.remove(user)
+                liked = False
+            else:
+                journal.likes.add(user)
+                liked = True
+            
+            return JsonResponse({
+                'status': 'success',
+                'liked': liked,
+                'likes_count': journal.likes.count(),
+                'message': 'Liked successfully' if liked else 'Unliked successfully'
+            })
+            
+        except Journal.DoesNotExist:
+            return JsonResponse({
+                'status': 'error',
+                'message': 'Journal not found'
+            }, status=404)
+        except Exception as e:
+            return JsonResponse({
+                'status': 'error',
+                'message': str(e)
+            }, status=500)
+    
+    return JsonResponse({
+        'status': 'error',
+        'message': 'Invalid request method'
+    }, status=405)
