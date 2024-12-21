@@ -36,11 +36,30 @@ def create_collection(request):
         return JsonResponse({'success': False, 'error': 'Name is required'})
     return render(request, 'collection.html')
 
+
+
 @login_required
 @csrf_exempt
+@require_http_methods(["DELETE"]) 
 def delete_collection(request, collection_id):
+    if request.method == 'DELETE':  # Add this check
+        try:
+            collection = Collection.objects.get(id=collection_id, user=request.user)
+            collection.delete()
+            return JsonResponse({'success': True})
+        except Collection.DoesNotExist:
+            return JsonResponse({'success': False, 'error': 'Collection not found'}, status=404)
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)}, status=500)
+    return JsonResponse({'success': False, 'error': 'Method not allowed'}, status=405)
+
+@login_required
+@csrf_exempt
+@require_http_methods(["POST"]) 
+def delete_collection_flutter(request, collection_id):
     if request.method == 'POST':  # Add this check
         try:
+            print("hai")
             collection = Collection.objects.get(id=collection_id, user=request.user)
             collection.delete()
             return JsonResponse({'success': True})
