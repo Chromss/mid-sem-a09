@@ -10,6 +10,10 @@ from django.contrib import messages
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
+from django.db.models import Avg
+from .models import Place, Comment
 
 # Import your models here
 from .models import Place, Souvenir, Comment
@@ -195,3 +199,50 @@ def buy_souvenir_ajax(request, souvenir_id):
             return JsonResponse({'error': 'Souvenir is out of stock.'}, status=400)
     else:
         return JsonResponse({'error': 'Invalid request.'}, status=400)
+    
+
+
+# Add this to places/views.py
+
+def place_detail_json(request, place_id):
+    place = get_object_or_404(Place, pk=place_id)
+    
+    # Calculate the average rating
+    average_rating = Comment.objects.filter(place=place).aggregate(Avg('rating'))['rating__avg'] or 0
+    average_rating = round(average_rating, 1)
+
+    # Get all comments for the place
+    comments = Comment.objects.filter(place=place).order_by('-created_at')
+    comments_data = []
+    for c in comments:
+        comments_data.append({
+            'id': c.id,
+            'username': c.user.username,
+            'content': c.content,
+            'rating': c.rating,
+            'created_at': c.created_at.isoformat(),
+        })
+
+    # Include souvenirs data if needed (optional)
+    souvenirs = Souvenir.objects.filter(place=place)
+    souvenir_data = []
+    for s in souvenirs:
+        souvenir_data.append({
+            'id': s.id,
+            'name': s.name,
+            'price': float(s.price),
+            'stock': s.stock,
+        })
+
+    # Construct the JSON response
+    data = {
+        'id': place.id,
+        'name': place.name,
+        'description': place.description,
+        'average_rating': average_rating,
+        'comments': comments_data,
+        'souvenirs': souvenir_data,
+    }
+    
+    return JsonResponse(data, safe=False)
+
