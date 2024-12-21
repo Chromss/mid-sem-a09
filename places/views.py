@@ -10,6 +10,8 @@ from django.contrib import messages
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
+from django.core.serializers.json import DjangoJSONEncoder
+from django.views.decorators.http import require_http_methods
 
 # Import your models here
 from .models import Place, Souvenir, Comment
@@ -139,36 +141,44 @@ def delete_comment_ajax(request, comment_id):
         return JsonResponse({'error': 'Invalid request.'}, status=400)
 
 # New view for adding a place to collections
-@csrf_exempt
+import json
+
 @login_required
+@csrf_exempt
 def add_to_collection_ajax(request, place_id):
-    if request.method == 'POST' and request.headers.get('x-requested-with') == 'XMLHttpRequest':
-        # Correctly fetch the Place instance using place_id
-        place = get_object_or_404(Place, pk=place_id)
-        
-        # Get list of collection IDs from POST data
-        collection_ids = request.POST.getlist('collections')
-        
-        if collection_ids:
-            for collection_id in collection_ids:
-                # Fetch the Collection instance ensuring it belongs to the current user
-                collection = get_object_or_404(Collection, pk=collection_id, user=request.user)
-                
-                # Check if the CollectionItem already exists
-                existing_item = CollectionItem.objects.filter(collection=collection, place=place).first()
-                
-                if not existing_item:
-                    # Create the CollectionItem if it doesn't exist
-                    CollectionItem.objects.create(collection=collection, place=place)
+    if request.method == 'POST':
+        try:
+            # Try to get collections from POST data first
+            collections = request.POST.getlist('collections[]', request.POST.getlist('collections'))
             
-            # Return a success response
-            return JsonResponse({'success': True})
-        else:
-            # Return an error if no collections are selected
-            return JsonResponse({'error': 'No collections selected.'}, status=400)
-    else:
-        # Return an error for invalid requests
-        return JsonResponse({'error': 'Invalid request.'}, status=400)
+            # If not in POST, try to get from JSON body
+            if not collections and request.body:
+                try:
+                    body = json.loads(request.body)
+                    collections = body.get('collections', [])
+                except json.JSONDecodeError:
+                    pass
+            
+            print("Received collections:", collections)
+            
+            # Validasi place_id dan collections
+            place = get_object_or_404(Place, pk=place_id)
+            if collections:
+                for collection_id in collections:
+                    collection = get_object_or_404(Collection, pk=collection_id, user=request.user)
+                    existing_item = CollectionItem.objects.filter(collection=collection, place=place).first()
+                    if not existing_item:
+                        CollectionItem.objects.create(collection=collection, place=place)
+                
+                return JsonResponse({'success': True})
+            else:
+                return JsonResponse({'error': 'No collections selected.'}, status=400)
+        except Exception as e:
+            print("Error:", str(e))
+            return JsonResponse({'error': str(e)}, status=400)
+    
+    return JsonResponse({'error': 'Invalid request.'}, status=400)
+    
 # New view for buying a souvenir
 @login_required
 @csrf_exempt
@@ -195,3 +205,59 @@ def buy_souvenir_ajax(request, souvenir_id):
             return JsonResponse({'error': 'Souvenir is out of stock.'}, status=400)
     else:
         return JsonResponse({'error': 'Invalid request.'}, status=400)
+    
+    # Add this new view to views.py
+@csrf_exempt
+@require_http_methods(["GET"])  # Only allow GET requests
+def place_detail_json(request, place_id):
+    try:
+        place = get_object_or_404(Place, pk=place_id)
+        
+        # Get comments for the place
+        comments = Comment.objects.filter(place=place).order_by('-created_at')
+        comments_data = [{
+            'id': comment.id,
+            'username': comment.user.username,
+            'content': comment.content,
+            'rating': comment.rating,
+            'created_at': comment.created_at.isoformat()
+        } for comment in comments]
+        
+        # Get souvenirs for the place
+        souvenirs = Souvenir.objects.filter(place=place)
+        souvenirs_data = [{
+            'id': souvenir.id,
+            'name': souvenir.name,
+            'price': souvenir.price,
+            'stock': souvenir.stock
+        } for souvenir in souvenirs]
+        
+        # Aggregate average rating
+        average_rating = Comment.objects.filter(place=place).aggregate(Avg('rating'))['rating__avg'] or 0
+        
+        # Format the place data as a dictionary
+        place_data = {
+            'id': place.id,
+            'name': place.name,
+            'description': place.description,
+            'average_rating': round(average_rating),
+            'comments': comments_data,
+            'souvenirs': souvenirs_data
+        }
+        
+        response = JsonResponse(place_data, encoder=DjangoJSONEncoder)
+        response["Access-Control-Allow-Origin"] = "*"
+        response["Access-Control-Allow-Methods"] = "GET, OPTIONS"
+        response["Access-Control-Max-Age"] = "1000"
+        response["Access-Control-Allow-Headers"] = "X-Requested-With, Content-Type"
+        
+        return response
+        
+    except Exception as e:
+        # Return error as JSON instead of HTML
+        error_response = JsonResponse({
+            'error': str(e),
+            'detail': 'Failed to fetch place details'
+        }, status=400)
+        error_response["Access-Control-Allow-Origin"] = "*"
+        return error_response

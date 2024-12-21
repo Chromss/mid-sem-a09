@@ -166,35 +166,36 @@
 
 
 
-    function deleteCollection(event, collectionId) {
-        event.stopPropagation();  // Prevent click event from triggering the link
+function deleteCollection(event, collectionId) {
+    event.stopPropagation();  // Prevent click event from triggering the link
 
-        if (!confirm("Are you sure you want to delete this collection?")) {
-            return;
-        }
-
-        fetch(`/placecollections/delete/${collectionId}/`, {
-            method: 'DELETE',
-            headers: {
-                'X-CSRFToken': '{{ csrf_token }}',
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                const collectionCard = document.getElementById(`collection-${collectionId}`);
-                if (collectionCard) {
-                    collectionCard.remove();
-                }
-            } else {
-                alert("Error deleting collection: " + (data.error || "Unknown error"));
-            }
-        })
-        .catch(error => {
-            console.error("Error:", error);
-            alert("An error occurred while deleting the collection. Please try again.");
-        });
+    if (!confirm("Are you sure you want to delete this collection?")) {
+        return;
     }
+
+    fetch(`http://localhost:8000/placeCollection/delete/${collectionId}/`, {  // Adjust URL if needed
+        method: 'DELETE',
+        headers: {
+            'X-CSRFToken': '{{ csrf_token }}',  // Ensure CSRF token is passed correctly
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            const collectionCard = document.getElementById(`collection-${collectionId}`);
+            if (collectionCard) {
+                collectionCard.remove();  // Remove the collection from the page if deletion was successful
+            }
+        } else {
+            alert("Error deleting collection: " + (data.error || "Unknown error"));
+        }
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        alert("An error occurred while deleting the collection. Please try again.");
+    });
+}
+
 </script>
 
 {% endblock %}

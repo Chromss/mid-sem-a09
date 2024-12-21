@@ -16,5 +16,6 @@ urlpatterns = [
     path('xml/', views.show_xml, name='show_xml'),
     path('json/', views.show_json, name='show_json'),
     # path('places-json/', views.show_collection_places, name='show_json_collection_places'),
+    path('get-csrf-token/', views.get_csrf_token, name='get_csrf_token'),
 
 ]

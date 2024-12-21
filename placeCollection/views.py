@@ -17,34 +17,38 @@ def get_csrf_token(request):
     return JsonResponse({'csrfToken': token})
 
 
-# 1. Create Collection (HTML)
 @login_required
 def create_collection(request):
-    """
-    Render halaman untuk membuat koleksi melalui form HTML.
-    """
     if request.method == 'POST':
         name = request.POST.get('name')
         if name:
             try:
-                # Membuat koleksi baru
-                Collection.objects.create(name=name, user=request.user)
-                return render(request, 'create_collection.html', {
+                collection = Collection.objects.create(name=name, user=request.user)  # Menambahkan user
+                created_at = collection.created_at.strftime('%b %d, %Y')
+                return JsonResponse({
                     'success': True,
-                    'message': 'Collection successfully created'
+                    'name': collection.name,
+                    'created_at': created_at,
+                    'id': collection.id
                 })
             except Exception as e:
-                return render(request, 'create_collection.html', {
-                    'success': False,
-                    'error': str(e)
-                })
-        return render(request, 'create_collection.html', {
-            'success': False,
-            'error': 'Name is required'
-        })
-    
-    # Render form untuk GET request
-    return render(request, 'create_collection.html')
+                return JsonResponse({'success': False, 'error': str(e)})
+        return JsonResponse({'success': False, 'error': 'Name is required'})
+    return render(request, 'collection.html')
+
+@login_required
+@csrf_exempt
+def delete_collection(request, collection_id):
+    if request.method == 'POST':  # Add this check
+        try:
+            collection = Collection.objects.get(id=collection_id, user=request.user)
+            collection.delete()
+            return JsonResponse({'success': True})
+        except Collection.DoesNotExist:
+            return JsonResponse({'success': False, 'error': 'Collection not found'}, status=404)
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)}, status=500)
+    return JsonResponse({'success': False, 'error': 'Method not allowed'}, status=405)
 
 @login_required
 @csrf_exempt
@@ -147,34 +151,29 @@ def show_json_collection_places(request, collection_id):
                 "id": place.id,
                 "name": place.name,
                 "description": place.description,
-                "image_url": place.image.url if place.image else None,
-                "price": place.price,
-                "stock": place.stock,
+                "image_url": place.image.url if hasattr(place, 'image') and place.image else None,
+                # Hapus price dan stock karena tidak ada di model Place
+                # Tambahkan field lain yang ada di model Place jika diperlukan
             }
             for place in places
         ]
 
-        return JsonResponse({"collection": collection.name, "places": places_data}, safe=False)
+        return JsonResponse({
+            "success": True,
+            "collection": collection.name,
+            "places": places_data
+        })
     except Exception as e:
-        return JsonResponse({"success": False, "error": str(e)}, status=500)
-
+        return JsonResponse({
+            "success": False,
+            "error": str(e)
+        }, status=500)
 
 # 6. Delete Collection
-@require_http_methods(["DELETE"])
-@login_required
-def delete_collection(request, collection_id):
-    """
-    Menghapus koleksi berdasarkan ID.
-    """
-    try:
-        collection = Collection.objects.get(id=collection_id, user=request.user)
-        collection.delete()
-        return JsonResponse({'success': True})
-    except Collection.DoesNotExist:
-        return JsonResponse({'success': False, 'error': 'Collection not found'}, status=404)
-    except Exception as e:
-        return JsonResponse({'success': False, 'error': str(e)}, status=500)
 
+def get_csrf_token(request):
+    token = get_token(request)
+    return JsonResponse({'csrfToken': token})
 
 # 7. Show Collections as XML
 @login_required
