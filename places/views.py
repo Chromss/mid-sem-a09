@@ -22,6 +22,7 @@ from .models import Place, Souvenir, Comment
 # Import the Collection models
 from placeCollection.models import Collection, CollectionItem  # Added import
 
+
 def format_price(price):
     """Formats the price with commas (e.g., 10000 -> 10,000)."""
     return "{:,}".format(price)

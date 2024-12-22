@@ -255,7 +255,7 @@ def journal_detail(request, journal_id):
     journal = get_object_or_404(Journal, id=journal_id)
     return render(request, 'main/spesific_journal.html', {'journal': journal})
 
-
+@csrf_exempt
 def register(request):
     form = UserCreationForm()
     last_login = request.COOKIES.get('last_login', 'Never')
@@ -269,7 +269,7 @@ def register(request):
     context = {'form': form, 'last_login': last_login}
     return render(request, 'register.html', context)
 
-
+@csrf_exempt
 def login_user(request):
     if request.method == 'POST':
         form = AuthenticationForm(data=request.POST)
@@ -286,7 +286,7 @@ def login_user(request):
         form = AuthenticationForm()
     return render(request, 'login.html', {'form': form})
 
-
+@csrf_exempt
 def logout_user(request):
     logout(request)
     response = HttpResponseRedirect(reverse('main:login'))
