@@ -3,7 +3,7 @@ from django.http import JsonResponse, HttpResponse
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
-from .models import Collection
+from .models import Collection, CollectionItem
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
@@ -268,3 +268,26 @@ def delete_collection_flutter(request, collection_id):
         except Exception as e:
             return JsonResponse({'success': False, 'error': str(e)}, status=500)
     return JsonResponse({'success': False, 'error': 'Method not allowed'}, status=405)
+
+@login_required
+def collection_places_json(request, collection_id):
+    """
+    Endpoint to show all places in a specific collection in JSON format.
+    """
+    try:
+        # Get the collection and verify it belongs to the user
+        collection = get_object_or_404(Collection, id=collection_id, user=request.user)
+        
+        # Get all places in this collection through CollectionItem
+        collection_items = CollectionItem.objects.filter(collection=collection)
+        places = [item.place for item in collection_items]
+        
+        # Serialize the places
+        data = serializers.serialize("json", places)
+        print("Djnago response data:", data)
+        return HttpResponse(data, content_type="application/json")
+        
+    except Collection.DoesNotExist:
+        return JsonResponse({
+            'error': 'Collection not found or access denied'
+        }, status=404)

@@ -33,6 +33,10 @@ urlpatterns = [
     path('flutter/buy_souvenir/<int:souvenir_id>/', 
          flutter_api_views.buy_souvenir_flutter, 
          name='flutter_buy_souvenir'),
+    path('flutter/<int:place_id>/add_to_collection_flutter/', 
+         flutter_api_views.add_to_collection_flutter, 
+         name='add_to_collection_flutter'),
+
 ]
     # path('add-comment-dart/<int:place_id>/', views.add_comment_dart, name='add_comment_dart'),
 

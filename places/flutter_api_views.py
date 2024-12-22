@@ -1,8 +1,11 @@
+import json
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 from django.utils import timezone
 from django.db.models import Avg
+
+from placeCollection.models import Collection, CollectionItem
 from .models import Place, Comment, Souvenir
 
 @csrf_exempt
@@ -210,4 +213,60 @@ def buy_souvenir_flutter(request, souvenir_id):
     return JsonResponse({
         'status': 'error',
         'message': 'Method not allowed'
+    }, status=405)
+
+@csrf_exempt
+def add_to_collection_flutter(request, place_id):
+    if request.method == 'POST':
+        try:
+            # Parse the JSON data from the request body
+            data = json.loads(request.body)
+            collection_ids = data.get('collections', [])
+            
+            # Fetch the Place instance
+            place = get_object_or_404(Place, pk=place_id)
+            
+            if not collection_ids:
+                return JsonResponse({
+                    'success': False,
+                    'error': 'No collections selected.'
+                }, status=400)
+            
+            # Process each collection ID
+            for collection_id in collection_ids:
+                try:
+                    # Verify collection belongs to user and exists
+                    collection = Collection.objects.get(
+                        pk=collection_id, 
+                        user=request.user
+                    )
+                    
+                    # Add place to collection if not already present
+                    CollectionItem.objects.get_or_create(
+                        collection=collection,
+                        place=place
+                    )
+                except Collection.DoesNotExist:
+                    continue  # Skip invalid collection IDs
+            
+            return JsonResponse({
+                'success': True,
+                'message': 'Place added to collections successfully'
+            })
+            
+        except json.JSONDecodeError:
+            return JsonResponse({
+                'success': False,
+                'error': 'Invalid JSON data'
+            }, status=400)
+            
+        except Exception as e:
+            return JsonResponse({
+                'success': False,
+                'error': str(e)
+            }, status=500)
+            
+    return JsonResponse({
+        'success': False,
+        'error': 'Invalid request method'
     }, status=405)

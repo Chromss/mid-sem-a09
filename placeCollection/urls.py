@@ -32,10 +32,11 @@ urlpatterns = [
     path('<int:collection_id>/places/', views.show_collection_places, name='show_collection_places'),
     path('delete/<int:collection_id>/', views.delete_collection, name='delete_collection'),
     path('delete_flut/<int:collection_id>/', views.delete_collection_flutter, name='delete_collection_flutter'),
-    path('<int:collection_id>/places/json/', views.show_json_collection_places, name='show_json_collection_places'),  # New endpoint
+    path('<int:collection_id>/places/json/', views.collection_places_json, name='collection_places_json'),  # Keep this one
     path('xml/', views.show_xml, name='show_xml'),
     path('json/', views.show_json, name='show_json'),
     path('get-csrf-token/', views.get_csrf_token, name='get_csrf_token'),
-
 ]
+
+
 
