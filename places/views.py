@@ -1,5 +1,6 @@
 # places/views.py
 
+import json
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
@@ -67,36 +68,185 @@ class CustomLoginView(LoginView):
         url = self.get_redirect_url()
         return url or reverse_lazy('home')  # Replace 'home' with your desired default view name
 
-@login_required
+# @login_required
+# @csrf_exempt
+# def add_comment_ajax(request, place_id):
+#     print(f"Request method: {request.method}")
+#     print(f"Request headers: {request.headers}")
+#     print(f"Request body: {request.body}")
+
+#     if request.method == 'POST':  # Removed x-requested-with for now
+#         try:
+#             # Parse JSON body
+#             data = json.loads(request.body)
+#             print(f"Parsed data: {data}")
+
+#             content = data.get('comment')  # Ensure this matches your JSON key
+#             rating = data.get('rating')   # Ensure this matches your JSON key
+
+#             if content and rating:
+#                 place = get_object_or_404(Place, pk=place_id)
+#                 comment = Comment.objects.create(
+#                     place=place,
+#                     user=request.user,
+#                     content=content,
+#                     rating=int(rating),
+#                     created_at=timezone.now()
+#                 )
+#                 average_rating = Comment.objects.filter(place=place).aggregate(Avg('rating'))['rating__avg'] or 0
+#                 average_rating = round(average_rating, 1)
+
+#                 rendered_comment = render_to_string('places/comment_partial.html', {'comment': comment, 'user': request.user})
+#                 return JsonResponse({
+#                     'message': 'Your review has been submitted successfully.',
+#                     'comment_html': rendered_comment,
+#                     'average_rating': average_rating
+#                 })
+
+#             return JsonResponse({'error': 'Please provide both a comment and a rating.'}, status=400)
+
+#         except json.JSONDecodeError as e:
+#             print(f"JSONDecodeError: {e}")
+#             return JsonResponse({'error': 'Invalid JSON data.'}, status=400)
+#TRIAL  4 START
+#     return JsonResponse({'error': 'Invalid request.'}, status=400)
 @csrf_exempt
 def add_comment_ajax(request, place_id):
-    if request.method == 'POST' and request.headers.get('x-requested-with') == 'XMLHttpRequest':
+    print("Request method:", request.method)
+    print("Request headers:", request.headers)
+    print("Is user authenticated?", request.user.is_authenticated)
+    print("Session key:", request.session.session_key)
+    print("POST data:", request.POST)
+    print("Cookies:", request.COOKIES)  # Add this to debug
+    print("Session ID:", request.session.session_key)  # Add this to debug
+    
+
+    
+    # Add CORS headers
+    response = JsonResponse({'status': 'error', 'message': 'Authentication required'}, status=401)
+    response["Access-Control-Allow-Credentials"] = "true"
+    response["Access-Control-Allow-Origin"] = "http://localhost:57880"
+    
+    if not request.user.is_authenticated:
+        session_id = request.COOKIES.get('sessionid')
+        if session_id:
+            from django.contrib.sessions.backends.db import SessionStore
+            from django.contrib.auth.models import User
+            session = SessionStore(session_key=session_id)
+            if '_auth_user_id' in session:
+                user_id = session.get('_auth_user_id')
+                request.user = User.objects.get(pk=user_id)
+    
+    if not request.user.is_authenticated:
+        return response
+
+    try:
         place = get_object_or_404(Place, pk=place_id)
-        content = request.POST.get('comment')
+        comment_text = request.POST.get('comment')
         rating = request.POST.get('rating')
-        if content and rating:
+
+        comment = Comment.objects.create(
+            place=place,
+            user=request.user,
+            content=comment_text,
+            rating=int(rating),
+            created_at=timezone.now()
+        )
+
+        success_response = JsonResponse({
+            'status': 'success',
+            'message': 'Comment added successfully',
+            'data': {
+                'id': comment.id,
+                'content': comment.content,
+                'rating': comment.rating,
+                'username': comment.user.username,
+            }
+        })
+        success_response["Access-Control-Allow-Credentials"] = "true"
+        success_response["Access-Control-Allow-Origin"] = "http://localhost:57880"
+        return success_response
+
+    except Exception as e:
+        error_response = JsonResponse({
+            'status': 'error',
+            'message': str(e)
+        }, status=500)
+        error_response["Access-Control-Allow-Credentials"] = "true"
+        error_response["Access-Control-Allow-Origin"] = "http://localhost:57880"
+        return error_response
+
+@csrf_exempt
+def add_comment_ajax(request, place_id):
+    print("Request method:", request.method)
+    print("Request headers:", request.headers)
+    print("Is user authenticated?", request.user.is_authenticated)
+    print("Session key:", request.session.session_key)
+    print("POST data:", request.POST)
+    print("Cookies:", request.COOKIES)  # Add this to debug
+    print("Session ID:", request.session.session_key)  # Add this to debug
+    
+    if not request.user.is_authenticated:
+        # Try to get the session from the cookie
+        session_id = request.COOKIES.get('sessionid')
+        if session_id:
+            from django.contrib.sessions.backends.db import SessionStore
+            session = SessionStore(session_key=session_id)
+            if session and '_auth_user_id' in session:
+                from django.contrib.auth import get_user
+                request.user = get_user(request)
+
+    if not request.user.is_authenticated:
+        print("User is not authenticated")
+        return JsonResponse({
+            'status': 'error',
+            'message': 'Authentication required',
+        }, status=401)
+
+
+    if request.method == 'POST':
+        try:
+            place = get_object_or_404(Place, pk=place_id)
+            
+            # Get data from POST instead of JSON body
+            comment_text = request.POST.get('comment')
+            rating = request.POST.get('rating')
+
+            if not comment_text or not rating:
+                return JsonResponse({
+                    'status': 'error',
+                    'message': 'Comment and rating are required'
+                }, status=400)
+
             comment = Comment.objects.create(
                 place=place,
                 user=request.user,
-                content=content,
+                content=comment_text,
                 rating=int(rating),
                 created_at=timezone.now()
             )
-            # Update average rating
-            average_rating = Comment.objects.filter(place=place).aggregate(Avg('rating'))['rating__avg'] or 0
-            average_rating = round(average_rating, 1)
-            # Return the rendered HTML for the new comment and updated average rating
-            rendered_comment = render_to_string('places/comment_partial.html', {'comment': comment, 'user': request.user})
-            return JsonResponse({
-                'message': 'Your review has been submitted successfully.',
-                'comment_html': rendered_comment,
-                'average_rating': average_rating
-            })
-        else:
-            return JsonResponse({'error': 'Please provide both a comment and a rating.'}, status=400)
-    else:
-        return JsonResponse({'error': 'Invalid request.'}, status=400)
 
+            return JsonResponse({
+                'status': 'success',
+                'message': 'Comment added successfully',
+                'data': {
+                    'id': comment.id,
+                    'content': comment.content,
+                    'rating': comment.rating,
+                    'username': comment.user.username,
+                }
+            })
+
+        except Exception as e:
+            return JsonResponse({
+                'status': 'error',
+                'message': str(e)
+            }, status=500)
+
+    return JsonResponse({
+        'status': 'error',
+        'message': 'Method not allowed'
+    }, status=405)
 @login_required
 @csrf_exempt
 def edit_comment_ajax(request, comment_id):
@@ -245,4 +395,4 @@ def place_detail_json(request, place_id):
     }
     
     return JsonResponse(data, safe=False)
-
+# TRIAL 4 END

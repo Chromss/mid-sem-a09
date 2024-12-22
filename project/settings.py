@@ -113,8 +113,13 @@ LOGOUT_REDIRECT_URL = 'login'
 
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
+
+#CIA NGUBAH  csrf cookie sm session cookie INI KRN MAU DI local DEV HTTP 
+
+CSRF_COOKIE_SECURE = False
+SESSION_COOKIE_SECURE = False
+
+
 CSRF_COOKIE_SAMESITE = 'None'
 SESSION_COOKIE_SAMESITE = 'None'
 CSRF_TRUSTED_ORIGINS = [
@@ -124,6 +129,18 @@ CSRF_TRUSTED_ORIGINS = [
     'http://127.0.0.1:60489',  # Tambahkan ini jika Flutter menggunakan 127.0.0.1
     'http://localhost:64325',  # URL asal request Flutter
     'http://localhost:50246',  # URL asal request Flutter
+    'http://localhost:5177',  # URL asal request Flutter
+    'http://localhost:57880',  # URL asal request Flutter
 
 
+
+
+]
+CORS_ALLOW_METHODS = [
+    'GET',
+    'POST',
+    'PUT',
+    'PATCH',
+    'DELETE',
+    'OPTIONS'
 ]
