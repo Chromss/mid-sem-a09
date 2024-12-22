@@ -7,17 +7,10 @@ from django.middleware.csrf import get_token
 def login(request):
     print("Login request received")
     print("Session before login:", request.session.session_key)
-
-    try:
-        username = request.POST['username']
-        password = request.POST['password']
-    except KeyError:
-        return JsonResponse({
-            "status": False,
-            "message": "Username and password are required."
-        }, status=400)
-
+    username = request.POST['username']
+    password = request.POST['password']
     user = authenticate(username=username, password=password)
+
 
     if user is not None and user.is_active:
         # Login the user and create session
