@@ -106,6 +106,11 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect */
         }
 
+        .modal-left {
+            width: 100%; /* Kolom kiri menjadi 100% */
+            padding: 10px; /* Padding untuk konten */
+        }
+
         .options-button {
             background-color: transparent; /* Set background color */
             border: none; /* Remove border */
@@ -376,7 +381,7 @@
     <!-- Modal for Edit Journal -->
     <div id="edit-modal" style="display: none;">
         <div class="modal-content">
-            <span class="close-button">&times;</span>
+            <span class="close-button" id="close-edit-modal">&times;</span>
             <h2>Edit Journal</h2>
             <form id="edit-form">
                 <input type="hidden" id="edit-form-id" name="journal_id">
@@ -404,7 +409,7 @@
                 <p id="current-image-message">No image currently uploaded.</p>
                 <img id="current-image" src="" alt="Current Image" style="display: none; max-width: 100%; margin-top: 10px;">
                 
-                <button type="submit">Save Changes</button>
+                <button type="submit" class="btn">Save Changes</button>
             </form>
         </div>
     </div>
@@ -442,7 +447,7 @@
         });
 
         // Close edit journal modal when the close button is clicked
-        $('.close-button').on('click', function() {
+        $('#close-edit-modal').on('click', function() {
             $('#edit-modal').hide(); // Hide the edit modal
         });
 
@@ -596,10 +601,15 @@
                     // Update the journal card with new data
                     $('div[data-journal-id="' + journalId + '"] .title').text(response.title);
                     $('div[data-journal-id="' + journalId + '"] .content').text(response.content);
+                    // Update place and souvenir
+                    $('div[data-journal-id="' + journalId + '"] .place-info span').text('Location: ' + response.place_name);
+                    $('div[data-journal-id="' + journalId + '"] .souvenir-info span').text('Souvenir: ' + response.souvenir.name + ' - IDR ' + response.souvenir.price);
+                    
+                    // Update image
                     if (response.image_url) {
                         $('div[data-journal-id="' + journalId + '"] .journal-image').attr('src', response.image_url);
                     } else {
-                        $('div[data-journal-id="' + journalId + '"] .journal-image').attr('src', ''); // Clear image if deleted
+                        $('div[data-journal-id="' + journalId + '"] .journal-image').attr('src', '{% static "images/default_image.png" %}'); // Ganti dengan gambar default jika tidak ada
                     }
                     $('#edit-modal').hide();
                 },
@@ -718,6 +728,7 @@
             const selectedPlace = $(this).val();
             loadSouvenirs(selectedPlace, null); // Clear selected souvenir
         });
+        
     </script>
     <!-- Footer -->
     <footer class="footer">
