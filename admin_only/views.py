@@ -136,3 +136,6 @@ def login_admin(request):
 def logout_admin(request):
     request.session.flush()
     return redirect('/admin/login/')
+
+
+# balik ke awal lagi
