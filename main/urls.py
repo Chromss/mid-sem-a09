@@ -6,14 +6,14 @@ from places.views import CustomLoginView
 from django.contrib.auth import views as auth_views
 
 from main.views import (
-    landing_page, journal_home, create_journal, edit_journal, delete_journal, 
-    journal_history, like_journal, journal_detail, register, login_user, 
+    delete_journal_flutter, edit_journal_flutter, get_journals_json, get_user_journals_json, landing_page, journal_home, create_journal, edit_journal, delete_journal, 
+    journal_history, like_journal, journal_detail, like_journal_flutter, register, login_user, 
     logout_user, specific_journal, save_journal, souvenir_list, 
     itinerary_list, itinerary_detail,
     show_xml, show_xml_by_id, show_json, show_json_by_id,
     show_xml_itin, show_xml_by_id_itin, show_json_itin, show_json_by_id_itin,
-    get_places, get_souvenirs, create_journal_flutter, get_journals_json, 
-    get_current_user, get_user_journals_json, edit_journal_flutter,
+    get_places, get_souvenirs, create_journal_flutter 
+    ,edit_journal_flutter,
     delete_journal_flutter,
     like_journal_flutter,
 )
@@ -22,7 +22,7 @@ app_name = 'main'
 
 urlpatterns = [
     path('', landing_page, name='landing_page'),  # Halaman landing
-    path('get-current-user/', get_current_user, name='get_current_user'),
+    # path('get-current-user/', get_current_user, name='get_current_user'),
     path('journal/', journal_home, name='journal_home'),
     path('create/', create_journal, name='create_journal'),
     path('edit/<int:journal_id>/', edit_journal, name='edit_journal'),

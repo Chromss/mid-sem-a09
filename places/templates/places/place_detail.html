@@ -256,11 +256,12 @@
                         headers: {
                             'X-CSRFToken': csrftoken,
                             'X-Requested-With': 'XMLHttpRequest',
-                            'Content-Type': 'application/x-www-form-urlencoded'
+                            'Content-Type': 'application/json'
                         },
-                        body: new URLSearchParams({
-                            'comment': commentContent,
-                            'rating': ratingVal
+                        credentials: 'include', // Ensures cookies are sent if needed for login
+                        body: JSON.stringify({
+                            "comment": commentContent,
+                            "rating": parseInt(ratingVal)
                         })
                     })
                     .then(response => response.json())
@@ -275,13 +276,46 @@
                             document.getElementById('rating-value').value = '';
                             currentRating = 0;
                             updateStars(0);
-                            // Re-initialize stars for edit forms
+                            // Re-initialize stars if necessary
                             initializeEditStars();
                         } else if (data.error) {
                             alert(data.error);
                         }
                     })
                     .catch(error => console.error('Error:', error));
+
+
+                    // fetch("{% url 'places:add_comment_ajax' place.id %}", {
+                    //     method: 'POST',
+                    //     headers: {
+                    //         'X-CSRFToken': csrftoken,
+                    //         'X-Requested-With': 'XMLHttpRequest',
+                    //         'Content-Type': 'application/x-www-form-urlencoded'
+                    //     },
+                    //     body: new URLSearchParams({
+                    //         'comment': commentContent,
+                    //         'rating': ratingVal
+                    //     })
+                    // })
+                    // .then(response => response.json())
+                    // .then(data => {
+                    //     if (data.comment_html) {
+                    //         // Prepend the new comment to the reviews container
+                    //         document.getElementById('reviews-container').insertAdjacentHTML('afterbegin', data.comment_html);
+                    //         // Update average rating
+                    //         document.getElementById('average-rating').textContent = data.average_rating;
+                    //         // Clear the form
+                    //         document.getElementById('review-input').value = '';
+                    //         document.getElementById('rating-value').value = '';
+                    //         currentRating = 0;
+                    //         updateStars(0);
+                    //         // Re-initialize stars for edit forms
+                    //         initializeEditStars();
+                    //     } else if (data.error) {
+                    //         alert(data.error);
+                    //     }
+                    // })
+                    // .catch(error => console.error('Error:', error));
                 });
             }
 
@@ -592,7 +626,9 @@
                 }, 3000); // Show for 3 seconds
             }
         });
+        
     </script>
     
 </body>
 </html>
+

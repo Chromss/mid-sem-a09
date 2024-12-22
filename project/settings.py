@@ -124,6 +124,18 @@ CSRF_TRUSTED_ORIGINS = [
     'http://127.0.0.1:60489',  # Tambahkan ini jika Flutter menggunakan 127.0.0.1
     'http://localhost:64325',  # URL asal request Flutter
     'http://localhost:50246',  # URL asal request Flutter
+    'http://localhost:5177',  # URL asal request Flutter
+    'http://localhost:57880',  # URL asal request Flutter
 
 
+
+
+]
+CORS_ALLOW_METHODS = [
+    'GET',
+    'POST',
+    'PUT',
+    'PATCH',
+    'DELETE',
+    'OPTIONS'
 ]
