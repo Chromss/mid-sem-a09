@@ -36,6 +36,62 @@ def create_collection(request):
         return JsonResponse({'success': False, 'error': 'Name is required'})
     return render(request, 'collection.html')
 
+# @login_required
+# @csrf_exempt
+# def create_collection_json(request):
+#     print("Request method:", request.method)  # Debug print
+#     print("Request body:", request.body)  # Debug print
+
+#     if request.method == 'POST':
+#         try:
+#             # Try different ways of parsing the request body
+#             try:
+#                 # Try parsing as JSON
+#                 data = json.loads(request.body.decode('utf-8'))
+#             except json.JSONDecodeError:
+#                 # Try parsing as form data
+#                 data = request.POST.dict()
+#                 if not data:
+#                     data = dict(request.POST)
+
+#             print("Parsed data:", data)  # Debug print
+
+#             # Validate name
+#             name = data.get('name')
+#             if not name:
+#                 return JsonResponse({
+#                     'success': False, 
+#                     'error': 'Name is required'
+#                 }, status=400)
+            
+#             # Create collection
+#             collection = Collection.objects.create(
+#                 name=name, 
+#                 user=request.user  # Ensure user is authenticated
+#             )
+            
+#             # Return success response
+#             return JsonResponse({
+#                 'success': True, 
+#                 'collection': {
+#                     'id': collection.id,
+#                     'name': collection.name
+#                 }
+#             }, status=201)
+        
+#         except Exception as e:
+#             print("Error:", str(e))  # Debug print
+#             return JsonResponse({
+#                 'success': False, 
+#                 'error': str(e)
+#             }, status=500)
+    
+#     # If not a POST request
+#     return JsonResponse({
+#         'success': False, 
+#         'error': 'Method not allowed'
+#     }, status=405)
+
 @login_required
 @csrf_exempt
 def create_collection_json(request):
@@ -91,6 +147,8 @@ def create_collection_json(request):
         'success': False, 
         'error': 'Method not allowed'
     }, status=405)
+
+
 
 # 3. Show All Collections
 @login_required
@@ -149,21 +207,25 @@ def show_json_collection_places(request, collection_id):
         return JsonResponse({"success": False, "error": str(e)}, status=500)
 
 
-# 6. Delete Collection
-@require_http_methods(["DELETE"])
-@login_required
-def delete_collection(request, collection_id):
-    """
-    Menghapus koleksi berdasarkan ID.
-    """
-    try:
-        collection = Collection.objects.get(id=collection_id, user=request.user)
-        collection.delete()
-        return JsonResponse({'success': True})
-    except Collection.DoesNotExist:
-        return JsonResponse({'success': False, 'error': 'Collection not found'}, status=404)
-    except Exception as e:
-        return JsonResponse({'success': False, 'error': str(e)}, status=500)
+def get_csrf_token(request):
+    token = get_token(request)
+    return JsonResponse({'csrfToken': token})
+
+# # 6. Delete Collection
+# @require_http_methods(["DELETE"])
+# @login_required
+# def delete_collection(request, collection_id):
+#     """
+#     Menghapus koleksi berdasarkan ID.
+#     """
+#     try:
+#         collection = Collection.objects.get(id=collection_id, user=request.user)
+#         collection.delete()
+#         return JsonResponse({'success': True})
+#     except Collection.DoesNotExist:
+#         return JsonResponse({'success': False, 'error': 'Collection not found'}, status=404)
+#     except Exception as e:
+#         return JsonResponse({'success': False, 'error': str(e)}, status=500)
 
 
 # 7. Show Collections as XML
@@ -175,3 +237,34 @@ def show_xml(request):
     collections = Collection.objects.filter(user=request.user)
     data = serializers.serialize("xml", collections)
     return HttpResponse(data, content_type="application/xml")
+
+@login_required
+@csrf_exempt
+@require_http_methods(["DELETE"]) 
+def delete_collection(request, collection_id):
+    if request.method == 'DELETE':  # Add this check
+        try:
+            collection = Collection.objects.get(id=collection_id, user=request.user)
+            collection.delete()
+            return JsonResponse({'success': True})
+        except Collection.DoesNotExist:
+            return JsonResponse({'success': False, 'error': 'Collection not found'}, status=404)
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)}, status=500)
+    return JsonResponse({'success': False, 'error': 'Method not allowed'}, status=405)
+
+@login_required
+@csrf_exempt
+@require_http_methods(["POST"]) 
+def delete_collection_flutter(request, collection_id):
+    if request.method == 'POST':  # Add this check
+        try:
+            print("hai")
+            collection = Collection.objects.get(id=collection_id, user=request.user)
+            collection.delete()
+            return JsonResponse({'success': True})
+        except Collection.DoesNotExist:
+            return JsonResponse({'success': False, 'error': 'Collection not found'}, status=404)
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)}, status=500)
+    return JsonResponse({'success': False, 'error': 'Method not allowed'}, status=405)
