@@ -18,7 +18,18 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
-
+from django.shortcuts import render, get_object_or_404, redirect
+from django.views.decorators.http import require_http_methods
+from .models import Itinerary, Day, Destination
+from django.http import HttpResponse
+from rest_framework.renderers import JSONRenderer
+from django.core import serializers
+from .models import Itinerary
+from .serializers import ItinerarySerializer
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from rest_framework.views import APIView
+from rest_framework import status
 
 @login_required
 def landing_page(request):
@@ -315,25 +326,35 @@ def show_json_by_id(request, id):
     data = Journal.objects.filter(pk=id)
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
-def show_xml_itin(request):
-    # Get all journals for the current user
-    data = Itinerary.objects.all()
-    return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
-
+# Fungsi untuk JSON
 def show_json_itin(request):
-    # Get all journals for the current user
-    itineraries = Itinerary.objects.all()
-    return HttpResponse(serializers.serialize("json", itineraries), content_type="application/json")
+    itineraries = Itinerary.objects.prefetch_related('days__destinations').all()
+    serializer = ItinerarySerializer(itineraries, many=True)
+    return HttpResponse(JSONRenderer().render(serializer.data), content_type="application/json")
 
-def show_xml_by_id_itin(request, id):
-    # Get a specific journal by ID
-    data = Itinerary.objects.all()
-    return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
+# Fungsi untuk XML
+def show_xml_itin(request):
+    itineraries = Itinerary.objects.prefetch_related('days__destinations').all()
+    xml_data = serializers.serialize('xml', itineraries)  # XML tidak mendukung nested secara otomatis
+    return HttpResponse(xml_data, content_type="application/xml")
 
+# JSON Berdasarkan ID
 def show_json_by_id_itin(request, id):
-    # Get a specific journal by ID
-    data = Itinerary.objects.all()
-    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+    try:
+        itinerary = Itinerary.objects.prefetch_related('days__destinations').get(id=id)  # Gunakan get untuk mengambil satu data
+    except Itinerary.DoesNotExist:
+        return HttpResponse('{"error": "Itinerary not found"}', content_type="application/json", status=404)
+    serializer = ItinerarySerializer(itinerary)
+    return HttpResponse(JSONRenderer().render(serializer.data), content_type="application/json")
+
+# XML Berdasarkan ID
+def show_xml_by_id_itin(request, id):
+    try:
+        itinerary = Itinerary.objects.prefetch_related('days__destinations').get(id=id)
+    except Itinerary.DoesNotExist:
+        return HttpResponse('<error>Itinerary not found</error>', content_type="application/xml", status=404)
+    xml_data = serializers.serialize('xml', [itinerary])  # Bungkus dalam list untuk serialisasi XML
+    return HttpResponse(xml_data, content_type="application/xml")
 
 def show_itineraries(request):
     itineraries = Itinerary.objects.all()  # Mendapatkan semua itinerary
@@ -601,3 +622,10 @@ def like_journal_flutter(request, journal_id):
         'status': 'error',
         'message': 'Invalid request method'
     }, status=405)
+
+@api_view(['GET'])
+def get_itineraries(request):
+    itineraries = Itinerary.objects.all()
+    serializer = ItinerarySerializer(itineraries, many=True)
+    return Response(serializer.data)
+
