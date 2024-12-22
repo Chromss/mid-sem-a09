@@ -3,6 +3,8 @@ from django.contrib.auth import authenticate, login as auth_login
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.middleware.csrf import get_token
+
+
 # from django.contrib.auth.models import User
 # import json
 # from django.contrib.auth import logout as auth_logout
@@ -63,6 +65,10 @@ def login(request):
         error_response["Access-Control-Allow-Origin"] = "http://localhost:57880"
         
         return error_response
+
+
+
+
 # @csrf_exempt
 # def login(request):
 #     username = request.POST['username']

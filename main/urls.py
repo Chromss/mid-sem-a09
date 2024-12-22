@@ -15,7 +15,8 @@ from main.views import (
     get_places, get_souvenirs, create_journal_flutter 
     ,edit_journal_flutter,
     delete_journal_flutter,
-    like_journal_flutter,
+    like_journal_flutter, 
+    itinerary_detail, get_itineraries,
 )
 
 app_name = 'main'
@@ -60,8 +61,8 @@ urlpatterns = [
     path('edit-journal-flutter/<int:journal_id>/', edit_journal_flutter, name='edit_journal_flutter'),
     path('delete-journal-flutter/<int:journal_id>/', delete_journal_flutter, name='delete_journal_flutter'),
     path('like-journal-flutter/<int:journal_id>/', like_journal_flutter, name='like_journal_flutter'),
-
-    
+    path('itinerary-list/', itinerary_list, name='itinerary_list'),
+    path('api/itineraries/', get_itineraries, name='get_itineraries'),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
